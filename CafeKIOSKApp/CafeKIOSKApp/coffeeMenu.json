@@ -4,8 +4,6 @@
     "source": "official+placeholder",
     "note": "가격은 과제용 임의값이며 실제 매장과 다를 수 있습니다."
   },
-  "currency": "KRW",
-  "updatedAt": "2026-02-03T05:54:18Z",
   "categories": [
     {
       "id": "recommend",
