@@ -15,15 +15,18 @@ extension UIButton {
         config.imagePadding = 6
         config.cornerStyle = .capsule
         config.contentInsets = .init(top: 10, leading: 14, bottom: 10, trailing: 14)
-        self.configuration = config
         
+        self.configuration = config
+    }
+    
+    func applySelectedColor(selectedColor: UIColor, baseColor: UIColor) {
         self.configurationUpdateHandler = { button in
             var updatedConfig = button.configuration
             
             if button.isSelected {
-                updatedConfig?.baseBackgroundColor = .black
+                updatedConfig?.baseBackgroundColor = selectedColor
             } else {
-                updatedConfig?.baseBackgroundColor = .brown
+                updatedConfig?.baseBackgroundColor = baseColor
             }
             
             button.configuration = updatedConfig

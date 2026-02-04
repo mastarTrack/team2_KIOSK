@@ -30,6 +30,7 @@ class MenuSectionView: UIView {
     func setupButtons() {
         menuSection.enumerated().forEach { index, menuSection in
             let button = UIButton(title: menuSection)
+            button.applySelectedColor(selectedColor: .black, baseColor: .brown)
             button.tag = index
             
             button.addAction(UIAction { [weak self, weak button] _ in
