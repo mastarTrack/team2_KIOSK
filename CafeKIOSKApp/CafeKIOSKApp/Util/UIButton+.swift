@@ -19,6 +19,7 @@ extension UIButton {
         self.configuration = config
     }
     
+    // 설정시 버튼 액션란에 button.setNeedsUpdateConfiguration() 호출해야 반영됨
     func applySelectedColor(selectedColor: UIColor, baseColor: UIColor) {
         self.configurationUpdateHandler = { button in
             var updatedConfig = button.configuration
