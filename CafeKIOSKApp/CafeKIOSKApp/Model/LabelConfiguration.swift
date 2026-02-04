@@ -11,10 +11,16 @@ struct LabelConfiguration {
     let color: UIColor
     let lines: Int
 }
-
+// MARK: - 메인 화면 라벨 규격
 extension LabelConfiguration {
-    static let headerTitle = LabelConfiguration(
-        font: .preferredFont(forTextStyle: .largeTitle),
+    static let priceNameLabel = LabelConfiguration(
+        font: .preferredFont(forTextStyle: .body),
+        color: .black,
+        lines: 0
+    )
+    
+    static let priceLabel = LabelConfiguration(
+        font: .preferredFont(forTextStyle: .title2),
         color: .black,
         lines: 0
     )
