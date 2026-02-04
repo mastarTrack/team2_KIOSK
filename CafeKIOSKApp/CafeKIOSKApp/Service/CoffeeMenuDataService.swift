@@ -45,17 +45,18 @@ class CoffeeMenuDataService {
 /*
  구현부
  
- // 버튼을 누르거나 화면이 켜질 때 호출
- coffeeMenuDataService.loadMenu { result in
+ CoffeeMenuDataService.loadMenu { result in
      switch result {
      case .success(let menuData):
-         print("성공")
-         print("브랜드명: \(menuData.brand.name)")
-         print("메뉴 개수: \(menuData.items.count)")
-         // 여기서 화면 업데이트 (예: self.items = menuData.items)
+         print("데이터 로드 성공")
+         print("총 메뉴 개수: \(menuData.items.count)개")
+         print("-- 메뉴 출력 --")
          
+         for item in menuData.items {
+             print("\(item.name)메뉴는 \(item.price)원이며 카테고리는 \(item.categoryId)입니다.")
+         }
      case .failure(let error):
-         print("실패: \(error)")
+         print("에러발생: \(error)")
      }
  }
  
