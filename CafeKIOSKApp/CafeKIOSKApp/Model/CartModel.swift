@@ -77,17 +77,17 @@ class CartManager {
      switch result {
      case .success(let menuData):
          let menuList = menuData.items
-         
+ 
          // 🛒🚶🏼‍♀️ 3. 아아와 라떼를 찾아서 장바구니에 넣기 👇👇👇👇👇👇👇👇
          // 이름으로 아메리카노 찾기
          if let americano = menuList.first(where: { $0.name == "아메리카노" }) {
              self.cartManager.addItem(menu: americano, isIce: false, shotCount: 1, count: 1)
          }
-         // id로 카페라떼 찾기
-         if let latte = menuList.first(where: { $0.id == "M102"}) {
-             self.cartManager.addItem(menu: latte, isIce: true, shotCount: 2, count: 1)
+         // id로 그린키위 콕콕 딸기스무디 찾기
+         if let menu2 = menuList.first(where: { $0.id == "S03"}) {
+            self.cartManager.addItem(menu: menu2, isIce: true, shotCount: 2, count: 1)
          }
-         // 아메리카노,1샷 + 카페라떼,2샷 = 2500+3800 = 6300원 출력
+         // 아메리카노,1샷 + 그린키위 콕콕 딸기스무디 = 2500+4800 = 7300원 출력
          print("현재 금액: \(self.cartManager.calculateTotal())원")
          
      case .failure(let error):
