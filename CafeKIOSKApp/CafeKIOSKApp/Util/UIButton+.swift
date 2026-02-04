@@ -19,6 +19,17 @@ extension UIButton {
         self.configuration = config
     }
     
+    func applyBig() {
+        var config = UIButton.Configuration.filled()
+        config.imagePlacement = .leading
+        config.imagePadding = 6
+        config.cornerStyle = .large
+        config.contentInsets = .init(top: 15, leading: 14, bottom: 15, trailing: 14)
+        
+        self.configuration = config
+    }
+    
+    
     // 설정시 버튼 액션란에 button.setNeedsUpdateConfiguration() 호출해야 반영됨
     func applySelectedColor(selectedColor: UIColor, baseColor: UIColor) {
         self.configurationUpdateHandler = { button in
