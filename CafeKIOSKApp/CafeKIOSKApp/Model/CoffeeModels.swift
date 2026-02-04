@@ -30,6 +30,18 @@ struct Category: Decodable {
     let id: String
     let name: String
     let description: String
+
+    enum CodingKeys: String, CodingKey {
+        case id, name, description
+    }
+
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        id = try container.decode(String.self, forKey: .id)
+        description = try container.decode(String.self, forKey: .description)
+        let rawName = try container.decode(String.self, forKey: .name)
+        name = rawName.replacingOccurrences(of: "_", with: "/")
+    }
 }
 
 // menuItem
