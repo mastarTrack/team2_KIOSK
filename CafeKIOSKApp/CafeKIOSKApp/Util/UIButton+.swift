@@ -1,0 +1,39 @@
+//
+//  UIButton+.swift
+//  CafeKIOSKApp
+//
+//  Created by Yeseul Jang on 2/3/26.
+//
+
+import Foundation
+import UIKit
+
+extension UIButton {
+    func applyCapsule() {
+        var config = UIButton.Configuration.filled()
+        config.imagePlacement = .leading
+        config.imagePadding = 6
+        config.cornerStyle = .capsule
+        config.contentInsets = .init(top: 10, leading: 14, bottom: 10, trailing: 14)
+        self.configuration = config
+        
+        self.configurationUpdateHandler = { button in
+            var updatedConfig = button.configuration
+            
+            if button.isSelected {
+                updatedConfig?.baseBackgroundColor = .black
+            } else {
+                updatedConfig?.baseBackgroundColor = .brown
+            }
+            
+            button.configuration = updatedConfig
+        }
+    }
+    
+    convenience init(title: String, systemImage: String? = nil ) {
+        self.init()
+        applyCapsule()
+        self.configuration?.title = title
+        self.configuration?.image = UIImage(systemName: systemImage ?? "")
+    }
+}
