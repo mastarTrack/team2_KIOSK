@@ -60,8 +60,8 @@ struct MenuItem: Decodable {
 
 // itemOptions
 struct ItemOptions: Decodable {
-    let temperature: [String]
-    let size: [String]
+    let temperature: [String]?
+    let size: [String]?
     
     let extraShot: ExtraShot? // 없는 메뉴도 존재
     let iceLevel: [String]? // 없는 메뉴도 존재
