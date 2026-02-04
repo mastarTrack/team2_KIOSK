@@ -34,6 +34,7 @@ class CartManager {
         
         // 빈 장바구니 배열에 집어넣기
         items.append(newItem)
+        print("\(newItem.menu.name)가 \(newItem.count)개가 장바구니에 추가되었습니다!")
     }
     
     // 총 가격 계산하는 함수
