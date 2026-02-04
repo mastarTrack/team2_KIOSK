@@ -1,67 +1,35 @@
 {
   "brand": {
     "name": "메가MGC커피",
-    "source": "official+placeholder",
-    "note": "가격은 과제용 임의값이며 실제 매장과 다를 수 있습니다."
+    "note": "공식 이미지 URL(img.79plus.co.kr)을 사용했습니다. 가격은 과제용 임의값입니다."
   },
   "categories": [
     {
-      "id": "recommend",
-      "name": "추천",
-      "description": "인기/시즌 추천 메뉴"
+      "id": "season",
+      "name": "시즌_추천",
+      "description": "시즌 한정 및 추천 메뉴"
     },
     {
       "id": "coffee",
       "name": "커피",
-      "description": "에스프레소 베이스 커피"
+      "description": "아메리카노/라떼 등 커피 메뉴"
     },
     {
-      "id": "latte",
-      "name": "라떼",
-      "description": "우유/크림 베이스 라떼"
-    },
-    {
-      "id": "tea",
-      "name": "티",
-      "description": "티/허브티"
-    },
-    {
-      "id": "ade",
-      "name": "에이드_주스",
-      "description": "탄산/주스/청 음료"
-    },
-    {
-      "id": "frappe",
-      "name": "스무디_프라페",
-      "description": "블렌디드/프라페"
-    },
-    {
-      "id": "decaf",
-      "name": "디카페인",
-      "description": "카페인 부담을 줄인 메뉴"
-    },
-    {
-      "id": "dessert",
-      "name": "푸드_디저트",
-      "description": "빵/케이크/아이스크림 등"
+      "id": "food",
+      "name": "푸드",
+      "description": "베이커리/디저트 등 푸드 메뉴"
     }
   ],
   "recommendedIds": [
     "S01",
     "S02",
     "S03",
-    "S04",
-    "M101",
-    "M102",
-    "M103",
-    "M116",
-    "M123",
-    "M130"
+    "S04"
   ],
   "items": [
     {
       "id": "S01",
-      "categoryId": "recommend",
+      "categoryId": "season",
       "name": "말차젤라또 퐁당 딸기프라페",
       "nameEn": "Matcha Gelato Strawberry Frappe",
       "description": "한입 가득 진한 말차향이 퍼지는 말차 젤라또에 부드러운 딸기 밀크 쉐이크가 어우러져 기분 좋은 달콤 쌉싸름한 맛이 입안 가득 맴도는 프라페",
@@ -69,8 +37,9 @@
       "imageUrl": "https://img.79plus.co.kr/megahp/manager/upload/menu/20251226201136_1766747496618_B9SxVDjAvl.png",
       "tags": [
         "NEW",
-        "SEASON",
-        "RECOMMEND"
+        "OFFICIAL_IMAGE",
+        "RECOMMEND",
+        "SEASON"
       ],
       "options": {
         "temperature": [
@@ -88,7 +57,7 @@
     },
     {
       "id": "S02",
-      "categoryId": "recommend",
+      "categoryId": "season",
       "name": "딸기젤라또 퐁당 딥 초코라떼",
       "nameEn": "Strawberry Gelato Dip Choco Latte",
       "description": "상큼~한 딸기청에 찌인한 초코가 만나 맛이 없을 수 없는 달콤한 마법같은 맛! 딸기가 콕콕 박힌 딸기 젤라또를 요리조리 섞어서 즐기면 상큼달달 더욱 맛있어지는 초코 라떼",
@@ -96,8 +65,9 @@
       "imageUrl": "https://img.79plus.co.kr/megahp/manager/upload/menu/20251226201359_1766747639502_86YuojCOr6.png",
       "tags": [
         "NEW",
-        "SEASON",
-        "RECOMMEND"
+        "OFFICIAL_IMAGE",
+        "RECOMMEND",
+        "SEASON"
       ],
       "options": {
         "temperature": [
@@ -116,7 +86,7 @@
     },
     {
       "id": "S03",
-      "categoryId": "recommend",
+      "categoryId": "season",
       "name": "그린키위 콕콕 딸키스무디",
       "nameEn": "Strawberry & Green Kiwi Smoothie",
       "description": "진~한 딸기청에 키위씨가 콕콕 박힌! 그린키위 스무디를 가득 올려 한잔 가득 새콤달콤 즐기는 스무디",
@@ -124,8 +94,9 @@
       "imageUrl": "https://img.79plus.co.kr/megahp/manager/upload/menu/20251226202021_1766748021154_Q8w6zFlJH3.png",
       "tags": [
         "NEW",
-        "SEASON",
-        "RECOMMEND"
+        "OFFICIAL_IMAGE",
+        "RECOMMEND",
+        "SEASON"
       ],
       "options": {
         "temperature": [
@@ -143,7 +114,7 @@
     },
     {
       "id": "S04",
-      "categoryId": "recommend",
+      "categoryId": "season",
       "name": "딸기폼 말캉 젤리워터",
       "nameEn": "Strawberry Foam Jelly Water",
       "description": "이것은 물인가 젤리인가. 투명한 물을 닮은 딸기향 매직워터가 가득- 입안에 말캉하게 씹히는 젤리 같은 식감에 구름같은 딸기 핑크폼을 올려내어 첫 한입부터 부드럽게 즐기는 매직워터",
@@ -151,9 +122,10 @@
       "imageUrl": "https://img.79plus.co.kr/megahp/manager/upload/menu/20251226202204_1766748124881_Zg4LPRO3aq.png",
       "tags": [
         "NEW",
-        "SEASON",
+        "NON_COFFEE",
+        "OFFICIAL_IMAGE",
         "RECOMMEND",
-        "NON_COFFEE"
+        "SEASON"
       ],
       "options": {
         "temperature": [
@@ -170,8 +142,539 @@
       "displayOrder": 4
     },
     {
+      "id": "M101",
+      "categoryId": "coffee",
+      "name": "아메리카노",
+      "nameEn": "Americano",
+      "description": "진한 에스프레소에 물을 더한 기본 커피.",
+      "price": 2000,
+      "imageUrl": "https://img.79plus.co.kr/megahp/manager/upload/menu/20240610105645_1717984605982_8i5CoHU2NV.jpg",
+      "tags": [
+        "OFFICIAL_IMAGE"
+      ],
+      "options": {
+        "temperature": [
+          "HOT",
+          "ICE"
+        ],
+        "size": [
+          "REGULAR"
+        ],
+        "extraShot": {
+          "min": 0,
+          "max": 3,
+          "pricePershot": 500
+        }
+      },
+      "displayOrder": 101
+    },
+    {
+      "id": "M102",
+      "categoryId": "coffee",
+      "name": "아이스 아메리카노",
+      "nameEn": "Iced Americano",
+      "description": "깔끔한 아메리카노를 시원하게 즐겨요.",
+      "price": 2000,
+      "imageUrl": "https://img.79plus.co.kr/megahp/manager/upload/menu/20240610133007_1717993807130_nwB5CATOJJ.jpg",
+      "tags": [
+        "OFFICIAL_IMAGE"
+      ],
+      "options": {
+        "temperature": [
+          "ICE"
+        ],
+        "size": [
+          "REGULAR"
+        ],
+        "extraShot": {
+          "min": 0,
+          "max": 3,
+          "pricePershot": 500
+        }
+      },
+      "displayOrder": 102
+    },
+    {
+      "id": "M103",
+      "categoryId": "coffee",
+      "name": "메가리카노",
+      "nameEn": "Mega Americano",
+      "description": "더 커진 용량으로 즐기는 아메리카노.",
+      "price": 3000,
+      "imageUrl": "https://img.79plus.co.kr/megahp/manager/upload/menu/20240610132223_1717993343456_4KESgpG57t.jpg",
+      "tags": [
+        "OFFICIAL_IMAGE"
+      ],
+      "options": {
+        "temperature": [
+          "HOT",
+          "ICE"
+        ],
+        "size": [
+          "REGULAR"
+        ],
+        "extraShot": {
+          "min": 0,
+          "max": 3,
+          "pricePershot": 500
+        }
+      },
+      "displayOrder": 103
+    },
+    {
+      "id": "M104",
+      "categoryId": "coffee",
+      "name": "디카페인 아메리카노",
+      "nameEn": "Decaf Americano",
+      "description": "카페인을 줄이고 깔끔함은 그대로.",
+      "price": 2300,
+      "imageUrl": "https://img.79plus.co.kr/megahp/manager/upload/menu/20240610105207_1717984327186_Sgj9kfKYCi.jpg",
+      "tags": [
+        "OFFICIAL_IMAGE"
+      ],
+      "options": {
+        "temperature": [
+          "HOT",
+          "ICE"
+        ],
+        "size": [
+          "REGULAR"
+        ],
+        "extraShot": {
+          "min": 0,
+          "max": 3,
+          "pricePershot": 500
+        }
+      },
+      "displayOrder": 104
+    },
+    {
+      "id": "M105",
+      "categoryId": "coffee",
+      "name": "아이스 디카페인 아메리카노",
+      "nameEn": "Iced Decaf Americano",
+      "description": "디카페인 아메리카노를 시원하게.",
+      "price": 2300,
+      "imageUrl": "https://img.79plus.co.kr/megahp/manager/upload/menu/20240612101052_1718154652699_a0ElVTNb16.jpg",
+      "tags": [
+        "OFFICIAL_IMAGE"
+      ],
+      "options": {
+        "temperature": [
+          "ICE"
+        ],
+        "size": [
+          "REGULAR"
+        ],
+        "extraShot": {
+          "min": 0,
+          "max": 3,
+          "pricePershot": 500
+        }
+      },
+      "displayOrder": 105
+    },
+    {
+      "id": "M106",
+      "categoryId": "coffee",
+      "name": "디카페인 메가리카노",
+      "nameEn": "Decaf Mega Americano",
+      "description": "디카페인 + 메가 사이즈 조합.",
+      "price": 3300,
+      "imageUrl": "https://img.79plus.co.kr/megahp/manager/upload/menu/20240610115001_1717987801368_av938eflM8.jpg",
+      "tags": [
+        "OFFICIAL_IMAGE"
+      ],
+      "options": {
+        "temperature": [
+          "HOT",
+          "ICE"
+        ],
+        "size": [
+          "REGULAR"
+        ],
+        "extraShot": {
+          "min": 0,
+          "max": 3,
+          "pricePershot": 500
+        }
+      },
+      "displayOrder": 106
+    },
+    {
+      "id": "M107",
+      "categoryId": "coffee",
+      "name": "꿀아메리카노",
+      "nameEn": "Honey Americano",
+      "description": "달콤한 꿀로 부드럽게 즐기는 아메리카노.",
+      "price": 3000,
+      "imageUrl": "https://img.79plus.co.kr/megahp/manager/upload/menu/20240610104349_1717983829122_YzOyiQAOOg.jpg",
+      "tags": [
+        "OFFICIAL_IMAGE"
+      ],
+      "options": {
+        "temperature": [
+          "HOT",
+          "ICE"
+        ],
+        "size": [
+          "REGULAR"
+        ],
+        "extraShot": {
+          "min": 0,
+          "max": 3,
+          "pricePershot": 500
+        }
+      },
+      "displayOrder": 107
+    },
+    {
+      "id": "M108",
+      "categoryId": "coffee",
+      "name": "아이스 꿀아메리카노",
+      "nameEn": "Iced Honey Americano",
+      "description": "달콤한 꿀아메리카노를 시원하게.",
+      "price": 3000,
+      "imageUrl": "https://img.79plus.co.kr/megahp/manager/upload/menu/20240610133054_1717993854434_bTty_9u3br.jpg",
+      "tags": [
+        "OFFICIAL_IMAGE"
+      ],
+      "options": {
+        "temperature": [
+          "ICE"
+        ],
+        "size": [
+          "REGULAR"
+        ],
+        "extraShot": {
+          "min": 0,
+          "max": 3,
+          "pricePershot": 500
+        }
+      },
+      "displayOrder": 108
+    },
+    {
+      "id": "M109",
+      "categoryId": "coffee",
+      "name": "디카페인 꿀아메리카노",
+      "nameEn": "Decaf Honey Americano",
+      "description": "디카페인 + 꿀의 달콤함.",
+      "price": 3300,
+      "imageUrl": "https://img.79plus.co.kr/megahp/manager/upload/menu/20240610104414_1717983854651_gNaXxjR35W.jpg",
+      "tags": [
+        "OFFICIAL_IMAGE"
+      ],
+      "options": {
+        "temperature": [
+          "HOT",
+          "ICE"
+        ],
+        "size": [
+          "REGULAR"
+        ],
+        "extraShot": {
+          "min": 0,
+          "max": 3,
+          "pricePershot": 500
+        }
+      },
+      "displayOrder": 109
+    },
+    {
+      "id": "M110",
+      "categoryId": "coffee",
+      "name": "아이스 디카페인 꿀아메리카노",
+      "nameEn": "Iced Decaf Honey Americano",
+      "description": "디카페인 꿀아메리카노를 시원하게.",
+      "price": 3300,
+      "imageUrl": "https://img.79plus.co.kr/megahp/manager/upload/menu/20240610131949_1717993189396_pb_H77_7AM.jpg",
+      "tags": [
+        "OFFICIAL_IMAGE"
+      ],
+      "options": {
+        "temperature": [
+          "ICE"
+        ],
+        "size": [
+          "REGULAR"
+        ],
+        "extraShot": {
+          "min": 0,
+          "max": 3,
+          "pricePershot": 500
+        }
+      },
+      "displayOrder": 110
+    },
+    {
+      "id": "M111",
+      "categoryId": "coffee",
+      "name": "바닐라 아메리카노",
+      "nameEn": "Vanilla Americano",
+      "description": "바닐라 향이 은은하게 퍼지는 아메리카노.",
+      "price": 3200,
+      "imageUrl": "https://img.79plus.co.kr/megahp/manager/upload/menu/20240610104740_1717984060714__tk3s9Kb_s.jpg",
+      "tags": [
+        "OFFICIAL_IMAGE"
+      ],
+      "options": {
+        "temperature": [
+          "HOT",
+          "ICE"
+        ],
+        "size": [
+          "REGULAR"
+        ],
+        "extraShot": {
+          "min": 0,
+          "max": 3,
+          "pricePershot": 500
+        }
+      },
+      "displayOrder": 111
+    },
+    {
+      "id": "M112",
+      "categoryId": "coffee",
+      "name": "아이스 바닐라 아메리카노",
+      "nameEn": "Iced Vanilla Americano",
+      "description": "바닐라 아메리카노를 시원하게.",
+      "price": 3200,
+      "imageUrl": "https://img.79plus.co.kr/megahp/manager/upload/menu/20240610133038_1717993838652__Ax_Xwuz6T.jpg",
+      "tags": [
+        "OFFICIAL_IMAGE"
+      ],
+      "options": {
+        "temperature": [
+          "ICE"
+        ],
+        "size": [
+          "REGULAR"
+        ],
+        "extraShot": {
+          "min": 0,
+          "max": 3,
+          "pricePershot": 500
+        }
+      },
+      "displayOrder": 112
+    },
+    {
+      "id": "M113",
+      "categoryId": "coffee",
+      "name": "디카페인 바닐라 아메리카노",
+      "nameEn": "Decaf Vanilla Americano",
+      "description": "디카페인으로 즐기는 바닐라 아메리카노.",
+      "price": 3500,
+      "imageUrl": "https://img.79plus.co.kr/megahp/manager/upload/menu/20240610104650_1717984010944__Ck8jyuaDL.jpg",
+      "tags": [
+        "OFFICIAL_IMAGE"
+      ],
+      "options": {
+        "temperature": [
+          "HOT",
+          "ICE"
+        ],
+        "size": [
+          "REGULAR"
+        ],
+        "extraShot": {
+          "min": 0,
+          "max": 3,
+          "pricePershot": 500
+        }
+      },
+      "displayOrder": 113
+    },
+    {
+      "id": "M114",
+      "categoryId": "coffee",
+      "name": "아이스 디카페인 바닐라 아메리카노",
+      "nameEn": "Iced Decaf Vanilla Americano",
+      "description": "시원한 디카페인 바닐라 아메리카노.",
+      "price": 3500,
+      "imageUrl": "https://img.79plus.co.kr/megahp/manager/upload/menu/20240610131932_1717993172929_VUtwLd_LyN.jpg",
+      "tags": [
+        "OFFICIAL_IMAGE"
+      ],
+      "options": {
+        "temperature": [
+          "ICE"
+        ],
+        "size": [
+          "REGULAR"
+        ],
+        "extraShot": {
+          "min": 0,
+          "max": 3,
+          "pricePershot": 500
+        }
+      },
+      "displayOrder": 114
+    },
+    {
+      "id": "M115",
+      "categoryId": "coffee",
+      "name": "바닐라라떼",
+      "nameEn": "Vanilla Latte",
+      "description": "부드러운 우유와 바닐라 향이 어우러진 라떼.",
+      "price": 3800,
+      "imageUrl": "https://img.79plus.co.kr/megahp/manager/upload/menu/20240610104603_1717983963750_lApih2z1h0.jpg",
+      "tags": [
+        "OFFICIAL_IMAGE"
+      ],
+      "options": {
+        "temperature": [
+          "HOT",
+          "ICE"
+        ],
+        "size": [
+          "REGULAR"
+        ],
+        "extraShot": {
+          "min": 0,
+          "max": 3,
+          "pricePershot": 500
+        }
+      },
+      "displayOrder": 115
+    },
+    {
+      "id": "M116",
+      "categoryId": "coffee",
+      "name": "아이스 바닐라라떼",
+      "nameEn": "Iced Vanilla Latte",
+      "description": "시원한 바닐라라떼.",
+      "price": 3800,
+      "imageUrl": "https://img.79plus.co.kr/megahp/manager/upload/menu/20240610132249_1717993369864_VIG6IR2byt.jpg",
+      "tags": [
+        "OFFICIAL_IMAGE"
+      ],
+      "options": {
+        "temperature": [
+          "ICE"
+        ],
+        "size": [
+          "REGULAR"
+        ],
+        "extraShot": {
+          "min": 0,
+          "max": 3,
+          "pricePershot": 500
+        }
+      },
+      "displayOrder": 116
+    },
+    {
+      "id": "M117",
+      "categoryId": "coffee",
+      "name": "디카페인 바닐라라떼",
+      "nameEn": "Decaf Vanilla Latte",
+      "description": "디카페인으로 즐기는 바닐라라떼.",
+      "price": 4100,
+      "imageUrl": "https://img.79plus.co.kr/megahp/manager/upload/menu/20240610104630_1717983990934_v3HPYN93uK.jpg",
+      "tags": [
+        "OFFICIAL_IMAGE"
+      ],
+      "options": {
+        "temperature": [
+          "HOT",
+          "ICE"
+        ],
+        "size": [
+          "REGULAR"
+        ],
+        "extraShot": {
+          "min": 0,
+          "max": 3,
+          "pricePershot": 500
+        }
+      },
+      "displayOrder": 117
+    },
+    {
+      "id": "M118",
+      "categoryId": "coffee",
+      "name": "아이스 디카페인 바닐라라떼",
+      "nameEn": "Iced Decaf Vanilla Latte",
+      "description": "시원한 디카페인 바닐라라떼.",
+      "price": 4100,
+      "imageUrl": "https://img.79plus.co.kr/megahp/manager/upload/menu/20240610113234_1717986754069_tSPQqoiPj6.jpg",
+      "tags": [
+        "OFFICIAL_IMAGE"
+      ],
+      "options": {
+        "temperature": [
+          "ICE"
+        ],
+        "size": [
+          "REGULAR"
+        ],
+        "extraShot": {
+          "min": 0,
+          "max": 3,
+          "pricePershot": 500
+        }
+      },
+      "displayOrder": 118
+    },
+    {
+      "id": "M119",
+      "categoryId": "coffee",
+      "name": "라이트 바닐라 아몬드라떼",
+      "nameEn": "Light Vanilla Almond Latte",
+      "description": "라이트 바닐라 시럽과 아몬드 밀크의 고소한 조합.",
+      "price": 4200,
+      "imageUrl": "https://img.79plus.co.kr/megahp/manager/upload/menu/20240703154302_1719988982437_ZzHlEUdQwF.jpg",
+      "tags": [
+        "OFFICIAL_IMAGE"
+      ],
+      "options": {
+        "temperature": [
+          "HOT",
+          "ICE"
+        ],
+        "size": [
+          "REGULAR"
+        ],
+        "extraShot": {
+          "min": 0,
+          "max": 3,
+          "pricePershot": 500
+        }
+      },
+      "displayOrder": 119
+    },
+    {
+      "id": "M120",
+      "categoryId": "coffee",
+      "name": "밤밤 크리미 슈페너",
+      "nameEn": "BamBam Creamy Einspänner",
+      "description": "달콤한 크림과 커피가 어우러진 슈페너 스타일 음료.",
+      "price": 4700,
+      "imageUrl": "https://img.79plus.co.kr/megahp/manager/upload/menu/20240904233402_1725460442471_TnG_wedxcA.jpg",
+      "tags": [
+        "OFFICIAL_IMAGE"
+      ],
+      "options": {
+        "temperature": [
+          "ICE"
+        ],
+        "size": [
+          "REGULAR"
+        ],
+        "extraShot": {
+          "min": 0,
+          "max": 3,
+          "pricePershot": 500
+        }
+      },
+      "displayOrder": 120
+    },
+    {
       "id": "F01",
-      "categoryId": "dessert",
+      "categoryId": "food",
       "name": "딸기 크림치즈 쫀득빵",
       "nameEn": "Strawberry Cream Cheese Chewy Bread",
       "description": "쪼-온득한 얇은 빵피 속에 달콤한 딸기 콤포트와 부드러운 크림치즈가 한가득! 곳곳에 진한 초콜릿 청크가 콕콕 박혀있어 어딜 베어물어도 맛있는 쫀득빵 (Tip: 차갑게 먹으면 더 쫀득!)",
@@ -179,6 +682,7 @@
       "imageUrl": "https://img.79plus.co.kr/megahp/manager/upload/menu/20251226202655_1766748415087_NsW1Ifwl8a.png",
       "tags": [
         "NEW",
+        "OFFICIAL_IMAGE",
         "SEASON"
       ],
       "options": {
@@ -189,7 +693,7 @@
     },
     {
       "id": "F02",
-      "categoryId": "dessert",
+      "categoryId": "food",
       "name": "로꾸거 딸기젤라또 콘케이크",
       "nameEn": "Upside-Down Strawberry Gelato Cone Cake",
       "description": "씨리얼과 초코볼을 꾹꾹 찍어 와작! 즐기는 딸기 젤라또 + 바삭한 콘 + 마들렌 빵 + 딸기잼 + 꼬다리 초콜릿까지, 거꾸로 즐겨 더 맛있는 디저트 아이스크림 (끝 부분 초콜릿이 단단할 수 있어요!)",
@@ -197,6 +701,7 @@
       "imageUrl": "https://img.79plus.co.kr/megahp/manager/upload/menu/20251226203351_1766748831213_i0wh0rMIQk.png",
       "tags": [
         "NEW",
+        "OFFICIAL_IMAGE",
         "SEASON"
       ],
       "options": {
@@ -207,14 +712,15 @@
     },
     {
       "id": "F03",
-      "categoryId": "dessert",
+      "categoryId": "food",
       "name": "고구마빵",
       "nameEn": "Sweet Potato Bread",
       "description": "쌀가루가 들어가 쫀득한 빵에 달콤포슬한 찐고구마를 더해, 꿀고구마처럼 달콤한 풍미가 가득 퍼지는 고구마빵",
       "price": 3000,
       "imageUrl": "https://img.79plus.co.kr/megahp/manager/upload/menu/20260107213223_1767789143324_x6QdkCDvTd.jpg",
       "tags": [
-        "NEW"
+        "NEW",
+        "OFFICIAL_IMAGE"
       ],
       "options": {
         "temperature": [],
@@ -224,7 +730,7 @@
     },
     {
       "id": "F04",
-      "categoryId": "dessert",
+      "categoryId": "food",
       "name": "가나디 키링 & 쿠앤크 케이크 세트",
       "nameEn": "Cookie and cream cake (with GANADI keyring)",
       "description": "부드러운 마스카포네 크림과 달콤한 블랙 쿠키가 어우러진 쿠키앤크림 케이크 + 한정판 키링 구성의 세트",
@@ -232,6 +738,7 @@
       "imageUrl": "https://img.79plus.co.kr/megahp/manager/upload/menu/20251204112425_1764815065116_N_nWBzwTMt.png",
       "tags": [
         "LIMITED",
+        "OFFICIAL_IMAGE",
         "SET"
       ],
       "options": {
@@ -239,1131 +746,6 @@
         "size": []
       },
       "displayOrder": 104
-    },
-    {
-      "id": "M101",
-      "categoryId": "coffee",
-      "name": "아메리카노",
-      "nameEn": "Americano",
-      "description": "진하게 추출한 에스프레소에 물을 더해 깔끔하게 즐기는 기본 커피.",
-      "price": 2000,
-      "imageUrl": "https://placehold.co/600x600/png?text=%EC%95%84%EB%A9%94%EB%A6%AC%EC%B9%B4%EB%85%B8",
-      "tags": [
-        "BEST"
-      ],
-      "options": {
-        "temperature": [
-          "ICE",
-          "HOT"
-        ],
-        "size": [
-          "REGULAR",
-          "MEGA"
-        ],
-        "extraShot": {
-          "min": 0,
-          "max": 2,
-          "pricePerShot": 500
-        },
-        "iceLevel": [
-          "LESS",
-          "NORMAL",
-          "MORE"
-        ],
-        "syrup": [
-          "NONE",
-          "VANILLA",
-          "HAZELNUT",
-          "CARAMEL"
-        ]
-      },
-      "displayOrder": 101
-    },
-    {
-      "id": "M102",
-      "categoryId": "coffee",
-      "name": "카페라떼",
-      "nameEn": "Caffè Latte",
-      "description": "에스프레소와 부드러운 우유의 균형이 좋은 클래식 라떼.",
-      "price": 2800,
-      "imageUrl": "https://placehold.co/600x600/png?text=%EC%B9%B4%ED%8E%98%EB%9D%BC%EB%96%BC",
-      "tags": [
-        "BEST"
-      ],
-      "options": {
-        "temperature": [
-          "ICE",
-          "HOT"
-        ],
-        "size": [
-          "REGULAR",
-          "MEGA"
-        ],
-        "extraShot": {
-          "min": 0,
-          "max": 2,
-          "pricePerShot": 500
-        },
-        "iceLevel": [
-          "LESS",
-          "NORMAL",
-          "MORE"
-        ],
-        "syrup": [
-          "NONE",
-          "VANILLA",
-          "HAZELNUT",
-          "CARAMEL"
-        ]
-      },
-      "displayOrder": 102
-    },
-    {
-      "id": "M103",
-      "categoryId": "coffee",
-      "name": "바닐라라떼",
-      "nameEn": "Vanilla Latte",
-      "description": "바닐라의 달콤한 향과 우유 거품이 어우러진 부드러운 라떼.",
-      "price": 3200,
-      "imageUrl": "https://placehold.co/600x600/png?text=%EB%B0%94%EB%8B%90%EB%9D%BC%EB%9D%BC%EB%96%BC",
-      "tags": [
-        "BEST"
-      ],
-      "options": {
-        "temperature": [
-          "ICE",
-          "HOT"
-        ],
-        "size": [
-          "REGULAR",
-          "MEGA"
-        ],
-        "extraShot": {
-          "min": 0,
-          "max": 2,
-          "pricePerShot": 500
-        },
-        "iceLevel": [
-          "LESS",
-          "NORMAL",
-          "MORE"
-        ],
-        "syrup": [
-          "NONE",
-          "VANILLA",
-          "HAZELNUT",
-          "CARAMEL"
-        ]
-      },
-      "displayOrder": 103
-    },
-    {
-      "id": "M104",
-      "categoryId": "coffee",
-      "name": "카라멜마끼아또",
-      "nameEn": "Caramel Macchiato",
-      "description": "카라멜 소스의 달콤함과 에스프레소의 쌉싸름함이 조화로운 음료.",
-      "price": 3500,
-      "imageUrl": "https://placehold.co/600x600/png?text=%EC%B9%B4%EB%9D%BC%EB%A9%9C%EB%A7%88%EB%81%BC%EC%95%84%EB%98%90",
-      "tags": [],
-      "options": {
-        "temperature": [
-          "ICE",
-          "HOT"
-        ],
-        "size": [
-          "REGULAR",
-          "MEGA"
-        ],
-        "extraShot": {
-          "min": 0,
-          "max": 2,
-          "pricePerShot": 500
-        },
-        "iceLevel": [
-          "LESS",
-          "NORMAL",
-          "MORE"
-        ],
-        "syrup": [
-          "NONE",
-          "VANILLA",
-          "HAZELNUT",
-          "CARAMEL"
-        ]
-      },
-      "displayOrder": 104
-    },
-    {
-      "id": "M105",
-      "categoryId": "coffee",
-      "name": "카페모카",
-      "nameEn": "Caffè Mocha",
-      "description": "초콜릿의 달콤함 + 커피의 풍미를 한 번에 즐기는 모카.",
-      "price": 3600,
-      "imageUrl": "https://placehold.co/600x600/png?text=%EC%B9%B4%ED%8E%98%EB%AA%A8%EC%B9%B4",
-      "tags": [],
-      "options": {
-        "temperature": [
-          "ICE",
-          "HOT"
-        ],
-        "size": [
-          "REGULAR",
-          "MEGA"
-        ],
-        "extraShot": {
-          "min": 0,
-          "max": 2,
-          "pricePerShot": 500
-        },
-        "iceLevel": [
-          "LESS",
-          "NORMAL",
-          "MORE"
-        ],
-        "syrup": [
-          "NONE",
-          "VANILLA",
-          "HAZELNUT",
-          "CARAMEL"
-        ]
-      },
-      "displayOrder": 105
-    },
-    {
-      "id": "M106",
-      "categoryId": "coffee",
-      "name": "콜드브루",
-      "nameEn": "Cold Brew",
-      "description": "차갑게 장시간 추출해 산미는 줄이고 부드러움은 살린 커피.",
-      "price": 3700,
-      "imageUrl": "https://placehold.co/600x600/png?text=%EC%BD%9C%EB%93%9C%EB%B8%8C%EB%A3%A8",
-      "tags": [],
-      "options": {
-        "temperature": [
-          "ICE",
-          "HOT"
-        ],
-        "size": [
-          "REGULAR",
-          "MEGA"
-        ],
-        "extraShot": {
-          "min": 0,
-          "max": 2,
-          "pricePerShot": 500
-        },
-        "iceLevel": [
-          "LESS",
-          "NORMAL",
-          "MORE"
-        ],
-        "syrup": [
-          "NONE",
-          "VANILLA",
-          "HAZELNUT",
-          "CARAMEL"
-        ]
-      },
-      "displayOrder": 106
-    },
-    {
-      "id": "M107",
-      "categoryId": "coffee",
-      "name": "연유라떼",
-      "nameEn": "Condensed Milk Latte",
-      "description": "연유의 진한 단맛을 우유와 에스프레소로 부드럽게 풀어낸 라떼.",
-      "price": 3500,
-      "imageUrl": "https://placehold.co/600x600/png?text=%EC%97%B0%EC%9C%A0%EB%9D%BC%EB%96%BC",
-      "tags": [],
-      "options": {
-        "temperature": [
-          "ICE",
-          "HOT"
-        ],
-        "size": [
-          "REGULAR",
-          "MEGA"
-        ],
-        "extraShot": {
-          "min": 0,
-          "max": 2,
-          "pricePerShot": 500
-        },
-        "iceLevel": [
-          "LESS",
-          "NORMAL",
-          "MORE"
-        ],
-        "syrup": [
-          "NONE",
-          "VANILLA",
-          "HAZELNUT",
-          "CARAMEL"
-        ]
-      },
-      "displayOrder": 107
-    },
-    {
-      "id": "M108",
-      "categoryId": "coffee",
-      "name": "아인슈페너",
-      "nameEn": "Einspänner",
-      "description": "진한 커피 위에 달콤한 크림을 올려 즐기는 크림 커피.",
-      "price": 3900,
-      "imageUrl": "https://placehold.co/600x600/png?text=%EC%95%84%EC%9D%B8%EC%8A%88%ED%8E%98%EB%84%88",
-      "tags": [],
-      "options": {
-        "temperature": [
-          "ICE",
-          "HOT"
-        ],
-        "size": [
-          "REGULAR",
-          "MEGA"
-        ],
-        "extraShot": {
-          "min": 0,
-          "max": 2,
-          "pricePerShot": 500
-        },
-        "iceLevel": [
-          "LESS",
-          "NORMAL",
-          "MORE"
-        ],
-        "syrup": [
-          "NONE",
-          "VANILLA",
-          "HAZELNUT",
-          "CARAMEL"
-        ]
-      },
-      "displayOrder": 108
-    },
-    {
-      "id": "M109",
-      "categoryId": "coffee",
-      "name": "헤이즐넛라떼",
-      "nameEn": "Hazelnut Latte",
-      "description": "고소한 헤이즐넛 향이 퍼지는 달콤 고소 라떼.",
-      "price": 3300,
-      "imageUrl": "https://placehold.co/600x600/png?text=%ED%97%A4%EC%9D%B4%EC%A6%90%EB%84%9B%EB%9D%BC%EB%96%BC",
-      "tags": [],
-      "options": {
-        "temperature": [
-          "ICE",
-          "HOT"
-        ],
-        "size": [
-          "REGULAR",
-          "MEGA"
-        ],
-        "extraShot": {
-          "min": 0,
-          "max": 2,
-          "pricePerShot": 500
-        },
-        "iceLevel": [
-          "LESS",
-          "NORMAL",
-          "MORE"
-        ],
-        "syrup": [
-          "NONE",
-          "VANILLA",
-          "HAZELNUT",
-          "CARAMEL"
-        ]
-      },
-      "displayOrder": 109
-    },
-    {
-      "id": "M110",
-      "categoryId": "latte",
-      "name": "초코라떼",
-      "nameEn": "Choco Latte",
-      "description": "진한 초코와 우유가 만나 달콤하게 즐기는 논커피 음료.",
-      "price": 3300,
-      "imageUrl": "https://placehold.co/600x600/png?text=%EC%B4%88%EC%BD%94%EB%9D%BC%EB%96%BC",
-      "tags": [
-        "NON_COFFEE"
-      ],
-      "options": {
-        "temperature": [
-          "ICE",
-          "HOT"
-        ],
-        "size": [
-          "REGULAR",
-          "MEGA"
-        ],
-        "extraShot": {
-          "min": 0,
-          "max": 2,
-          "pricePerShot": 500
-        },
-        "iceLevel": [
-          "LESS",
-          "NORMAL",
-          "MORE"
-        ],
-        "syrup": [
-          "NONE"
-        ]
-      },
-      "displayOrder": 110
-    },
-    {
-      "id": "M111",
-      "categoryId": "latte",
-      "name": "그린티라떼",
-      "nameEn": "Green Tea Latte",
-      "description": "쌉싸름한 말차/녹차 풍미와 우유의 부드러움이 어우러진 라떼.",
-      "price": 3500,
-      "imageUrl": "https://placehold.co/600x600/png?text=%EA%B7%B8%EB%A6%B0%ED%8B%B0%EB%9D%BC%EB%96%BC",
-      "tags": [
-        "NON_COFFEE"
-      ],
-      "options": {
-        "temperature": [
-          "ICE",
-          "HOT"
-        ],
-        "size": [
-          "REGULAR",
-          "MEGA"
-        ],
-        "extraShot": {
-          "min": 0,
-          "max": 2,
-          "pricePerShot": 500
-        },
-        "iceLevel": [
-          "LESS",
-          "NORMAL",
-          "MORE"
-        ],
-        "syrup": [
-          "NONE"
-        ]
-      },
-      "displayOrder": 111
-    },
-    {
-      "id": "M112",
-      "categoryId": "latte",
-      "name": "고구마라떼",
-      "nameEn": "Sweet Potato Latte",
-      "description": "달콤한 고구마 베이스를 우유와 섞어 든든하게 즐기는 라떼.",
-      "price": 3600,
-      "imageUrl": "https://placehold.co/600x600/png?text=%EA%B3%A0%EA%B5%AC%EB%A7%88%EB%9D%BC%EB%96%BC",
-      "tags": [
-        "NON_COFFEE"
-      ],
-      "options": {
-        "temperature": [
-          "ICE",
-          "HOT"
-        ],
-        "size": [
-          "REGULAR",
-          "MEGA"
-        ],
-        "extraShot": {
-          "min": 0,
-          "max": 2,
-          "pricePerShot": 500
-        },
-        "iceLevel": [
-          "LESS",
-          "NORMAL",
-          "MORE"
-        ],
-        "syrup": [
-          "NONE"
-        ]
-      },
-      "displayOrder": 112
-    },
-    {
-      "id": "M113",
-      "categoryId": "latte",
-      "name": "딸기라떼",
-      "nameEn": "Strawberry Latte",
-      "description": "상큼한 딸기 베이스에 우유를 더해 부드럽고 달콤하게 즐기는 음료.",
-      "price": 3800,
-      "imageUrl": "https://placehold.co/600x600/png?text=%EB%94%B8%EA%B8%B0%EB%9D%BC%EB%96%BC",
-      "tags": [
-        "NON_COFFEE"
-      ],
-      "options": {
-        "temperature": [
-          "ICE",
-          "HOT"
-        ],
-        "size": [
-          "REGULAR",
-          "MEGA"
-        ],
-        "extraShot": {
-          "min": 0,
-          "max": 2,
-          "pricePerShot": 500
-        },
-        "iceLevel": [
-          "LESS",
-          "NORMAL",
-          "MORE"
-        ],
-        "syrup": [
-          "NONE"
-        ]
-      },
-      "displayOrder": 113
-    },
-    {
-      "id": "M114",
-      "categoryId": "latte",
-      "name": "흑당버블라떼",
-      "nameEn": "Brown Sugar Boba Latte",
-      "description": "흑당 시럽의 달콤함과 쫀득한 펄(버블)이 매력적인 라떼.",
-      "price": 4200,
-      "imageUrl": "https://placehold.co/600x600/png?text=%ED%9D%91%EB%8B%B9%EB%B2%84%EB%B8%94%EB%9D%BC%EB%96%BC",
-      "tags": [
-        "NON_COFFEE"
-      ],
-      "options": {
-        "temperature": [
-          "ICE",
-          "HOT"
-        ],
-        "size": [
-          "REGULAR",
-          "MEGA"
-        ],
-        "extraShot": {
-          "min": 0,
-          "max": 2,
-          "pricePerShot": 500
-        },
-        "iceLevel": [
-          "LESS",
-          "NORMAL",
-          "MORE"
-        ],
-        "syrup": [
-          "NONE"
-        ]
-      },
-      "displayOrder": 114
-    },
-    {
-      "id": "M115",
-      "categoryId": "latte",
-      "name": "밀크티",
-      "nameEn": "Milk Tea",
-      "description": "홍차 베이스에 우유를 더해 깔끔하고 부드러운 밀크티.",
-      "price": 3800,
-      "imageUrl": "https://placehold.co/600x600/png?text=%EB%B0%80%ED%81%AC%ED%8B%B0",
-      "tags": [
-        "NON_COFFEE"
-      ],
-      "options": {
-        "temperature": [
-          "ICE",
-          "HOT"
-        ],
-        "size": [
-          "REGULAR",
-          "MEGA"
-        ],
-        "extraShot": {
-          "min": 0,
-          "max": 2,
-          "pricePerShot": 500
-        },
-        "iceLevel": [
-          "LESS",
-          "NORMAL",
-          "MORE"
-        ],
-        "syrup": [
-          "NONE"
-        ]
-      },
-      "displayOrder": 115
-    },
-    {
-      "id": "M116",
-      "categoryId": "tea",
-      "name": "얼그레이 티",
-      "nameEn": "Earl Grey Tea",
-      "description": "베르가못 향이 은은하게 퍼지는 클래식 홍차.",
-      "price": 2800,
-      "imageUrl": "https://placehold.co/600x600/png?text=%EC%96%BC%EA%B7%B8%EB%A0%88%EC%9D%B4%20%ED%8B%B0",
-      "tags": [],
-      "options": {
-        "temperature": [
-          "ICE",
-          "HOT"
-        ],
-        "size": [
-          "REGULAR",
-          "MEGA"
-        ],
-        "extraShot": {
-          "min": 0,
-          "max": 0
-        },
-        "iceLevel": [
-          "LESS",
-          "NORMAL",
-          "MORE"
-        ],
-        "syrup": [
-          "NONE"
-        ]
-      },
-      "displayOrder": 116
-    },
-    {
-      "id": "M117",
-      "categoryId": "tea",
-      "name": "캐모마일 티",
-      "nameEn": "Chamomile Tea",
-      "description": "은은한 꽃향과 편안한 풍미로 가볍게 즐기는 허브티.",
-      "price": 3000,
-      "imageUrl": "https://placehold.co/600x600/png?text=%EC%BA%90%EB%AA%A8%EB%A7%88%EC%9D%BC%20%ED%8B%B0",
-      "tags": [],
-      "options": {
-        "temperature": [
-          "ICE",
-          "HOT"
-        ],
-        "size": [
-          "REGULAR",
-          "MEGA"
-        ],
-        "extraShot": {
-          "min": 0,
-          "max": 0
-        },
-        "iceLevel": [
-          "LESS",
-          "NORMAL",
-          "MORE"
-        ],
-        "syrup": [
-          "NONE"
-        ]
-      },
-      "displayOrder": 117
-    },
-    {
-      "id": "M118",
-      "categoryId": "tea",
-      "name": "페퍼민트 티",
-      "nameEn": "Peppermint Tea",
-      "description": "상쾌한 민트 향으로 입안을 깔끔하게 해주는 허브티.",
-      "price": 3000,
-      "imageUrl": "https://placehold.co/600x600/png?text=%ED%8E%98%ED%8D%BC%EB%AF%BC%ED%8A%B8%20%ED%8B%B0",
-      "tags": [],
-      "options": {
-        "temperature": [
-          "ICE",
-          "HOT"
-        ],
-        "size": [
-          "REGULAR",
-          "MEGA"
-        ],
-        "extraShot": {
-          "min": 0,
-          "max": 0
-        },
-        "iceLevel": [
-          "LESS",
-          "NORMAL",
-          "MORE"
-        ],
-        "syrup": [
-          "NONE"
-        ]
-      },
-      "displayOrder": 118
-    },
-    {
-      "id": "M119",
-      "categoryId": "tea",
-      "name": "유자차",
-      "nameEn": "Citron Tea",
-      "description": "유자청의 상큼함과 달콤함을 뜨겁게 즐기는 전통 티.",
-      "price": 3200,
-      "imageUrl": "https://placehold.co/600x600/png?text=%EC%9C%A0%EC%9E%90%EC%B0%A8",
-      "tags": [],
-      "options": {
-        "temperature": [
-          "ICE",
-          "HOT"
-        ],
-        "size": [
-          "REGULAR",
-          "MEGA"
-        ],
-        "extraShot": {
-          "min": 0,
-          "max": 0
-        },
-        "iceLevel": [
-          "LESS",
-          "NORMAL",
-          "MORE"
-        ],
-        "syrup": [
-          "NONE"
-        ]
-      },
-      "displayOrder": 119
-    },
-    {
-      "id": "M120",
-      "categoryId": "tea",
-      "name": "레몬티",
-      "nameEn": "Lemon Tea",
-      "description": "상큼한 레몬 베이스를 깔끔하게 즐기는 티.",
-      "price": 3200,
-      "imageUrl": "https://placehold.co/600x600/png?text=%EB%A0%88%EB%AA%AC%ED%8B%B0",
-      "tags": [],
-      "options": {
-        "temperature": [
-          "ICE",
-          "HOT"
-        ],
-        "size": [
-          "REGULAR",
-          "MEGA"
-        ],
-        "extraShot": {
-          "min": 0,
-          "max": 0
-        },
-        "iceLevel": [
-          "LESS",
-          "NORMAL",
-          "MORE"
-        ],
-        "syrup": [
-          "NONE"
-        ]
-      },
-      "displayOrder": 120
-    },
-    {
-      "id": "M121",
-      "categoryId": "ade",
-      "name": "자몽에이드",
-      "nameEn": "Grapefruit Ade",
-      "description": "자몽의 쌉싸름한 상큼함과 탄산의 청량감.",
-      "price": 3900,
-      "imageUrl": "https://placehold.co/600x600/png?text=%EC%9E%90%EB%AA%BD%EC%97%90%EC%9D%B4%EB%93%9C",
-      "tags": [],
-      "options": {
-        "temperature": [
-          "ICE"
-        ],
-        "size": [
-          "REGULAR"
-        ],
-        "extraShot": {
-          "min": 0,
-          "max": 0
-        },
-        "iceLevel": [
-          "NORMAL"
-        ]
-      },
-      "displayOrder": 121
-    },
-    {
-      "id": "M122",
-      "categoryId": "ade",
-      "name": "레몬에이드",
-      "nameEn": "Lemon Ade",
-      "description": "레몬의 새콤함과 탄산이 어우러진 스파클링 음료.",
-      "price": 3800,
-      "imageUrl": "https://placehold.co/600x600/png?text=%EB%A0%88%EB%AA%AC%EC%97%90%EC%9D%B4%EB%93%9C",
-      "tags": [
-        "BEST"
-      ],
-      "options": {
-        "temperature": [
-          "ICE"
-        ],
-        "size": [
-          "REGULAR"
-        ],
-        "extraShot": {
-          "min": 0,
-          "max": 0
-        },
-        "iceLevel": [
-          "NORMAL"
-        ]
-      },
-      "displayOrder": 122
-    },
-    {
-      "id": "M123",
-      "categoryId": "ade",
-      "name": "청포도에이드",
-      "nameEn": "Green Grape Ade",
-      "description": "달콤한 청포도 향과 탄산이 어우러진 상큼 청량 에이드.",
-      "price": 3900,
-      "imageUrl": "https://placehold.co/600x600/png?text=%EC%B2%AD%ED%8F%AC%EB%8F%84%EC%97%90%EC%9D%B4%EB%93%9C",
-      "tags": [
-        "BEST"
-      ],
-      "options": {
-        "temperature": [
-          "ICE"
-        ],
-        "size": [
-          "REGULAR"
-        ],
-        "extraShot": {
-          "min": 0,
-          "max": 0
-        },
-        "iceLevel": [
-          "NORMAL"
-        ]
-      },
-      "displayOrder": 123
-    },
-    {
-      "id": "M124",
-      "categoryId": "ade",
-      "name": "오렌지주스",
-      "nameEn": "Orange Juice",
-      "description": "상큼한 오렌지 풍미를 시원하게 즐기는 주스.",
-      "price": 4200,
-      "imageUrl": "https://placehold.co/600x600/png?text=%EC%98%A4%EB%A0%8C%EC%A7%80%EC%A3%BC%EC%8A%A4",
-      "tags": [],
-      "options": {
-        "temperature": [
-          "ICE"
-        ],
-        "size": [
-          "REGULAR"
-        ],
-        "extraShot": {
-          "min": 0,
-          "max": 0
-        },
-        "iceLevel": [
-          "NORMAL"
-        ]
-      },
-      "displayOrder": 124
-    },
-    {
-      "id": "M125",
-      "categoryId": "ade",
-      "name": "망고주스",
-      "nameEn": "Mango Juice",
-      "description": "진한 망고의 달콤함을 가득 담은 주스.",
-      "price": 4300,
-      "imageUrl": "https://placehold.co/600x600/png?text=%EB%A7%9D%EA%B3%A0%EC%A3%BC%EC%8A%A4",
-      "tags": [],
-      "options": {
-        "temperature": [
-          "ICE"
-        ],
-        "size": [
-          "REGULAR"
-        ],
-        "extraShot": {
-          "min": 0,
-          "max": 0
-        },
-        "iceLevel": [
-          "NORMAL"
-        ]
-      },
-      "displayOrder": 125
-    },
-    {
-      "id": "M126",
-      "categoryId": "frappe",
-      "name": "딸기스무디",
-      "nameEn": "Strawberry Smoothie",
-      "description": "상큼한 딸기 베이스를 시원하게 블렌딩한 스무디.",
-      "price": 4500,
-      "imageUrl": "https://placehold.co/600x600/png?text=%EB%94%B8%EA%B8%B0%EC%8A%A4%EB%AC%B4%EB%94%94",
-      "tags": [
-        "BEST"
-      ],
-      "options": {
-        "temperature": [
-          "ICE"
-        ],
-        "size": [
-          "REGULAR"
-        ],
-        "extraShot": {
-          "min": 0,
-          "max": 0
-        },
-        "iceLevel": [
-          "NORMAL"
-        ]
-      },
-      "displayOrder": 126
-    },
-    {
-      "id": "M127",
-      "categoryId": "frappe",
-      "name": "망고스무디",
-      "nameEn": "Mango Smoothie",
-      "description": "달콤한 망고를 시원하게 갈아낸 스무디.",
-      "price": 4500,
-      "imageUrl": "https://placehold.co/600x600/png?text=%EB%A7%9D%EA%B3%A0%EC%8A%A4%EB%AC%B4%EB%94%94",
-      "tags": [],
-      "options": {
-        "temperature": [
-          "ICE"
-        ],
-        "size": [
-          "REGULAR"
-        ],
-        "extraShot": {
-          "min": 0,
-          "max": 0
-        },
-        "iceLevel": [
-          "NORMAL"
-        ]
-      },
-      "displayOrder": 127
-    },
-    {
-      "id": "M128",
-      "categoryId": "frappe",
-      "name": "요거트스무디",
-      "nameEn": "Yogurt Smoothie",
-      "description": "새콤달콤 요거트 풍미를 부드럽게 즐기는 스무디.",
-      "price": 4600,
-      "imageUrl": "https://placehold.co/600x600/png?text=%EC%9A%94%EA%B1%B0%ED%8A%B8%EC%8A%A4%EB%AC%B4%EB%94%94",
-      "tags": [],
-      "options": {
-        "temperature": [
-          "ICE"
-        ],
-        "size": [
-          "REGULAR"
-        ],
-        "extraShot": {
-          "min": 0,
-          "max": 0
-        },
-        "iceLevel": [
-          "NORMAL"
-        ]
-      },
-      "displayOrder": 128
-    },
-    {
-      "id": "M129",
-      "categoryId": "frappe",
-      "name": "쿠앤크프라페",
-      "nameEn": "Cookies & Cream Frappe",
-      "description": "쿠키 크럼블과 달콤한 크림 베이스로 즐기는 프라페.",
-      "price": 4900,
-      "imageUrl": "https://placehold.co/600x600/png?text=%EC%BF%A0%EC%95%A4%ED%81%AC%ED%94%84%EB%9D%BC%ED%8E%98",
-      "tags": [
-        "BEST"
-      ],
-      "options": {
-        "temperature": [
-          "ICE"
-        ],
-        "size": [
-          "REGULAR"
-        ],
-        "extraShot": {
-          "min": 0,
-          "max": 0
-        },
-        "iceLevel": [
-          "NORMAL"
-        ]
-      },
-      "displayOrder": 129
-    },
-    {
-      "id": "M130",
-      "categoryId": "frappe",
-      "name": "자바칩프라페",
-      "nameEn": "Java Chip Frappe",
-      "description": "초코칩의 바삭함과 커피 풍미가 살아있는 프라페.",
-      "price": 5100,
-      "imageUrl": "https://placehold.co/600x600/png?text=%EC%9E%90%EB%B0%94%EC%B9%A9%ED%94%84%EB%9D%BC%ED%8E%98",
-      "tags": [],
-      "options": {
-        "temperature": [
-          "ICE"
-        ],
-        "size": [
-          "REGULAR"
-        ],
-        "extraShot": {
-          "min": 0,
-          "max": 0
-        },
-        "iceLevel": [
-          "NORMAL"
-        ]
-      },
-      "displayOrder": 130
-    },
-    {
-      "id": "M131",
-      "categoryId": "decaf",
-      "name": "디카페인 아메리카노",
-      "nameEn": "Decaf Americano",
-      "description": "카페인을 줄였지만 커피의 풍미는 살린 디카페인 아메리카노.",
-      "price": 2400,
-      "imageUrl": "https://placehold.co/600x600/png?text=%EB%94%94%EC%B9%B4%ED%8E%98%EC%9D%B8%20%EC%95%84%EB%A9%94%EB%A6%AC%EC%B9%B4%EB%85%B8",
-      "tags": [],
-      "options": {
-        "temperature": [
-          "ICE",
-          "HOT"
-        ],
-        "size": [
-          "REGULAR",
-          "MEGA"
-        ],
-        "extraShot": {
-          "min": 0,
-          "max": 1,
-          "pricePerShot": 500
-        },
-        "iceLevel": [
-          "LESS",
-          "NORMAL",
-          "MORE"
-        ]
-      },
-      "displayOrder": 131
-    },
-    {
-      "id": "M132",
-      "categoryId": "decaf",
-      "name": "디카페인 카페라떼",
-      "nameEn": "Decaf Latte",
-      "description": "디카페인 에스프레소와 우유로 부드럽게 즐기는 라떼.",
-      "price": 3200,
-      "imageUrl": "https://placehold.co/600x600/png?text=%EB%94%94%EC%B9%B4%ED%8E%98%EC%9D%B8%20%EC%B9%B4%ED%8E%98%EB%9D%BC%EB%96%BC",
-      "tags": [],
-      "options": {
-        "temperature": [
-          "ICE",
-          "HOT"
-        ],
-        "size": [
-          "REGULAR",
-          "MEGA"
-        ],
-        "extraShot": {
-          "min": 0,
-          "max": 1,
-          "pricePerShot": 500
-        },
-        "iceLevel": [
-          "LESS",
-          "NORMAL",
-          "MORE"
-        ]
-      },
-      "displayOrder": 132
-    },
-    {
-      "id": "M133",
-      "categoryId": "dessert",
-      "name": "버터크로와상",
-      "nameEn": "Butter Croissant",
-      "description": "바삭한 결 사이로 버터 향이 퍼지는 클래식 크로와상.",
-      "price": 2800,
-      "imageUrl": "https://placehold.co/600x600/png?text=%EB%B2%84%ED%84%B0%ED%81%AC%EB%A1%9C%EC%99%80%EC%83%81",
-      "tags": [],
-      "options": {
-        "temperature": [],
-        "size": []
-      },
-      "displayOrder": 133
-    },
-    {
-      "id": "M134",
-      "categoryId": "dessert",
-      "name": "초코칩 쿠키",
-      "nameEn": "Choco Chip Cookie",
-      "description": "겉은 바삭, 속은 촉촉한 초코칩 쿠키.",
-      "price": 1900,
-      "imageUrl": "https://placehold.co/600x600/png?text=%EC%B4%88%EC%BD%94%EC%B9%A9%20%EC%BF%A0%ED%82%A4",
-      "tags": [],
-      "options": {
-        "temperature": [],
-        "size": []
-      },
-      "displayOrder": 134
-    },
-    {
-      "id": "M135",
-      "categoryId": "dessert",
-      "name": "치즈케이크",
-      "nameEn": "Cheesecake",
-      "description": "진한 치즈 풍미와 부드러운 식감의 케이크.",
-      "price": 4500,
-      "imageUrl": "https://placehold.co/600x600/png?text=%EC%B9%98%EC%A6%88%EC%BC%80%EC%9D%B4%ED%81%AC",
-      "tags": [],
-      "options": {
-        "temperature": [],
-        "size": []
-      },
-      "displayOrder": 135
-    },
-    {
-      "id": "M136",
-      "categoryId": "dessert",
-      "name": "티라미수",
-      "nameEn": "Tiramisu",
-      "description": "커피 향이 은은한 크림과 코코아의 달콤 쌉싸름한 조합.",
-      "price": 4800,
-      "imageUrl": "https://placehold.co/600x600/png?text=%ED%8B%B0%EB%9D%BC%EB%AF%B8%EC%88%98",
-      "tags": [],
-      "options": {
-        "temperature": [],
-        "size": []
-      },
-      "displayOrder": 136
-    },
-    {
-      "id": "M137",
-      "categoryId": "dessert",
-      "name": "마들렌",
-      "nameEn": "Madeleine",
-      "description": "폭신한 식감과 은은한 버터 향이 좋은 구움과자.",
-      "price": 2200,
-      "imageUrl": "https://placehold.co/600x600/png?text=%EB%A7%88%EB%93%A4%EB%A0%8C",
-      "tags": [],
-      "options": {
-        "temperature": [],
-        "size": []
-      },
-      "displayOrder": 137
     }
   ]
 }
