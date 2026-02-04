@@ -13,8 +13,8 @@ struct LabelConfiguration {
 }
 
 extension LabelConfiguration {
-    static let headerTitle = LabelConfiguration(
-        font: .preferredFont(forTextStyle: .largeTitle),
+    static let mainPriceLabel = LabelConfiguration(
+        font: .preferredFont(forTextStyle: .body),
         color: .black,
         lines: 0
     )
