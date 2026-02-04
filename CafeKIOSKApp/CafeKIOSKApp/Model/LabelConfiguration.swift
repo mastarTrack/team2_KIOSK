@@ -20,3 +20,18 @@ extension LabelConfiguration {
     )
 }
 
+
+// MARK: - 메뉴 상세 화면 라벨 규격
+extension LabelConfiguration {
+    static let descriptionTitle = LabelConfiguration(
+        font: .boldSystemFont(ofSize: 20),
+        color: .black,
+        lines: 0
+    )
+    
+    static let descriptionText = LabelConfiguration(
+        font: .systemFont(ofSize: 15),
+        color: .systemGray,
+        lines: 0
+    )
+}
