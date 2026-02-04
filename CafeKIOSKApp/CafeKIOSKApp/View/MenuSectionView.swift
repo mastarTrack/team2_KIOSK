@@ -8,12 +8,11 @@ import Foundation
 import UIKit
 import SnapKit
 
-// 스크롤 뷰 만들기
-// 버튼 스택 뷰 만들기
 class MenuSectionView: UIView {
-    let menuSection = ["시즌메뉴", "커피", "디카페인", "라떼", "논커피", "스무디", "쥬스", "디저트"]
+    let menuSection = ["시즌메뉴 - 대박 이때만 맛볼 수 있는 메뉴", "커피", "디카페인", "라떼", "논커피", "스무디", "쥬스", "디저트"]
     let buttonStackView = UIStackView()
     let scrollView = UIScrollView()
+    var menuButtons: [UIButton] = []
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -28,22 +27,22 @@ class MenuSectionView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func makeButtons(title: String) -> UIButton {
-        var config = UIButton.Configuration.filled()
-        config.title = title
-        config.imagePlacement = .leading
-        config.imagePadding = 6
-        config.cornerStyle = .capsule
-        config.contentInsets = .init(top: 10, leading: 14, bottom: 10, trailing: 14)
-        
-        let button = UIButton(configuration: config)
-        return button
-    }
-    
     func setupButtons() {
         menuSection.enumerated().forEach { index, menuSection in
-            let button = makeButtons(title: menuSection)
+            let button = UIButton(title: menuSection)
+            button.tag = index
             
+            button.addAction(UIAction { [weak self, weak button] _ in
+                guard let self, let selectedButton = button else { return }
+                
+                for button in self.menuButtons {
+                    let isSameButton = (button === selectedButton)
+                    button.isSelected = isSameButton
+                    button.setNeedsUpdateConfiguration()
+                }
+            }, for: .touchUpInside)
+            
+            menuButtons.append(button)
             buttonStackView.addArrangedSubview(button)
         }
     }
@@ -53,7 +52,7 @@ class MenuSectionView: UIView {
         buttonStackView.axis = .horizontal
         buttonStackView.spacing = 20
         buttonStackView.alignment = .center
-        buttonStackView.distribution = .fill
+        buttonStackView.distribution = .fillProportionally
         
         scrollView.showsHorizontalScrollIndicator = false
         
