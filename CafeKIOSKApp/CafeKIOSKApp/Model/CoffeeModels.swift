@@ -21,7 +21,6 @@ struct CoffeeMenuResponse: Decodable {
 // brand
 struct Brand: Decodable {
     let name: String
-    let source: String
     let note: String
   }
 
@@ -65,7 +64,6 @@ struct ItemOptions: Decodable {
     
     let extraShot: ExtraShot? // 없는 메뉴도 존재
     let iceLevel: [String]? // 없는 메뉴도 존재
-    let syrup: [String]? // 없는 메뉴도 존재
 }
 
 // extraShot
