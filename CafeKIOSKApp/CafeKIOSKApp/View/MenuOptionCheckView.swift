@@ -9,15 +9,14 @@ import UIKit
 import SnapKit
 import Then
 
-class MenuOptionCheckView: UIView {
+/// UIButton 혹은 UIControl
+class MenuOptionCheckView: UIControl {
     
     // MARK: - Closure
     /// 뷰 터치 제스처에 대한 이벤트 전달용 클로저
     var optionCheckClosure: (() -> Void)?
     
     // MARK: - Components
-
-    ///
     let optionStackView = UIStackView().then {
         $0.axis = .horizontal
         $0.spacing = 12
@@ -47,11 +46,22 @@ class MenuOptionCheckView: UIView {
         $0.textAlignment = .right
     }
     
+    /// 버튼 셀렉트 변수 오버라이딩
+    override var isSelected: Bool{
+        didSet{
+            updateUIData()
+        }
+    }
+    
     // MARK: - Init
     override init(frame: CGRect) {
         super.init(frame: frame)
+        layer.cornerRadius = 20
+        
         configureUI()
-        setViewTapGesture()
+        optionStackView.isUserInteractionEnabled = false
+        addTarget(self, action: #selector(didTap), for: .touchUpInside)
+
     }
     
     required init(coder: NSCoder) {
@@ -62,36 +72,26 @@ class MenuOptionCheckView: UIView {
 
 //MARK: - METHOD: 터치 이벤트 관련
 extension MenuOptionCheckView {
-    /// 탭 제스쳐 설정 메소드
-    func setViewTapGesture() {
-        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(tapAction))
-        self.addGestureRecognizer(tapGesture)
-    }
     
-    @objc
-    /// 탭 동작에 대한 액션 메소드
-    func tapAction() {
-        optionCheckClosure?()
+    /// 버튼 이벤트 메소드
+    @objc private func didTap() {
+        isSelected.toggle()
+        sendActions(for: .valueChanged)
     }
     
     /// 체크값에 따른 이미지 및 배경화면 변경 메소드
-    func reSettingUIData(isCheck: Bool) {
-        if isCheck {
-            checkImageView.image = .checked
-            optionStackView.backgroundColor = .systemYellow
-        } else {
-            checkImageView.image = .unchecked
-            optionStackView.backgroundColor = .white
-        }
+    func updateUIData() {
+        checkImageView.image = isSelected ? .checked : .unchecked
+        optionStackView.backgroundColor = isSelected ? .systemYellow : .white
     }
     
     /// 옵션 타이틀 및 금액 텍스트 설정 메소드
-    func setUIData(title: String, price: String) {
+    func setUIData(title: String, price: String, checked: Bool) {
         optionTitleLabel.text = title
         optionPriceLabel.text = price
+        isSelected = checked
     }
 }
-
 
 
 //MARK: - METHOD: UI Configure
@@ -99,7 +99,7 @@ extension MenuOptionCheckView {
     private func configureUI() {
         
         let tempView = UIView()
-    
+        
         optionStackView.addArrangedSubview(checkImageView)
         optionStackView.addArrangedSubview(optionTitleLabel)
         optionStackView.addArrangedSubview(optionPriceLabel)
@@ -108,20 +108,17 @@ extension MenuOptionCheckView {
         optionStackView.setCustomSpacing(30, after: optionPriceLabel)
         
         addSubview(optionStackView)
-        
+
         optionStackView.snp.makeConstraints {
-            //$0.directionalEdges.equalToSuperview()
-            $0.top.leading.equalToSuperview().offset(10)
-            $0.bottom.trailing.equalToSuperview().inset(10)
+            $0.edges.equalToSuperview()
             $0.height.greaterThanOrEqualTo(40)
             $0.width.lessThanOrEqualToSuperview()
-            $0.trailing.margins.equalTo(40)
         }
         
         checkImageView.snp.makeConstraints {
             $0.leading.equalToSuperview().offset(25)
             $0.width.height.equalTo(25)
-            $0.centerY.equalToSuperview()
+            
         }
         
         tempView.snp.makeConstraints {
@@ -129,6 +126,16 @@ extension MenuOptionCheckView {
         }
     }
 }
+
+//MARK: - 사용 방법 코드
+//optionView.addTarget(
+//    self,
+//    action: #selector(optionChanged),
+//    for: .valueChanged
+//)
+//@objc private func optionChanged(_ sender: MenuOptionCheckView) {
+//    checked = sender.isSelected
+//}
 
 #Preview {
     MenuOptionCheckView()

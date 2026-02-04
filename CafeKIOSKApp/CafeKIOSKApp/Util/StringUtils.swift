@@ -24,3 +24,7 @@ func makeColorToIceAndHot(text: String)-> NSAttributedString {
     }
     return attributed
 }
+
+func formatAsCurrency(intMoney: Int)-> String {
+    return ""
+}
