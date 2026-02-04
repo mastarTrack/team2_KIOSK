@@ -72,5 +72,5 @@ struct ItemOptions: Decodable {
 struct ExtraShot: Decodable {
     let min: Int
     let max: Int
-    let pricePershot: Int? // 없는 메뉴도 존재
+    let pricePerShot: Int? // 없는 메뉴도 존재
 }
