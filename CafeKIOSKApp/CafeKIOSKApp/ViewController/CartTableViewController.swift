@@ -27,8 +27,8 @@ class CartTableViewController: UIViewController {
         super.viewDidLoad()
         view.backgroundColor = .white
         
-        setupCartBottomView() // 하단부 구현
         setupTableView() // 테이블 준비
+        setupCartBottomView() // 하단부 구현
         fetchData()      // 데이터 가져와
         
     }
