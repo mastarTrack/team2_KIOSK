@@ -11,14 +11,17 @@ import Then
 
 // UICollectionViewDataSource - 셀 개수 셀 내용 제공을 이 뷰가 직접하겠음
 class MainMenuCollectionView: UIView {
-    let dataManager = CoffeeMenuDataService()
-    var menuData = [MenuItem]()
+    var drinkByCategory = [String: [String]]()
     
+    // 페이지 컨트롤러에 넘겨줄 정보 저장
+    var changeToCurrentPage: ((Int) -> Void)?
+    
+    // 콜렉션 뷰 생성
     lazy var collectionView = UICollectionView(
-      frame: .zero,
-      collectionViewLayout: makeLayout()
+        frame: .zero, //레이아웃 직접 설정을 위해
+        collectionViewLayout: makeLayout() // 이 클래스 내에서 다른 메서드 호출하기 때문에 lazy
     )
-
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         backgroundColor = .white
@@ -26,17 +29,8 @@ class MainMenuCollectionView: UIView {
         
         collectionView.register(GridCell.self, forCellWithReuseIdentifier: "GridCell")
         collectionView.dataSource = self
-        configure()
         
-        dataManager.loadMenu { result in
-            switch result {
-            case .success(let menuData):
-                self.menuData = menuData.items
-                
-            case .failure(let error):
-                print("에러발생: \(error)")
-            }
-        }
+        configure()
     }
     
     required init?(coder: NSCoder) {
@@ -44,61 +38,77 @@ class MainMenuCollectionView: UIView {
     }
     
     func configure() {
+        // 부모뷰 전체에 꽉 채움
         collectionView.snp.makeConstraints {
             $0.edges.equalToSuperview()
         }
-        collectionView.directionalLayoutMargins = NSDirectionalEdgeInsets(top: 0, leading: 20, bottom: 0, trailing: 20)
     }
     
+    // 콜렉션 뷰에 레이아웃을 정하는 메서드 (3*3 그리드)
     func makeLayout() -> UICollectionViewLayout {
         return UICollectionViewCompositionalLayout(sectionProvider: { section, environment in
-            let spacing: CGFloat = 10
+            let spacing: CGFloat = 10 // 간격
             
-            let containerSize = environment.container.effectiveContentSize
-            let itemWidthSize = (containerSize.width - spacing * 4) / 3
+            let containerSize = environment.container.effectiveContentSize // 컬렉션뷰가 들어갈 사이즈 자동계산
+            let itemWidthSize = (containerSize.width - spacing * 4) / 3 // 들어갈 간격 제외한 아이템 크기 계산
             let itemHeightSize = (containerSize.height - spacing * 4) / 3
             
-            let item = NSCollectionLayoutItem(
-              layoutSize: NSCollectionLayoutSize(
-                widthDimension: .absolute(itemWidthSize),
-                heightDimension: .absolute(itemHeightSize)
-              )
+            let item = NSCollectionLayoutItem( // 아이템 크기 설정
+                layoutSize: NSCollectionLayoutSize(
+                    widthDimension: .absolute(itemWidthSize),
+                    heightDimension: .absolute(itemHeightSize)
+                )
             )
             
+            // 아이템이 3개 들어가는 한줄(horizontal) 그룹 레이아웃 설정
             let rowGroup = NSCollectionLayoutGroup.horizontal(
                 layoutSize: NSCollectionLayoutSize(
                     widthDimension: .absolute((itemWidthSize * 3)),
                     heightDimension: .absolute(itemHeightSize)
                 ),
-                repeatingSubitem: item,
-                count: 3
+                repeatingSubitem: item, // 아이템을
+                count: 3 //3번 넣겠다
             )
             
-            rowGroup.interItemSpacing = .fixed(spacing)
+            rowGroup.interItemSpacing = .fixed(spacing) // 간격줌
             
+            // 위의 1줄에 3개 들어가는 그룹을 3개 쌓는(vertical) 그룹 (3*3)
             let gridGroup = NSCollectionLayoutGroup.vertical(
-              layoutSize: NSCollectionLayoutSize(
-                widthDimension: .fractionalWidth(1),
-                heightDimension: .fractionalHeight(1)
-              ),
-              repeatingSubitem: rowGroup,
-              count: 3
+                layoutSize: NSCollectionLayoutSize(
+                    widthDimension: .fractionalWidth(1),
+                    heightDimension: .fractionalHeight(1)
+                ),
+                repeatingSubitem: rowGroup, // 위의 그룹을
+                count: 3 // 3개 쌓음
             )
             
-            gridGroup.interItemSpacing = .fixed(spacing)
+            gridGroup.interItemSpacing = .fixed(spacing)// 안쪽 인스턴스들 간격주기
+            // 바깥쪽에 인셋주기
             gridGroup.contentInsets = NSDirectionalEdgeInsets(top: spacing, leading: spacing, bottom: spacing, trailing: spacing)
-
-            let section = NSCollectionLayoutSection(group: gridGroup)
-            section.orthogonalScrollingBehavior = .groupPaging
+            
+            let section = NSCollectionLayoutSection(group: gridGroup) // 섹션 설정
+            section.orthogonalScrollingBehavior = .groupPagingCentered // 스크롤 설정
+            
+            section.visibleItemsInvalidationHandler =  { [weak self] _, offset, environment in
+                guard let self else { return } //weak self라서 해줌
+                // 지금 콜렉센뷰 넓이 길이 구하기
+                let containerWidthSize = environment.container.effectiveContentSize.width
+                
+                // 현재 화면이 나타내는 x 좌표 기준으로 화면 크기 나눠주기 (처음에 offset.x는 0, 옆으로 스크롤 하면 +)
+                let page = Int((offset.x / containerWidthSize))
+                
+                // 계산한 현재 페이지 전달
+                changeToCurrentPage?(page)
+            }
             return section
         })
     }
-    
 }
 
+// 데이터 소스 구현 부
 extension MainMenuCollectionView: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 20
+        return 10
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -112,7 +122,7 @@ extension MainMenuCollectionView: UICollectionViewDataSource {
     }
 }
 
-
+// 확인용 셀
 class GridCell: UICollectionViewCell {
     static let identifier = "GridCell"
     
@@ -131,9 +141,10 @@ class GridCell: UICollectionViewCell {
         contentView.addSubview(label)
         
         label.snp.makeConstraints {
-            $0.leading.trailing.bottom.top.greaterThanOrEqualTo(8)
+            $0.leading.trailing.bottom.top.equalToSuperview()
         }
     }
+    
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -142,3 +153,24 @@ class GridCell: UICollectionViewCell {
         label.text = text
     }
 }
+
+/*
+ 뷰컨에 있어야 하는 페이지뷰 구현 부 - 메인쓰레드에서만 UI 담당하기 때문에..
+var pageControl: UIPageControl = {
+    let pageControl = UIPageControl()
+    pageControl.numberOfPages = 3
+    pageControl.currentPage = 0
+    pageControl.pageIndicatorTintColor = .gray
+    pageControl.currentPageIndicatorTintColor = .black
+    return pageControl
+}()
+
+override func viewDidLoad() {
+    super.viewDidLoad()
+    view.backgroundColor = .white
+    
+    myCV.changeToCurrentPage = { [weak self] page in
+        self?.pageControl.currentPage = page
+    }
+}
+*/
