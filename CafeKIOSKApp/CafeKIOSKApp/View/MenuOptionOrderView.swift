@@ -28,17 +28,17 @@ class MenuOptionOrderView: UIView {
     // MARK: - Components
     /// 갯수 레이블
     let countLabel = UILabel().then {
-        $0.font = UIFont.boldSystemFont(ofSize: 30)
+        $0.font = UIFont.boldSystemFont(ofSize: 33)
         $0.numberOfLines = 1
         $0.textColor = .black
         $0.textAlignment = .center
     }
     /// 전체금액 레이블
     let TotalPriceLabel = UILabel().then {
-        $0.font = UIFont.boldSystemFont(ofSize: 30)
+        $0.font = UIFont.boldSystemFont(ofSize: 33)
         $0.numberOfLines = 1
         $0.textColor = .black
-        $0.textAlignment = .center
+        $0.textAlignment = .right
     }
     
     /// 개수 증가버튼
@@ -76,9 +76,7 @@ class MenuOptionOrderView: UIView {
         $0.configuration?.baseBackgroundColor = .systemGray
         $0.configuration?.baseForegroundColor = .white
         $0.configuration?.cornerStyle = .fixed
-        $0.layer.cornerRadius = 15
-        $0.layer.maskedCorners = [.layerMinXMinYCorner, .layerMinXMaxYCorner]
-        $0.clipsToBounds = true
+        $0.layer.cornerRadius = 10
     }
     
     /// 주문하기 버튼
@@ -90,9 +88,7 @@ class MenuOptionOrderView: UIView {
         $0.configuration?.baseBackgroundColor = .systemYellow
         $0.configuration?.baseForegroundColor = .white
         $0.configuration?.cornerStyle = .fixed
-        $0.layer.cornerRadius = 15
-        $0.layer.maskedCorners = [.layerMaxXMinYCorner, .layerMaxXMaxYCorner]
-        $0.clipsToBounds = true
+        $0.layer.cornerRadius = 10
     }
     
     //MARK: - Init
@@ -100,7 +96,6 @@ class MenuOptionOrderView: UIView {
         super.init(frame: frame)
         configureUI()
         SetButtonAction()
-        setSampleData()
     }
     
     required init?(coder: NSCoder) {
@@ -138,15 +133,21 @@ extension MenuOptionOrderView {
 extension MenuOptionOrderView {
     /// 초기 UI 설정
     private func configureUI() {
+        let emptyView  = UIView()
+        let emptyTopView = UIView()
+        let emptyTopMiddleView = UIView()
+        let emptyBottomView = UIView()
+        let emptyMainbottomView = UIView()
+        
         let mainStack = UIStackView().then {
             $0.axis = .vertical
-            $0.distribution = .fill
-            $0.spacing = 2
-            $0.layer.borderWidth = 1
+            $0.distribution = .fillProportionally
+            $0.spacing = 10
+            $0.backgroundColor = .systemGray5
         }
         let topStack = UIStackView().then {
             $0.axis = .horizontal
-            $0.distribution = .fill
+            $0.distribution = .fillProportionally
             $0.spacing = 5
         }
         let bottomStack = UIStackView().then {
@@ -158,36 +159,39 @@ extension MenuOptionOrderView {
         topStack.addArrangedSubview(increaseButton)
         topStack.addArrangedSubview(countLabel)
         topStack.addArrangedSubview(decreaseButton)
+        topStack.addArrangedSubview(emptyTopMiddleView)
         topStack.addArrangedSubview(TotalPriceLabel)
-        
-        let emptyView  = UIView()
-        
+        topStack.addArrangedSubview(emptyTopView)
+
         bottomStack.addArrangedSubview(emptyView)
         bottomStack.addArrangedSubview(cartButton)
         bottomStack.addArrangedSubview(orderButton)
-        
+        bottomStack.addArrangedSubview(emptyBottomView)
+
         mainStack.addArrangedSubview(topStack)
         mainStack.addArrangedSubview(bottomStack)
-        
+        mainStack.addArrangedSubview(emptyMainbottomView)
+
         addSubview(mainStack)
         
         mainStack.snp.makeConstraints {
             $0.edges.equalToSuperview()
-            $0.height.greaterThanOrEqualTo(80)
+            $0.height.greaterThanOrEqualTo(120)
             $0.width.lessThanOrEqualToSuperview()
         }
-        
+        topStack.snp.makeConstraints {
+            $0.top.equalToSuperview().offset(10)
+            $0.height.equalTo(40)
+        }
         increaseButton.snp.makeConstraints {
-            $0.width.height.equalTo(30)
+            $0.leading.equalToSuperview().offset(20)
+            $0.width.height.equalTo(40)
         }
         decreaseButton.snp.makeConstraints {
-            $0.width.height.equalTo(30)
-        }
-        countLabel.snp.makeConstraints {
             $0.width.height.equalTo(40)
         }
         TotalPriceLabel.snp.makeConstraints {
-            $0.trailing.equalToSuperview()
+            $0.trailing.equalTo(emptyTopView.snp.leading)
         }
         cartButton.snp.makeConstraints {
             $0.width.equalTo(100)
@@ -197,6 +201,21 @@ extension MenuOptionOrderView {
             $0.width.equalTo(100)
             $0.height.equalTo(40)
         }
+        emptyTopMiddleView.snp.makeConstraints {
+            $0.width.greaterThanOrEqualTo(20)
+        }
+        
+        emptyBottomView.snp.makeConstraints {
+            $0.width.equalTo(20)
+        }
+        emptyTopView.snp.makeConstraints {
+            $0.width.equalTo(25)
+        }
+        
+        emptyMainbottomView.snp.makeConstraints {
+            $0.height.greaterThanOrEqualTo(5)
+        }
+        
     }
 }
 
@@ -206,7 +225,6 @@ extension MenuOptionOrderView {
         countLabel.text = "2"
         TotalPriceLabel.text = "14,000 원"
     }
-
 }
 
 
