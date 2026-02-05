@@ -9,12 +9,8 @@ import UIKit
 import SnapKit
 import Then
 
-/// UIButton 혹은 UIControl
+/// 메뉴 상세화면 중 체크방식 옵션 뷰
 class MenuOptionCheckView: UIControl {
-    
-    // MARK: - Closure
-    /// 뷰 터치 제스처에 대한 이벤트 전달용 클로저
-    var optionCheckClosure: (() -> Void)?
     
     // MARK: - Components
     let optionStackView = UIStackView().then {
@@ -118,7 +114,6 @@ extension MenuOptionCheckView {
         checkImageView.snp.makeConstraints {
             $0.leading.equalToSuperview().offset(25)
             $0.width.height.equalTo(25)
-            
         }
         
         tempView.snp.makeConstraints {
