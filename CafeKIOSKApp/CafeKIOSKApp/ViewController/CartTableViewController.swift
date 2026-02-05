@@ -23,13 +23,11 @@ class CartTableViewController: UIViewController {
         $0.rowHeight = 120 // 셀 높이
     }
     
-
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
+        
         setupCartBottomView() // 하단부 구현
-
         setupTableView() // 테이블 준비
         fetchData()      // 데이터 가져와
         
@@ -74,11 +72,24 @@ class CartTableViewController: UIViewController {
         }
     }
     
+    // 5. 카트 바닥 뷰 세팅
+    func setupCartBottomView() {
+        view.addSubview(bottomView)
+
+        // 하단의 버튼 뷰
+        bottomView.snp.makeConstraints {
+            $0.leading.trailing.bottom.equalToSuperview()
+            $0.height.equalTo(120)
+        }
+    }
+    
+    // 6. 테이블뷰 세팅
     func setupTableView() {
         view.addSubview(tableView)
         
         // 테이블 뷰에 셀 등록
         tableView.register(CartTableViewCell.self, forCellReuseIdentifier: CartTableViewCell.identifier)
+        
         tableView.dataSource = self
         tableView.delegate = self
 
@@ -90,18 +101,8 @@ class CartTableViewController: UIViewController {
             $0.bottom.equalTo(bottomView.snp.top)
         }
         
-        // 테두리 둘글게
+        // 테두리 둥글게
         tableView.layer.cornerRadius = 15
-    }
-    
-    func setupCartBottomView() {
-        view.addSubview(bottomView)
-
-        // 하단의 버튼 뷰
-        bottomView.snp.makeConstraints {
-            $0.leading.trailing.bottom.equalToSuperview()
-            $0.height.equalTo(30)
-        }
     }
 }
 
