@@ -24,3 +24,10 @@ func makeColorToIceAndHot(text: String)-> NSAttributedString {
     }
     return attributed
 }
+
+/// 정수형 숫자값을 재화 문자열로 변환 메소드
+func formatAsCurrency(intMoney: Int)-> String {
+    let formatter = NumberFormatter()
+    formatter.numberStyle = .decimal
+    return formatter.string(from: NSNumber(value: intMoney)) ?? "\(intMoney)"
+}
