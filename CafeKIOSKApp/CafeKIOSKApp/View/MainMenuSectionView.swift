@@ -1,5 +1,5 @@
 //
-//  MenuView.swift
+//  MainMenuSectionView.swift
 //  CafeKIOSKApp
 //
 //  Created by Yeseul Jang on 2/3/26.
@@ -9,7 +9,7 @@ import UIKit
 import SnapKit
 
 //메인 화면 상단 카테고리 화면
-class MenuSectionView: UIView {
+class MainMenuSectionView: UIView {
     let buttonStackView = UIStackView()
     var data = [Category]()
     let scrollView = UIScrollView()
