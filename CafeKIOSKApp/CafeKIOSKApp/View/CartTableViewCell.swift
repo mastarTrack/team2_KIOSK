@@ -45,6 +45,7 @@ class CartTableViewCell: UITableViewCell {
         $0.textAlignment = .center
     }
     
+    // 삭제 버튼 구현
     private let deleteButton = UIButton().then {
         
         let config = UIImage.SymbolConfiguration(pointSize: 12, weight: .semibold)
@@ -55,12 +56,23 @@ class CartTableViewCell: UITableViewCell {
         $0.tintColor = .systemGray2
     }
     
+    // 체크 버튼 구현
+    private let checkBox = UIButton().then {
+        let config = UIImage.SymbolConfiguration(pointSize: 22, weight: .bold)
+        
+        let image = UIImage(systemName: "checkmark.circle.fill",  withConfiguration: config)
+        
+        $0.setImage(image, for: .normal)
+        $0.tintColor = .systemGray4
+    }
+    
     // 초기화
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         setupUI()
         // 삭제 버튼 액션 연결
         deleteButton.addTarget(self, action: #selector(deleteTapped), for: .touchDown)
+        checkBox.addTarget(self, action: #selector(checkTapped), for: .touchUpInside)
     }
     
     required init?(coder: NSCoder) {
@@ -68,12 +80,21 @@ class CartTableViewCell: UITableViewCell {
     }
     
     @objc func deleteTapped() {
-        
         removeAction?()
     }
     
+    @objc func checkTapped() {
+        self.checkBox.isSelected.toggle()
+        
+        if self.checkBox.isSelected {
+            self.checkBox.tintColor = .systemGray4
+        } else {
+            self.checkBox.tintColor = .systemYellow
+        }
+    }
+    
     private func setupUI() {
-        [imgView, nameLabel, priceLabel, countLabel,deleteButton].forEach {
+        [imgView, nameLabel, priceLabel, countLabel,deleteButton,checkBox].forEach {
             contentView.addSubview($0)
         }
         
@@ -110,6 +131,11 @@ class CartTableViewCell: UITableViewCell {
         }
         
         // 체크표시 추가 예정
+        checkBox.snp.makeConstraints {
+            $0.trailing.equalTo(imgView.snp.leading)
+            $0.top.equalTo(imgView.snp.top)
+            $0.width.height.equalTo(30)
+        }
         
         // 클릭하면 스윽 사라지는것도 하고싶은데 어케할지 아직 모름
     }
@@ -124,4 +150,8 @@ class CartTableViewCell: UITableViewCell {
         imgView.kf.setImage(with: url)
     }
     
+}
+
+#Preview {
+    CartTableViewController()
 }
