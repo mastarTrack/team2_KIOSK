@@ -11,24 +11,29 @@ import SnapKit
 
 class CartTableViewController: UIViewController {
 
-    // 1. 서비스 & 데이터를 담을 배열 (CartManager의 items를 가져옴)
+    // 1. 데이터 인스턴스 & 데이터를 담을 빈배열 (CartManager의 items를 가져옴)
     let dataService = CoffeeMenuDataService()
     var cartList = [CartItem]()
     
     // 2. 테이블 뷰 생성하기
     private let tableView = UITableView().then {
-        $0.rowHeight = 100 // 셀 높이
-        $0.separatorStyle = .singleLine
+        $0.rowHeight = 120 // 셀 높이
     }
+    
+    // 3. 하단 버튼 뷰 생성
+    private let bottomView = CartBottomView()
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
         setupTableView() // 테이블 준비
         fetchData()      // 데이터 가져와
+        
+        setupCartBottomView() // 하단부 구현
     }
     
-    // 3. 실제 데이터를 가져와서 장바구니에 넣는 함수
+    // 4. 실제 데이터를 가져와서 장바구니에 넣는 함수
     func fetchData() {
         dataService.loadMenu { [weak self] result in
             guard let self = self else { return }
@@ -59,7 +64,6 @@ class CartTableViewController: UIViewController {
                 // 4) 데이터가 준비되었으니 화면을 갱신하라고 알림 (메인 스레드에서)
                 DispatchQueue.main.async {
                     self.tableView.reloadData()
-                    print("화면 갱신 완료! 총 \(self.cartList.count)개의 메뉴가 보입니다.")
                 }
                 
             case .failure(let error):
@@ -73,19 +77,29 @@ class CartTableViewController: UIViewController {
         
         // 테이블 뷰에 셀 등록
         tableView.register(CartTableViewCell.self, forCellReuseIdentifier: CartTableViewCell.identifier)
-        
         tableView.dataSource = self
         tableView.delegate = self
-        
+
         // 테이블뷰 위치 잡기
         tableView.snp.makeConstraints {
             $0.center.equalToSuperview()
             $0.width.equalToSuperview().multipliedBy(0.9)
             $0.height.equalToSuperview().multipliedBy(0.6)
+            $0.bottom.equalTo(bottomView.snp.top)
         }
         
         // 테두리 둘글게
         tableView.layer.cornerRadius = 15
+    }
+    
+    func setupCartBottomView() {
+        view.addSubview(bottomView)
+
+        // 하단의 버튼 뷰
+        bottomView.snp.makeConstraints {
+            $0.leading.trailing.bottom.equalToSuperview()
+            $0.height.equalTo(30)
+        }
     }
 }
 
@@ -119,3 +133,7 @@ extension CartTableViewController: UITableViewDataSource, UITableViewDelegate {
     }
 }
 
+
+#Preview {
+    CartTableViewController()
+}
