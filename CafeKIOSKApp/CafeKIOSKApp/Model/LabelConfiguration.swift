@@ -24,6 +24,12 @@ extension LabelConfiguration {
         color: .black,
         lines: 0
     )
+    
+    static let drinkLabel = LabelConfiguration(
+        font: .preferredFont(forTextStyle: .callout),
+        color: .black,
+        lines: 0
+    )
 }
 
 
