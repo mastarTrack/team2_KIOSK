@@ -23,8 +23,8 @@ extension UIButton {
         var config = UIButton.Configuration.filled()
         config.imagePlacement = .leading
         config.imagePadding = 6
-        config.cornerStyle = .large
-        config.contentInsets = .init(top: 15, leading: 14, bottom: 15, trailing: 14)
+        config.cornerStyle = .medium
+        //config.contentInsets = .init(top: 10, leading: 14, bottom: 15, trailing: 10)
         
         self.configuration = config
     }
