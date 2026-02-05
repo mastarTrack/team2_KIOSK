@@ -15,22 +15,24 @@ class CartTableViewController: UIViewController {
     let dataService = CoffeeMenuDataService()
     var cartList = [CartItem]()
     
-    // 2. 테이블 뷰 생성하기
+    // 2. 하단 버튼 뷰 생성
+    private let bottomView = CartBottomView()
+    
+    // 3. 테이블 뷰 생성하기
     private let tableView = UITableView().then {
         $0.rowHeight = 120 // 셀 높이
     }
     
-    // 3. 하단 버튼 뷰 생성
-    private let bottomView = CartBottomView()
-    
+
     
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
+        setupCartBottomView() // 하단부 구현
+
         setupTableView() // 테이블 준비
         fetchData()      // 데이터 가져와
         
-        setupCartBottomView() // 하단부 구현
     }
     
     // 4. 실제 데이터를 가져와서 장바구니에 넣는 함수
@@ -82,9 +84,9 @@ class CartTableViewController: UIViewController {
 
         // 테이블뷰 위치 잡기
         tableView.snp.makeConstraints {
-            $0.center.equalToSuperview()
-            $0.width.equalToSuperview().multipliedBy(0.9)
-            $0.height.equalToSuperview().multipliedBy(0.6)
+            $0.centerX.equalToSuperview()
+            $0.width.equalTo(view.safeAreaLayoutGuide).inset(20)
+            $0.top.equalTo(view.safeAreaLayoutGuide)
             $0.bottom.equalTo(bottomView.snp.top)
         }
         
