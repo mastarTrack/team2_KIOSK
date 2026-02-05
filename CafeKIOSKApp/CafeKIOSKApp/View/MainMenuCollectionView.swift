@@ -8,6 +8,7 @@ import Foundation
 import UIKit
 import SnapKit
 import Then
+import Kingfisher
 
 // UICollectionViewDataSource - 셀 개수 셀 내용 제공을 이 뷰가 직접하겠음
 class MainMenuCollectionView: UIView {
@@ -83,7 +84,7 @@ class MainMenuCollectionView: UIView {
             )
             
             gridGroup.interItemSpacing = .fixed(spacing)// 안쪽 인스턴스들 간격주기
-            // 바깥쪽에 인셋주기
+            // 바깥 쪽에 인셋주기
             gridGroup.contentInsets = NSDirectionalEdgeInsets(top: spacing, leading: spacing, bottom: spacing, trailing: spacing)
             
             let section = NSCollectionLayoutSection(group: gridGroup) // 섹션 설정
@@ -91,7 +92,7 @@ class MainMenuCollectionView: UIView {
             
             section.visibleItemsInvalidationHandler =  { [weak self] _, offset, environment in
                 guard let self else { return } //weak self라서 해줌
-                // 지금 콜렉센뷰 넓이 길이 구하기
+                // 지금 콜렉션뷰 넓이 길이 구하기
                 let containerWidthSize = environment.container.effectiveContentSize.width
                 
                 // 현재 화면이 나타내는 x 좌표 기준으로 화면 크기 나눠주기 (처음에 offset.x는 0, 옆으로 스크롤 하면 +)
@@ -108,7 +109,7 @@ class MainMenuCollectionView: UIView {
 // 데이터 소스 구현 부
 extension MainMenuCollectionView: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 10
+        return 20
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -118,6 +119,11 @@ extension MainMenuCollectionView: UICollectionViewDataSource {
             print("셀오류")
             return UICollectionViewCell()
         }
+        cell.layer.shadowColor = UIColor.brown.cgColor
+        cell.layer.shadowOpacity = 0.20
+        cell.layer.shadowOffset = CGSize(width: 0, height: 4)
+        cell.layer.shadowRadius = 4
+        cell.layer.masksToBounds = false
         return cell
     }
 }
@@ -126,31 +132,60 @@ extension MainMenuCollectionView: UICollectionViewDataSource {
 class GridCell: UICollectionViewCell {
     static let identifier = "GridCell"
     
+    let drinkImage = UIImageView()
     let label = UILabel()
+    let stackView = UIStackView()
     
     override init(frame: CGRect) {
         super.init(frame: frame)
         // 컨텐트 뷰에 넣음
-        contentView.backgroundColor = .lightGray
+        contentView.backgroundColor = .white
         contentView.layer.cornerRadius = 15
         contentView.layer.masksToBounds = true
         
-        label.font = .systemFont(ofSize: 16, weight: .bold)
-        label.textAlignment = .center
-        
-        contentView.addSubview(label)
-        
-        label.snp.makeConstraints {
-            $0.leading.trailing.bottom.top.equalToSuperview()
-        }
+        configure()
+        putInfo()
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func configure(text: String) {
-        label.text = text
+    func configure() {
+        label.apply(.drinkLabel)
+        label.textAlignment = .center
+        drinkImage.contentMode = .scaleAspectFill
+        drinkImage.clipsToBounds = true
+        
+        contentView.addSubview(drinkImage)
+        contentView.addSubview(label)
+        
+        drinkImage.snp.makeConstraints {
+            $0.top.equalToSuperview().offset(10)
+            $0.leading.trailing.equalToSuperview()
+            $0.height.equalTo(drinkImage.snp.width)
+        }
+        
+        label.snp.makeConstraints {
+            $0.top.equalTo(drinkImage.snp.bottom).offset(8)
+            $0.leading.trailing.bottom.equalToSuperview().inset(8)
+        }
+        
+    }
+    
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        
+        layer.shadowPath = UIBezierPath(
+            roundedRect: bounds,
+            cornerRadius: contentView.layer.cornerRadius
+        ).cgPath
+    }
+    
+    func putInfo() {
+        let url = URL(string: "https://img.79plus.co.kr/megahp/manager/upload/menu/20251226201136_1766747496618_B9SxVDjAvl.png")
+        drinkImage.kf.setImage(with: url)
+        label.text = "시즌메뉴 특별 카라멜 마끼야또"
     }
 }
 
