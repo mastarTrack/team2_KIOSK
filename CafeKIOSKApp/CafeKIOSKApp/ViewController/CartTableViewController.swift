@@ -10,7 +10,7 @@ import Then
 import SnapKit
 
 class CartTableViewController: UIViewController {
-
+    
     // 1. 데이터 인스턴스 & 데이터를 담을 빈배열 (CartManager의 items를 가져옴)
     let dataService = CoffeeMenuDataService()
     var cartList = [CartItem]()
@@ -27,8 +27,7 @@ class CartTableViewController: UIViewController {
         super.viewDidLoad()
         view.backgroundColor = .white
         
-        setupTableView() // 테이블 준비
-        setupCartBottomView() // 하단부 구현
+        setupUIView()
         fetchData()      // 데이터 가져와
         
     }
@@ -72,27 +71,22 @@ class CartTableViewController: UIViewController {
         }
     }
     
-    // 5. 카트 바닥 뷰 세팅
-    func setupCartBottomView() {
+    private func setupUIView() {
+        view.addSubview(tableView)
         view.addSubview(bottomView)
-
+        
         // 하단의 버튼 뷰
         bottomView.snp.makeConstraints {
             $0.leading.trailing.bottom.equalToSuperview()
             $0.height.equalTo(120)
         }
-    }
-    
-    // 6. 테이블뷰 세팅
-    func setupTableView() {
-        view.addSubview(tableView)
         
         // 테이블 뷰에 셀 등록
         tableView.register(CartTableViewCell.self, forCellReuseIdentifier: CartTableViewCell.identifier)
         
         tableView.dataSource = self
         tableView.delegate = self
-
+        
         // 테이블뷰 위치 잡기
         tableView.snp.makeConstraints {
             $0.centerX.equalToSuperview()
@@ -135,8 +129,6 @@ extension CartTableViewController: UITableViewDataSource, UITableViewDelegate {
         return cell
     }
 }
-
-
 #Preview {
     CartTableViewController()
 }
