@@ -159,7 +159,7 @@ extension MenuOptionStapperView {
         
         optionStackView.snp.makeConstraints {
             $0.edges.equalToSuperview()
-            $0.height.greaterThanOrEqualTo(50)
+            $0.height.greaterThanOrEqualTo(55)
             $0.width.lessThanOrEqualToSuperview()
         }
         
@@ -168,13 +168,13 @@ extension MenuOptionStapperView {
         }
         
         decreaseButton.snp.makeConstraints {
-            $0.height.equalTo(20)
-            $0.width.equalTo(27)
+            $0.height.equalTo(30)
+            $0.width.equalTo(30)
         }
         
         increaseButton.snp.makeConstraints {
-            $0.height.equalTo(20)
-            $0.width.equalTo(27)
+            $0.height.equalTo(30)
+            $0.width.equalTo(30)
         }
                 
         mainStapperStackView.snp.makeConstraints{

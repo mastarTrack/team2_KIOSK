@@ -15,10 +15,13 @@ class optionCheckCell : UICollectionViewCell {
     
     let optionCheckView = MenuOptionCheckView()
     
+    var didTapCheck: (() -> Void)?
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         contentView.addSubview(optionCheckView)
         configUI()
+        optionCheckView.addTarget(self, action: #selector(tapped), for: .valueChanged)
     }
 
     required init?(coder: NSCoder) {
@@ -28,6 +31,10 @@ class optionCheckCell : UICollectionViewCell {
     override func prepareForReuse() {
         super.prepareForReuse()
     }
+    
+    @objc private func tapped() {
+           didTapCheck?()
+       }
 }
 
 
@@ -35,7 +42,7 @@ extension optionCheckCell {
     func configUI() {
         optionCheckView.snp.makeConstraints{
             $0.leading.trailing.equalToSuperview()
-            $0.top.bottom.equalToSuperview().inset(10)
+            $0.top.bottom.equalToSuperview()//.inset(10)
             $0.width.equalToSuperview()
         }
     }
