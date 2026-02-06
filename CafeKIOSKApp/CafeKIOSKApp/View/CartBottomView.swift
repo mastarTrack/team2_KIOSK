@@ -17,7 +17,7 @@ class CartBottomView: UIView {
         $0.backgroundColor = .systemYellow
         $0.setTitle("0원 주문하기", for: .normal)
         $0.setTitleColor(.black, for: .normal)
-        $0.titleLabel?.font = .systemFont(ofSize: 23, weight: .bold)
+        $0.titleLabel?.font = .systemFont(ofSize: 20, weight: .bold)
         $0.layer.cornerRadius = 10
     }
     
