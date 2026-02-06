@@ -10,25 +10,32 @@ import Then
 import SnapKit
 
 class CartTableViewController: UIViewController {
-
-    // 1. 서비스 & 데이터를 담을 배열 (CartManager의 items를 가져옴)
+    
+    // 1. 데이터 인스턴스 & 데이터를 담을 빈배열 (CartManager의 items를 가져옴)
     let dataService = CoffeeMenuDataService()
     var cartList = [CartItem]()
     
-    // 2. 테이블 뷰 생성하기
+    // 2. 하단 버튼 뷰 생성
+    private let bottomView = CartBottomView()
+    
+    // 3. 테이블 뷰 생성하기
     private let tableView = UITableView().then {
-        $0.rowHeight = 100 // 셀 높이
-        $0.separatorStyle = .singleLine
+        $0.rowHeight = 120 // 셀 높이
     }
+    
+    // 4. 상단 주문하기 뷰 생성
+    private let TopView = CartTopView()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
-        setupTableView() // 테이블 준비
+        
+        setupUIView()
         fetchData()      // 데이터 가져와
+        
     }
     
-    // 3. 실제 데이터를 가져와서 장바구니에 넣는 함수
+    // 4. 실제 데이터를 가져와서 장바구니에 넣는 함수
     func fetchData() {
         dataService.loadMenu { [weak self] result in
             guard let self = self else { return }
@@ -59,7 +66,6 @@ class CartTableViewController: UIViewController {
                 // 4) 데이터가 준비되었으니 화면을 갱신하라고 알림 (메인 스레드에서)
                 DispatchQueue.main.async {
                     self.tableView.reloadData()
-                    print("화면 갱신 완료! 총 \(self.cartList.count)개의 메뉴가 보입니다.")
                 }
                 
             case .failure(let error):
@@ -68,8 +74,22 @@ class CartTableViewController: UIViewController {
         }
     }
     
-    func setupTableView() {
+    private func setupUIView() {
         view.addSubview(tableView)
+        view.addSubview(bottomView)
+        view.addSubview(TopView)
+        
+        // 하단의 버튼 뷰
+        bottomView.snp.makeConstraints {
+            $0.leading.trailing.bottom.equalToSuperview()
+            $0.height.equalTo(110)
+        }
+        
+        TopView.snp.makeConstraints {
+            $0.leading.trailing.equalToSuperview()
+            $0.top.equalTo(view.safeAreaLayoutGuide)
+            $0.height.equalTo(130)
+        }
         
         // 테이블 뷰에 셀 등록
         tableView.register(CartTableViewCell.self, forCellReuseIdentifier: CartTableViewCell.identifier)
@@ -79,12 +99,13 @@ class CartTableViewController: UIViewController {
         
         // 테이블뷰 위치 잡기
         tableView.snp.makeConstraints {
-            $0.center.equalToSuperview()
-            $0.width.equalToSuperview().multipliedBy(0.9)
-            $0.height.equalToSuperview().multipliedBy(0.6)
+            $0.centerX.equalToSuperview()
+            $0.width.equalTo(view.safeAreaLayoutGuide).inset(20)
+            $0.top.equalTo(TopView.snp.bottom)
+            $0.bottom.equalTo(bottomView.snp.top)
         }
         
-        // 테두리 둘글게
+        // 테두리 둥글게
         tableView.layer.cornerRadius = 15
     }
 }
@@ -118,4 +139,6 @@ extension CartTableViewController: UITableViewDataSource, UITableViewDelegate {
         return cell
     }
 }
-
+#Preview {
+    CartTableViewController()
+}
