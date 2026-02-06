@@ -11,8 +11,10 @@ import Then
 
 class CartBottomView: UIView {
 
+    // 주문하기 버튼 클릭시 클로저
     var OrderButtonTapped: (() -> Void)?
     
+    // 주문하기 버튼 만들기
     private let orderButton = UIButton().then {
         $0.backgroundColor = .systemYellow
         $0.setTitle("0원 주문하기", for: .normal)
@@ -39,6 +41,12 @@ class CartBottomView: UIView {
         OrderButtonTapped?()
     }
     
+    // 가격 텍스트를 업데이트하는 메서드
+    func updatePrice(_ price: Int) {
+        let priceString = formatAsCurrency(intMoney: price)
+        orderButton.setTitle("\(priceString)원 주문하기", for: .normal)
+    }
+    
     // UI설정
     private func setupUI() {
         self.backgroundColor = .white
@@ -58,14 +66,10 @@ class CartBottomView: UIView {
             $0.bottom.equalToSuperview().inset(30)
         }
     }
-    
-    // 외부에서 가격을 바꿔주는 함수
-    func updatePrice(_ price: Int) {
-        orderButton.setTitle("\(price)원 주문하기", for: .normal)
-    }
 
 }
 
+
 #Preview {
-    CartTableViewController()
+    CartViewController()
 }
