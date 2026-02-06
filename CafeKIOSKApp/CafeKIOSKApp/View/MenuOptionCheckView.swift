@@ -42,21 +42,19 @@ class MenuOptionCheckView: UIControl {
         $0.textAlignment = .right
     }
     
-    /// 버튼 셀렉트 변수 오버라이딩
-    override var isSelected: Bool{
-        didSet{
-            updateUIData()
-        }
-    }
+
     
     // MARK: - Init
     override init(frame: CGRect) {
         super.init(frame: frame)
         layer.cornerRadius = 20
+        backgroundColor = .black
         
         configureUI()
-        optionStackView.isUserInteractionEnabled = false
-        addTarget(self, action: #selector(didTap), for: .touchUpInside)
+        optionStackView.isUserInteractionEnabled = true
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(didTap))
+        optionStackView.addGestureRecognizer(tapGesture)
+
 
     }
     
@@ -69,23 +67,22 @@ class MenuOptionCheckView: UIControl {
 //MARK: - METHOD: 터치 이벤트 관련
 extension MenuOptionCheckView {
     
-    /// 버튼 이벤트 메소드
     @objc private func didTap() {
-        isSelected.toggle()
-        sendActions(for: .valueChanged)
+        sendActions(for: .valueChanged) // VC에서 처리
     }
     
     /// 체크값에 따른 이미지 및 배경화면 변경 메소드
-    func updateUIData() {
-        checkImageView.image = isSelected ? .checked : .unchecked
-        optionStackView.backgroundColor = isSelected ? .systemYellow : .white
+    func setChecked(_ checked: Bool) {
+        isSelected = checked
+        checkImageView.image = checked ? .checked : .unchecked
+        optionStackView.backgroundColor = checked ? .systemYellow : .white
     }
     
     /// 옵션 타이틀 및 금액 텍스트 설정 메소드
     func setUIData(title: String, price: String, checked: Bool) {
         optionTitleLabel.text = title
         optionPriceLabel.text = price
-        isSelected = checked
+        setChecked(isSelected)
     }
 }
 

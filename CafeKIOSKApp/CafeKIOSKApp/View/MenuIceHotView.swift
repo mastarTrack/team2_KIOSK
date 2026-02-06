@@ -11,6 +11,10 @@ import Then
 
 class MenuIceHotView : UIStackView {
     
+    //MARK: - Closures
+    /// Ice 상태 변화 전달 클로져
+    var isIceClosure: ((Bool) -> Void)?
+    
     //MARK: - Components
     /// 아이스 선택 버튼
     let iceButton = UIButton(configuration: .filled()).then {
@@ -85,9 +89,10 @@ extension MenuIceHotView {
     
     @objc
     /// 버튼 선택에 대한 UI 활성화 변화 액션 메소드
-    private func updateSelected(isIce: Bool) {
+    func updateSelected(isIce: Bool) {
         iceButton.isSelected = isIce
         hotButton.isSelected = !isIce
+        isIceClosure?(isIce)
     }
 }
 

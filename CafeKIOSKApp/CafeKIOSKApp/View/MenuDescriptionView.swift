@@ -8,6 +8,7 @@
 import UIKit
 import SnapKit
 import Then
+import Kingfisher
 
 /// 메뉴 상세화면 용 메뉴 설명 뷰
 class MenuDescriptionView: UIView {
@@ -42,7 +43,6 @@ class MenuDescriptionView: UIView {
     override init(frame: CGRect) {
         super.init(frame: frame)
         configureUI()
-        SetTempData()
     }
     
     required init?(coder: NSCoder) {
@@ -53,8 +53,9 @@ class MenuDescriptionView: UIView {
 //MARK: - METHOD: Set UI Data
 extension MenuDescriptionView {
     /// 메뉴 정보 설정 메소드
-    func setUIData(_ image: UIImage,_ title: String,_ iceHot: String,_ text: String) {
-        menuImageView.image = image
+    func setUIData(_ imageUrl: String,_ title: String,_ iceHot: String,_ text: String) {
+        let url = URL(string: imageUrl)
+        menuImageView.kf.setImage(with: url)
         menuTitleLabel.text = title
         menuIceOrHotLabel.attributedText = makeColorToIceAndHot(text: iceHot)
         MenuDescriptionLabel.text = text
@@ -92,6 +93,7 @@ extension MenuDescriptionView {
         
         stackView.snp.makeConstraints{
             $0.directionalEdges.equalToSuperview()
+            $0.height.equalTo(500)
         }
         
         menuImageView.snp.makeConstraints {
@@ -121,5 +123,5 @@ extension MenuDescriptionView {
 
 
 #Preview {
-    MenuDescriptionView()
+    MenuOptionViewController()
 }

@@ -65,7 +65,135 @@ class CartManager {
     func clear() {
         items.removeAll() // 배열 전체 지우기
     }
+    
 }
+
+extension CartManager {
+    func makeMockCartItems() -> [CartItem] {
+        return [
+            // 시즌 음료
+            CartItem(
+                menu: MenuItem(
+                    id: "S01",
+                    categoryId: "season",
+                    name: "말차젤라또 퐁당 딸기프라페",
+                    nameEn: "Matcha Gelato Strawberry Frappe",
+                    description: "말차 젤라또와 딸기 밀크 쉐이크가 어우러진 프라페",
+                    price: 4900,
+                    imageUrl: "https://img.79plus.co.kr/megahp/manager/upload/menu/20251226201136_1766747496618_B9SxVDjAvl.png",
+                    tags: ["NEW", "RECOMMEND", "SEASON"],
+                    options: ItemOptions(
+                        temperature: ["ICE"],
+                        size: ["REGULAR"],
+                        extraShot: ExtraShot(min: 0, max: 0, pricePerShot: nil),
+                        iceLevel: nil
+                    ),
+                    displayOrder: 1
+                ),
+                isIce: true,
+                shotCount: 0,
+                count: 1
+            ),
+
+            // 커피
+            CartItem(
+                menu: MenuItem(
+                    id: "M101",
+                    categoryId: "coffee",
+                    name: "아메리카노",
+                    nameEn: "Americano",
+                    description: "진한 에스프레소에 물을 더한 기본 커피",
+                    price: 2000,
+                    imageUrl: "https://img.79plus.co.kr/megahp/manager/upload/menu/20240610105645_1717984605982_8i5CoHU2NV.jpg",
+                    tags: ["OFFICIAL_IMAGE"],
+                    options: ItemOptions(
+                        temperature: ["HOT", "ICE"],
+                        size: ["REGULAR"],
+                        extraShot: ExtraShot(min: 0, max: 3, pricePerShot: 500),
+                        iceLevel: nil
+                    ),
+                    displayOrder: 101
+                ),
+                isIce: false,
+                shotCount: 2,
+                count: 2
+            ),
+
+            // 아이스 커피
+            CartItem(
+                menu: MenuItem(
+                    id: "M102",
+                    categoryId: "coffee",
+                    name: "아이스 아메리카노",
+                    nameEn: "Iced Americano",
+                    description: "깔끔한 아메리카노를 시원하게",
+                    price: 2000,
+                    imageUrl: "https://img.79plus.co.kr/megahp/manager/upload/menu/20240610133007_1717993807130_nwB5CATOJJ.jpg",
+                    tags: ["OFFICIAL_IMAGE"],
+                    options: ItemOptions(
+                        temperature: ["ICE"],
+                        size: ["REGULAR"],
+                        extraShot: ExtraShot(min: 0, max: 3, pricePerShot: 500),
+                        iceLevel: nil
+                    ),
+                    displayOrder: 102
+                ),
+                isIce: true,
+                shotCount: 1,
+                count: 1
+            ),
+
+            // 라떼
+            CartItem(
+                menu: MenuItem(
+                    id: "M115",
+                    categoryId: "coffee",
+                    name: "바닐라라떼",
+                    nameEn: "Vanilla Latte",
+                    description: "부드러운 우유와 바닐라 향이 어우러진 라떼",
+                    price: 3800,
+                    imageUrl: "https://img.79plus.co.kr/megahp/manager/upload/menu/20240610104603_1717983963750_lApih2z1h0.jpg",
+                    tags: ["OFFICIAL_IMAGE"],
+                    options: ItemOptions(
+                        temperature: ["HOT", "ICE"],
+                        size: ["REGULAR"],
+                        extraShot: ExtraShot(min: 0, max: 3, pricePerShot: 500),
+                        iceLevel: nil
+                    ),
+                    displayOrder: 115
+                ),
+                isIce: true,
+                shotCount: 0,
+                count: 3
+            ),
+
+            // 푸드
+            CartItem(
+                menu: MenuItem(
+                    id: "F01",
+                    categoryId: "food",
+                    name: "딸기 크림치즈 쫀득빵",
+                    nameEn: "Strawberry Cream Cheese Chewy Bread",
+                    description: "딸기 콤포트와 크림치즈가 가득한 쫀득빵",
+                    price: 3300,
+                    imageUrl: "https://img.79plus.co.kr/megahp/manager/upload/menu/20251226202655_1766748415087_NsW1Ifwl8a.png",
+                    tags: ["NEW", "SEASON"],
+                    options: ItemOptions(
+                        temperature: [],
+                        size: [],
+                        extraShot: nil,
+                        iceLevel: nil
+                    ),
+                    displayOrder: 101
+                ),
+                isIce: false,
+                shotCount: 0,
+                count: 2
+            )
+        ]
+    }
+}
+
 
 /* 장바구니에 물건 넣기 구현 예시
  
