@@ -9,44 +9,81 @@ import Foundation
 
 class CartViewModel{
     
+    private var cartManager = CartManager()
     
-//    // 4. 실제 데이터를 가져와서 장바구니에 넣는 함수
-//    func fetchData() {
-//        dataService.loadMenu { [weak self] result in
-//            guard let self = self else { return }
-//            
-//            switch result {
-//            case .success(let response):
-//                // 전체 메뉴 리스트 가져옴
-//                let menuItems = response.items
-//                
-//                // 1) 아메리카노 찾아서 담기 (1잔, 핫, 1샷)
-//                if let americano = menuItems.first(where: { $0.name == "아메리카노" }) {
-//                    let item = CartItem(menu: americano, isIce: false, shotCount: 1, count: 1)
-//                    self.cartList.append(item)
-//                }
-//                
-//                // 2) 딸기 스무디(S03) 찾아서 담기 (1잔, 샷추가 2번)
-//                if let smoothie = menuItems.first(where: { $0.id == "S03" }) {
-//                    let item = CartItem(menu: smoothie, isIce: true, shotCount: 2, count: 1)
-//                    self.cartList.append(item)
-//                }
-//                
-//                // 3) 로꾸거 찾아서 담기 (1잔)
-//                if let americano = menuItems.first(where: { $0.name == "로꾸거 딸기젤라또 콘케이크" }) {
-//                    let item = CartItem(menu: americano, isIce: false, shotCount: 2, count: 1)
-//                    self.cartList.append(item)
-//                }
-//                
-//                // 4) 데이터가 준비되었으니 화면을 갱신하라고 알림 (메인 스레드에서)
-//                DispatchQueue.main.async {
-//                    self.tableView.reloadData()
-//                }
-//                
-//            case .failure(let error):
-//                print("데이터 가져오기 실패: \(error)")
-//            }
-//        }
+    // View 갱신용 클로저
+    var dataChanged: (() -> Void)?
+    
+    func fetchData() {
+        let mockItems = cartManager.makeMockCartItems()
+        
+        cartManager.items = mockItems
+        
+        dataChanged?()
+        }
+    // 테이블뷰 행 개수
+    var rowCount: Int {
+        return cartManager.items.count
+    }
+    
+//    func toggleSelectAll() {  
+//        // 1. 모든 요소가 true인지 검사
+//        let isAllSelected = cartManager.items.allSatisfy { $0.isSelected == true }
+//        
+//        // 2. 반대 상태로 설정하기
 //    }
+//    
+    // 특정한 인덱스값의 items 반환하기
+    func item(at index: Int) -> CartItem {
+        return cartManager.items[index]
+    }
+    
+    // 아이템 삭제하기
+    func removeItem(at index: Int) {
+        cartManager.items.remove(at: index)
+        
+        dataChanged?()
+    }
+    
+    // 수량 증가 함수
+    func increaseCount(at index: Int) {
+        cartManager.items[index].count += 1
+        dataChanged?()
+    }
+    
+    func decreaseCount(at index: Int) {
+        if cartManager.items[index].count > 1 {
+            cartManager.items[index].count -= 1
+            dataChanged?()
+        }
+    }
+
+    func ToggleAllSelection() {
+        let isAllSelected = cartManager.items.allSatisfy { $0.isSelected! }
+        
+        // 다 선택되어있으면 모두 해제하기, 그게 아니면 전부 선택시킴
+        let newValue = !isAllSelected
+        
+        for i in 0..<cartManager.items.count {
+            cartManager.items[i].isSelected = newValue
+        }
+        
+        dataChanged?()
+    }
+    
+    func toggleSelection(at index: Int) {
+        cartManager.items[index].isSelected?.toggle()
+        dataChanged?()
+    }
+        
+    var selectedCount: Int {
+        return cartManager.items.filter { $0.isSelected! }.count
+        }
+    
+    var totalPrice: Int {
+        let total = cartManager.calculateTotal()
+        return total
+    }
     
 }
+
