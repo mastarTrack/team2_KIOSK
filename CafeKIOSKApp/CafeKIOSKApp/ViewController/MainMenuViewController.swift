@@ -17,18 +17,17 @@ class MainMenuViewController: UIViewController {
     let mainMenuSectionView = MainMenuSectionView()
     let mainBottomView = MainBottomView()
     let mainMenuCollectionView = MainMenuCollectionView()
+    var numberOfItems = 0
     
     var pageControl: UIPageControl = {
         let pageControl = UIPageControl()
-        pageControl.numberOfPages = 3
+        pageControl.numberOfPages = 0
         pageControl.currentPage = 0
         pageControl.pageIndicatorTintColor = .gray
         pageControl.currentPageIndicatorTintColor = .red
         pageControl.isUserInteractionEnabled = false
         return pageControl
     }()
-    
-
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -42,6 +41,7 @@ class MainMenuViewController: UIViewController {
         firstUpdate() // 함수 등록
         changeCategory()
         passSelectedItem()
+        updateBottomView()
         
         configure()
         
@@ -56,6 +56,8 @@ class MainMenuViewController: UIViewController {
                 selectedCategoryId: self.mainMenuViewModel.selectedCategory,
                 itemsByCategoryId: self.mainMenuViewModel.itemsByCategoryId
             )
+            self.numberOfItems = self.mainMenuViewModel.itemsByCategoryId[self.mainMenuViewModel.selectedCategory]?.count ?? 0
+            self.pageControl.numberOfPages = (self.numberOfItems / 9) + 1
         }
     }
     
@@ -76,6 +78,15 @@ class MainMenuViewController: UIViewController {
             // 여기에 주헌님 뷰컨 생성해서 네비게이션 바에 이런식으로 넣어주면 됩니다 👍
             // let detailVC = DetailViewController(item: item, cartModel: CartModel) 선택된 아이템과 카트모델 같이 보내줍니다
             // navigationController?.pushViewController(detailVC, animated: true)
+        }
+    }
+    
+    func updateBottomView() {
+        cartModel.sum = { sum in
+            self.mainBottomView.priceCount = String(sum)
+        }
+        cartModel.cartCount = { count in
+            self.mainBottomView.cartCount = count
         }
     }
     
