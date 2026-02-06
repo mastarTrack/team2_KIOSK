@@ -10,9 +10,21 @@ import SnapKit
 import Then
 import Kingfisher
 
+
 // UICollectionViewDataSource - 셀 개수 셀 내용 제공을 이 뷰가 직접하겠음
 class MainMenuCollectionView: UIView {
-    var drinkByCategory = [String: [String]]()
+    var selectedCategoryId = "season"
+    var itemsByCategoryId = [String: [MenuItem]]() // 건네 받을 것
+    
+    var selectedItems: [MenuItem] {
+        return itemsByCategoryId[selectedCategoryId] ?? []
+    }
+    
+    func update(selectedCategoryId: String, itemsByCategoryId: [String: [MenuItem]]) {
+        self.selectedCategoryId = selectedCategoryId
+        self.itemsByCategoryId = itemsByCategoryId
+        collectionView.reloadData()
+    }
     
     // 페이지 컨트롤러에 넘겨줄 정보 저장
     var changeToCurrentPage: ((Int) -> Void)?
@@ -109,7 +121,7 @@ class MainMenuCollectionView: UIView {
 // 데이터 소스 구현 부
 extension MainMenuCollectionView: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 20
+        return selectedItems.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -119,11 +131,16 @@ extension MainMenuCollectionView: UICollectionViewDataSource {
             print("셀오류")
             return UICollectionViewCell()
         }
+        // 셀에 그림자 넣기
         cell.layer.shadowColor = UIColor.brown.cgColor
         cell.layer.shadowOpacity = 0.20
         cell.layer.shadowOffset = CGSize(width: 0, height: 4)
         cell.layer.shadowRadius = 4
         cell.layer.masksToBounds = false
+        
+        let item = selectedItems[indexPath.item]
+        cell.putInfo(item: item)
+        
         return cell
     }
 }
@@ -144,7 +161,6 @@ class GridCell: UICollectionViewCell {
         contentView.layer.masksToBounds = true
         
         configure()
-        putInfo()
     }
     
     required init?(coder: NSCoder) {
@@ -182,10 +198,10 @@ class GridCell: UICollectionViewCell {
         ).cgPath
     }
     
-    func putInfo() {
-        let url = URL(string: "https://img.79plus.co.kr/megahp/manager/upload/menu/20251226201136_1766747496618_B9SxVDjAvl.png")
+    func putInfo(item: MenuItem) {
+        let url = URL(string: item.imageUrl)
         drinkImage.kf.setImage(with: url)
-        label.text = "시즌메뉴 특별 카라멜 마끼야또"
+        label.text = item.name
     }
 }
 

@@ -11,28 +11,16 @@ import SnapKit
 //메인 화면 상단 카테고리 화면
 class MainMenuSectionView: UIView {
     let buttonStackView = UIStackView()
-    var data = [Category]()
     let scrollView = UIScrollView()
     var menuButtons: [UIButton] = []
-    let dataManager = CoffeeMenuDataService()
+   
+    var tapCategory: ((String) -> Void)?
     
     override init(frame: CGRect) {
         super.init(frame: frame)
         backgroundColor = .white
         addSubview(scrollView)
         
-        //데이터 부분
-        dataManager.loadMenu { result in
-            switch result {
-            case .success(let menuData):
-                self.data = menuData.categories
-                
-            case .failure(let error):
-                print("에러발생: \(error)")
-            }
-        }
-        
-        setupButtons()
         configure()
     }
     
@@ -41,8 +29,8 @@ class MainMenuSectionView: UIView {
     }
     
     // 버튼 셋업 및 버튼 하나만 색 바꾸기 로직
-    func setupButtons() {
-        data.enumerated().forEach { index, category in
+    func setupButtons(categories: [Category]) {
+        categories.enumerated().forEach { index, category in
             let button = UIButton(title: category.name)
             button.applySelectedColor(selectedColor: .black, baseColor: .brown)
             button.tag = index

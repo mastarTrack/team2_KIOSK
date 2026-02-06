@@ -15,6 +15,31 @@
             "description": "아메리카노/라떼 등 커피 메뉴"
         },
         {
+            "id": "decaf",
+            "name": "디카페인",
+            "description": "카페인을 제거한 커피 메뉴"
+        },
+        {
+            "id": "ade_tea",
+            "name": "에이드/차",
+            "description": "상큼한 에이드 및 티 메뉴"
+        },
+        {
+            "id": "non_coffee",
+            "name": "논커피",
+            "description": "커피가 들어가지 않은 음료"
+        },
+        {
+            "id": "frappe",
+            "name": "프라페",
+            "description": "얼음을 블렌딩한 프라페 음료"
+        },
+        {
+            "id": "juice",
+            "name": "과일주스",
+            "description": "과일을 베이스로 한 주스 음료"
+        },
+        {
             "id": "food",
             "name": "푸드",
             "description": "베이커리/디저트 등 푸드 메뉴"

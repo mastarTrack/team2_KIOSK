@@ -8,13 +8,16 @@
 import UIKit
 import SnapKit
 
+
+//콜렉트뷰에 정보 넣기 ㅎㅎ
+
+
 class MainMenuViewController: UIViewController {
+    let mainMenuViewModel = MainMenuViewModel()
     
-    let header = MainMenuSectionView()
-    let myBottomView = MainBottomView()
-    let myCV = MainMenuCollectionView()
-    
-    //let items = Array(0..<10)
+    let mainMenuSectionView = MainMenuSectionView()
+    let mainBottomView = MainBottomView()
+    let mainMenuCollectionView = MainMenuCollectionView()
     
     var pageControl: UIPageControl = {
         let pageControl = UIPageControl()
@@ -30,37 +33,52 @@ class MainMenuViewController: UIViewController {
         super.viewDidLoad()
         view.backgroundColor = .white
         
+        mainMenuCollectionView.changeToCurrentPage = { [weak self] page in
+            self?.pageControl.currentPage = page
+        }
+        
+        firstUpdate() // 함수 등록
+        
         configure()
         
-        myCV.changeToCurrentPage = { [weak self] page in
-            self?.pageControl.currentPage = page
+        mainMenuViewModel.loadMenu()
+    }
+    
+    // 함수 등록
+    func firstUpdate() {
+        // 뷰모델에서 oneTimeUpdate 호출하면 아래에 있는 함수 실행됨
+        mainMenuViewModel.oneTimeUpdate = { [weak self] in
+            guard let self else { return }
+            self.mainMenuSectionView.setupButtons(categories: self.mainMenuViewModel.categories)
+            // 콜렉션뷰 첫화면 나타내기
+            self.mainMenuCollectionView.update(selectedCategoryId: self.mainMenuViewModel.selectedCategory, itemsByCategoryId: self.mainMenuViewModel.itemsByCategoryId)
         }
     }
     
     func configure() {
-        view.addSubview(header)
-        view.addSubview(myBottomView)
-        view.addSubview(myCV)
+        view.addSubview(mainMenuSectionView)
+        view.addSubview(mainBottomView)
+        view.addSubview(mainMenuCollectionView)
         view.addSubview(pageControl)
         
-        header.snp.makeConstraints {
+        mainMenuSectionView.snp.makeConstraints {
             $0.top.equalTo(view.safeAreaLayoutGuide).offset(30)
             $0.trailing.leading.equalToSuperview()
         }
         
-        myCV.snp.makeConstraints {
-            $0.top.equalTo(header.snp.bottom)
+        mainMenuCollectionView.snp.makeConstraints {
+            $0.top.equalTo(mainMenuSectionView.snp.bottom)
             $0.trailing.leading.equalToSuperview()
             $0.bottom.equalTo(pageControl.snp.top)
         }
         
         pageControl.snp.makeConstraints {
             $0.height.equalTo(20)
-            $0.bottom.equalTo(myBottomView.snp.top)
-            $0.trailing.leading.equalTo(myBottomView)
+            $0.bottom.equalTo(mainBottomView.snp.top)
+            $0.trailing.leading.equalTo(mainBottomView)
         }
         
-        myBottomView.snp.makeConstraints {
+        mainBottomView.snp.makeConstraints {
             $0.bottom.equalTo(view.safeAreaLayoutGuide)
             $0.trailing.leading.equalToSuperview()
         }
