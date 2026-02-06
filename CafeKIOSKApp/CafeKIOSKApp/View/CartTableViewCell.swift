@@ -47,23 +47,35 @@ class CartTableViewCell: UITableViewCell {
     
     // 삭제 버튼 구현
     private let deleteButton = UIButton().then {
-        
         let config = UIImage.SymbolConfiguration(pointSize: 12, weight: .semibold)
         // 애플 기본 아이콘 사용
         let image = UIImage(systemName: "xmark",  withConfiguration: config)
-        
         $0.setImage(image, for: .normal)
-        $0.tintColor = .systemGray2
+        $0.tintColor = .systemGray
     }
     
     // 체크 버튼 구현
     private let checkBox = UIButton().then {
         let config = UIImage.SymbolConfiguration(pointSize: 22, weight: .bold)
-        
         let image = UIImage(systemName: "checkmark.circle.fill",  withConfiguration: config)
-        
         $0.setImage(image, for: .normal)
         $0.tintColor = .systemGray4
+    }
+    
+    // 감소 버튼 구현
+    private let minusButton = UIButton().then {
+        let config = UIImage.SymbolConfiguration(pointSize: 20, weight: .regular)
+        let image = UIImage(systemName: "minus.square",  withConfiguration: config)
+        $0.setImage(image, for: .normal)
+        $0.tintColor = .systemGray2
+    }
+    
+    // 증가 버튼 구현
+    private let plusButton = UIButton().then {
+        let config = UIImage.SymbolConfiguration(pointSize: 20, weight: .regular)
+        let image = UIImage(systemName: "plus.square",  withConfiguration: config)
+        $0.setImage(image, for: .normal)
+        $0.tintColor = .systemGray
     }
     
     // 초기화
@@ -85,7 +97,6 @@ class CartTableViewCell: UITableViewCell {
     
     @objc func checkTapped() {
         self.checkBox.isSelected.toggle()
-        
         if self.checkBox.isSelected {
             self.checkBox.tintColor = .systemGray4
         } else {
@@ -93,8 +104,9 @@ class CartTableViewCell: UITableViewCell {
         }
     }
     
+    // UI
     private func setupUI() {
-        [imgView, nameLabel, priceLabel, countLabel,deleteButton,checkBox].forEach {
+        [imgView, nameLabel, priceLabel, countLabel,deleteButton,checkBox,minusButton,plusButton].forEach {
             contentView.addSubview($0)
         }
         
@@ -127,7 +139,19 @@ class CartTableViewCell: UITableViewCell {
         // 개수 배치
         countLabel.snp.makeConstraints {
             $0.centerY.equalTo(priceLabel)
+            $0.leading.equalTo(minusButton.snp.trailing).offset(15)
+        }
+        
+        // 마이너스 버튼 배치
+        minusButton.snp.makeConstraints {
+            $0.centerY.equalTo(priceLabel)
             $0.leading.equalTo(imgView.snp.trailing).offset(20)
+        }
+        
+        // 마이너스 버튼 배치
+        plusButton.snp.makeConstraints {
+            $0.centerY.equalTo(priceLabel)
+            $0.leading.equalTo(countLabel.snp.trailing).offset(15)
         }
         
         // 체크표시 추가 예정
@@ -144,7 +168,7 @@ class CartTableViewCell: UITableViewCell {
     // 데이터 채워넣는 함수
     func configure(with item: CartItem) {
         nameLabel.text = item.menu.name
-        priceLabel.text = "\(item.menu.price * item.count)원"
+        priceLabel.text = "\(formatAsCurrency(intMoney: item.menu.price * item.count))원"
         countLabel.text = "\(item.count)"
         let url = URL(string: item.menu.imageUrl)
         imgView.kf.setImage(with: url)
@@ -153,5 +177,5 @@ class CartTableViewCell: UITableViewCell {
 }
 
 #Preview {
-    CartTableViewController()
+    CartViewController()
 }
