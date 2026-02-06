@@ -24,10 +24,21 @@ class CartTopView: UIView {
         $0.backgroundColor = .systemGray5
     }
     
+    // 지도 버튼 구현
+    private let mapButton = UIButton().then {
+        
+        let config = UIImage.SymbolConfiguration(pointSize: 20, weight: .semibold)
+        let image = UIImage(systemName: "map", withConfiguration: config)
+        
+        $0.setImage(image, for: .normal)
+        $0.tintColor = .systemGray2
+    }
+    
+    // 위치 라벨ㅋ
     private let locationLabel = UILabel().then {
         $0.textColor = .gray
         $0.font = .systemFont(ofSize: 18, weight: .semibold)
-        $0.text = "       칼퇴커피 1호점"
+        $0.text = "칼퇴커피 1호점"
     }
     
     // 초기화
@@ -46,6 +57,7 @@ class CartTopView: UIView {
         
         self.addSubview(cartTopLabel)
         self.addSubview(locationView)
+        locationView.addSubview(mapButton)
         locationView.addSubview(locationLabel)
         
         cartTopLabel.snp.makeConstraints {
@@ -60,6 +72,11 @@ class CartTopView: UIView {
         }
         
         locationLabel.snp.makeConstraints {
+            $0.leading.equalTo(mapButton.snp.trailing).offset(10)
+            $0.centerY.equalToSuperview()
+        }
+        
+        mapButton.snp.makeConstraints {
             $0.leading.equalToSuperview().inset(10)
             $0.centerY.equalToSuperview()
         }
