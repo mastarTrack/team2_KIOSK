@@ -92,6 +92,7 @@ extension MenuDescriptionView {
         
         stackView.snp.makeConstraints{
             $0.directionalEdges.equalToSuperview()
+            $0.height.equalTo(500)
         }
         
         menuImageView.snp.makeConstraints {

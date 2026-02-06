@@ -96,6 +96,7 @@ class MenuOptionOrderView: UIView {
         super.init(frame: frame)
         configureUI()
         SetButtonAction()
+        setSampleData()
     }
     
     required init?(coder: NSCoder) {
