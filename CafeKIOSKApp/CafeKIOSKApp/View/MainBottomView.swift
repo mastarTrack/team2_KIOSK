@@ -12,6 +12,8 @@ import Then
 class MainBottomView: UIView {
     let shoppingCartButton = UIButton()
     let priceLabel = UILabel()
+    var cartCount = 0
+    var priceCount = "0"
     let stackView = UIStackView().then {
         $0.axis = .horizontal
         $0.spacing = 10
@@ -34,7 +36,7 @@ class MainBottomView: UIView {
     func configure() {
         shoppingCartButton.applyBig()
         shoppingCartButton.configuration?.title = "장바구니 가기"
-        shoppingCartButton.configuration?.subtitle = "총 수량: 12개"
+        shoppingCartButton.configuration?.subtitle = "총 수량: \(cartCount)개"
         shoppingCartButton.configuration?.image = UIImage(systemName: "cart")
         shoppingCartButton.configuration?.baseBackgroundColor = .brown
         stackView.snp.makeConstraints {
@@ -52,7 +54,7 @@ class MainBottomView: UIView {
 
         let priceNameLabel = UILabel(text: "총 금액", config: .priceNameLabel)
         priceLabel.apply(.priceLabel)
-        priceLabel.text = "210000원"
+        priceLabel.text = priceCount
         
         labelStackView.addArrangedSubview(priceNameLabel)
         labelStackView.addArrangedSubview(priceLabel)
