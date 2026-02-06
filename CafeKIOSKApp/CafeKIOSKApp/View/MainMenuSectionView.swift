@@ -14,7 +14,8 @@ class MainMenuSectionView: UIView {
     let scrollView = UIScrollView()
     var menuButtons: [UIButton] = []
    
-    var tapCategory: ((String) -> Void)?
+    var CategoryString = ""
+    var tapCategory: ((String) -> Void)? // 전달하기
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -38,13 +39,15 @@ class MainMenuSectionView: UIView {
             button.addAction(UIAction { [weak self, weak button] _ in
                 guard let self, let selectedButton = button else { return }
                 
+                CategoryString = categories[selectedButton.tag].id
+                tapCategory?(CategoryString)
+                
                 for button in self.menuButtons {
                     let isSameButton = (button === selectedButton)
                     button.isSelected = isSameButton
                     button.setNeedsUpdateConfiguration()
                 }
             }, for: .touchUpInside)
-            
             menuButtons.append(button)
             buttonStackView.addArrangedSubview(button)
         }

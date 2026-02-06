@@ -20,14 +20,10 @@ class MainMenuCollectionView: UIView {
         return itemsByCategoryId[selectedCategoryId] ?? []
     }
     
-    func update(selectedCategoryId: String, itemsByCategoryId: [String: [MenuItem]]) {
-        self.selectedCategoryId = selectedCategoryId
-        self.itemsByCategoryId = itemsByCategoryId
-        collectionView.reloadData()
-    }
-    
     // 페이지 컨트롤러에 넘겨줄 정보 저장
     var changeToCurrentPage: ((Int) -> Void)?
+    
+    var selectedItem: ((MenuItem) -> Void)?
     
     // 콜렉션 뷰 생성
     lazy var collectionView = UICollectionView(
@@ -42,6 +38,7 @@ class MainMenuCollectionView: UIView {
         
         collectionView.register(GridCell.self, forCellWithReuseIdentifier: "GridCell")
         collectionView.dataSource = self
+        collectionView.delegate = self
         
         configure()
     }
@@ -55,6 +52,12 @@ class MainMenuCollectionView: UIView {
         collectionView.snp.makeConstraints {
             $0.edges.equalToSuperview()
         }
+    }
+    
+    func update(selectedCategoryId: String, itemsByCategoryId: [String: [MenuItem]]) {
+        self.selectedCategoryId = selectedCategoryId
+        self.itemsByCategoryId = itemsByCategoryId
+        collectionView.reloadData()
     }
     
     // 콜렉션 뷰에 레이아웃을 정하는 메서드 (3*3 그리드)
@@ -118,6 +121,13 @@ class MainMenuCollectionView: UIView {
     }
 }
 
+extension MainMenuCollectionView: UICollectionViewDelegate {
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let item = selectedItems[indexPath.item]
+        selectedItem?(item)
+    }
+}
+
 // 데이터 소스 구현 부
 extension MainMenuCollectionView: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -152,7 +162,7 @@ class GridCell: UICollectionViewCell {
     let drinkImage = UIImageView()
     let label = UILabel()
     let stackView = UIStackView()
-    
+        
     override init(frame: CGRect) {
         super.init(frame: frame)
         // 컨텐트 뷰에 넣음
@@ -167,6 +177,15 @@ class GridCell: UICollectionViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
+    override var isHighlighted: Bool {
+        didSet {
+            UIView.animate(withDuration: 0.3) {
+                self.contentView.layer.borderWidth = self.isHighlighted ? 1 : 0
+                self.contentView.layer.borderColor = UIColor.black.cgColor
+            }
+        }
+    }
+        
     func configure() {
         label.apply(.drinkLabel)
         label.textAlignment = .center
