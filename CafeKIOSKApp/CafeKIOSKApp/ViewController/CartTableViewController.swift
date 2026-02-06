@@ -23,6 +23,9 @@ class CartTableViewController: UIViewController {
         $0.rowHeight = 120 // 셀 높이
     }
     
+    // 4. 상단 주문하기 뷰 생성
+    private let TopView = CartTopView()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
@@ -74,11 +77,18 @@ class CartTableViewController: UIViewController {
     private func setupUIView() {
         view.addSubview(tableView)
         view.addSubview(bottomView)
+        view.addSubview(TopView)
         
         // 하단의 버튼 뷰
         bottomView.snp.makeConstraints {
             $0.leading.trailing.bottom.equalToSuperview()
-            $0.height.equalTo(120)
+            $0.height.equalTo(110)
+        }
+        
+        TopView.snp.makeConstraints {
+            $0.leading.trailing.equalToSuperview()
+            $0.top.equalTo(view.safeAreaLayoutGuide)
+            $0.height.equalTo(130)
         }
         
         // 테이블 뷰에 셀 등록
@@ -91,7 +101,7 @@ class CartTableViewController: UIViewController {
         tableView.snp.makeConstraints {
             $0.centerX.equalToSuperview()
             $0.width.equalTo(view.safeAreaLayoutGuide).inset(20)
-            $0.top.equalTo(view.safeAreaLayoutGuide)
+            $0.top.equalTo(TopView.snp.bottom)
             $0.bottom.equalTo(bottomView.snp.top)
         }
         
