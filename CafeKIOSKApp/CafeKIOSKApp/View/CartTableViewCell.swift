@@ -18,6 +18,12 @@ class CartTableViewCell: UITableViewCell {
     // 삭제 버튼 클로저 지정
     var removeAction: (() -> Void)?
     
+    // 증감 버튼 클로저 정의
+    var plusAction: (() -> Void)?
+    var minusAction: (() -> Void)?
+    
+    var checkAction: (() -> Void)?
+    
     // UI 요소 만들기
     // 이미지
     private let imgView = UIImageView().then {
@@ -59,7 +65,7 @@ class CartTableViewCell: UITableViewCell {
         let config = UIImage.SymbolConfiguration(pointSize: 22, weight: .bold)
         let image = UIImage(systemName: "checkmark.circle.fill",  withConfiguration: config)
         $0.setImage(image, for: .normal)
-        $0.tintColor = .systemGray4
+        $0.tintColor = .systemYellow
     }
     
     // 감소 버튼 구현
@@ -85,6 +91,8 @@ class CartTableViewCell: UITableViewCell {
         // 삭제 버튼 액션 연결
         deleteButton.addTarget(self, action: #selector(deleteTapped), for: .touchDown)
         checkBox.addTarget(self, action: #selector(checkTapped), for: .touchUpInside)
+        minusButton.addTarget(self, action: #selector(minusTapped), for: .touchUpInside)
+        plusButton.addTarget(self, action: #selector(plusTapped), for: .touchUpInside)
     }
     
     required init?(coder: NSCoder) {
@@ -96,12 +104,19 @@ class CartTableViewCell: UITableViewCell {
     }
     
     @objc func checkTapped() {
-        self.checkBox.isSelected.toggle()
-        if self.checkBox.isSelected {
-            self.checkBox.tintColor = .systemGray4
-        } else {
-            self.checkBox.tintColor = .systemYellow
-        }
+        checkAction?()
+    }
+    
+    
+    
+    @objc
+    func minusTapped() {
+        minusAction?()
+    }
+    
+    @objc
+    func plusTapped() {
+        plusAction?()
     }
     
     // UI
@@ -172,6 +187,14 @@ class CartTableViewCell: UITableViewCell {
         countLabel.text = "\(item.count)"
         let url = URL(string: item.menu.imageUrl)
         imgView.kf.setImage(with: url)
+        
+        checkBox.isSelected = item.isSelected!
+        
+        if item.isSelected! {
+            self.checkBox.tintColor = .systemYellow
+        } else {
+            self.checkBox.tintColor = .systemGray4
+        }
     }
     
 }
