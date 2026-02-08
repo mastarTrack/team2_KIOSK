@@ -12,19 +12,10 @@ import SnapKit
 /// 메뉴 상세화면 중 스탭방식 옵션 뷰
 class MenuOptionStapperView: UIView {
     
-    //MARK: - ENUM
-    enum MinMax{
-        case Min
-        case Max
-        case None
-    }
-    
     //MARK: - Closures
     /// 증가 버튼 이벤트용 클로져
-    var increaseButtonClosure: (()-> Void)?
-    /// 감소 버튼 이벤트용 클로져
-    var decreaseButtonClosure: (()-> Void)?
-    
+    var ButtonActionClosure: ((MenuOptionViewModel.StepperAction)-> Void)?
+
     //MARK: - Components
     //. 메인 옵션 스택뷰
     let optionStackView = UIStackView().then {
@@ -103,26 +94,31 @@ class MenuOptionStapperView: UIView {
 extension MenuOptionStapperView {
     private func SetButtonAction() {
         increaseButton.addAction(UIAction { [weak self] _ in
-            self?.increaseButtonClosure?()
+            self?.ButtonActionClosure?(.Increase)
         }, for: .touchUpInside)
         
         decreaseButton.addAction(UIAction { [weak self] _ in
-            self?.decreaseButtonClosure?()
+            self?.ButtonActionClosure?(.Decrease)
         }, for: .touchUpInside)
     }
     
     
-    func updateOptionDataUI(count: Int, price: String, minMax: MinMax) {
-        optionPriceLabel.text = price
+    func updateOptionDataUI(count: Int,
+                            price: String,
+                            minMax: MenuOptionViewModel.MinMax) {
+        
         optionCountLabel.text = "\(count)"
+        optionPriceLabel.text = price
         switch minMax {
         case .Max:
             increaseButton.isEnabled = false
+            decreaseButton.isEnabled = true
         case .Min:
             decreaseButton.isEnabled = false
-        case .None:
-            decreaseButton.isEnabled = true
             increaseButton.isEnabled = true
+        case .None:
+            increaseButton.isEnabled = true
+            decreaseButton.isEnabled = true
         }
     }
 }

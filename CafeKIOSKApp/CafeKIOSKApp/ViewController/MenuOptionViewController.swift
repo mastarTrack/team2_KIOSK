@@ -17,6 +17,8 @@ class MenuOptionViewController: UIViewController {
         case stepper
         case check
     }
+    //MARK: - ViewModel
+    let viewModel: MenuOptionViewModel
     
     //MARK: - Components
     var collectionView: UICollectionView!
@@ -24,50 +26,27 @@ class MenuOptionViewController: UIViewController {
     let menuOrderView = MenuOptionOrderView()
     
     //MARK: - Properties
-    var activeSections: [MenuSectionType] = []
     
     var selectedSizeIndex: Int? = 0
     
     var tempCartManager = CartManager()
-
-    var menuCart = CartItem(menu: MenuItem(
-        id: "menu_001",
-        categoryId: "coffee",
-        name: "아메리카노",
-        nameEn: "Americano",
-        description: "에스프레소에 물을 더해 깔끔한 맛의 커피",
-        price: 4500,
-        imageUrl: "https://img.79plus.co.kr/megahp/manager/upload/menu/20240610105645_1717984605982_8i5CoHU2NV.jpg",
-        tags: ["BEST", "HOT", "ICE"],
-        options: ItemOptions(
-            temperature: ["HOT", "ICE"],
-            size: ["TALL", "GRANDE", "VENTI"],
-            extraShot: ExtraShot(
-                min: 0,
-                max: 3,
-                pricePerShot: 500
-            ),
-            iceLevel: ["LESS", "NORMAL", "MORE"]
-        ),
-        displayOrder: 1
-    ),
-                            isIce: true,
-                            shotCount: 0,
-                            count: 0)
     
-
         
-//    //MARK: - Init
-//    init(menu: MenuItem, cartManager: CartManager) {
-//        self.tempMenu = menu
-//        self.tempCartManager = cartManager
-//        super.init(nibName: nil, bundle: nil)
-//    }
-//    
-//    required init?(coder: NSCoder) {
-//        fatalError("init(coder:) has not been implemented")
-//    }
+    //MARK: - Init
+    init(menu: MenuItem, cartManager: CartManager) {
+        viewModel = MenuOptionViewModel(cartManager: cartManager, menuItem: menu)
+        super.init(nibName: nil, bundle: nil)
+    }
     
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    convenience init() {
+        let menu = CartItem.SetSampleData()
+        let cartManager = CartManager()
+        self.init(menu: menu.menu, cartManager: cartManager)
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -76,6 +55,35 @@ class MenuOptionViewController: UIViewController {
     }
 }
 
+//MARK: - METHOD: Clousure
+extension MenuOptionViewController {
+    func setClosure() {
+        
+    }
+}
+
+
+
+//MARK: - METHOD: Check Add section
+extension MenuOptionViewController {
+    /// 어떤 섹션을 추가할지 체크하는 메소드
+    func checkedNewSection() {
+        viewModel.activeSections.append(.mainImage)
+        if viewModel.cartItem.menu.options.temperature?.count == 2 {
+            viewModel.activeSections.append(.iceHot)
+        }
+        if let extraShot = viewModel.cartItem.menu.options.extraShot {
+            if extraShot.max > 0 {
+                viewModel.activeSections.append(.stepper)
+            }
+        }
+        if let size = viewModel.cartItem.menu.options.size {
+            if size.count > 0 {
+                viewModel.activeSections.append(.check)
+            }
+        }
+    }
+}
 
 //MARK: - Configure CollectionView
 extension MenuOptionViewController: UICollectionViewDataSource, UICollectionViewDelegate {
@@ -83,14 +91,14 @@ extension MenuOptionViewController: UICollectionViewDataSource, UICollectionView
     /// 컬렉션뷰 섹션 설정 메소드
     func numberOfSections(in collectionView: UICollectionView) -> Int {
         //TODO: 옵션종류 갯수 설정
-        return activeSections.count
+        return viewModel.activeSections.count
     }
     
     /// CollectionView의 각 섹션(section)에 몇개를 보여줄지 정하는 메소드
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         
         //TODO: 옵션 당 갯수 설정
-        let sectionType = activeSections[section]
+        let sectionType = viewModel.activeSections[section]
         
         switch sectionType {
         case .mainImage:
@@ -100,25 +108,25 @@ extension MenuOptionViewController: UICollectionViewDataSource, UICollectionView
         case .stepper:
             return 1
         case .check:
-            return menuCart.menu.options.size?.count ?? 0
+            return viewModel.cartItem.menu.options.size?.count ?? 0
         }
     }
     
     /// indexPath 위치에 표시할 셀을 생성 및 구성하는 메소드
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
-        switch activeSections[indexPath.section] {
+        switch viewModel.activeSections[indexPath.section] {
         case .mainImage:
             let cell = collectionView.dequeueReusableCell(
                 withReuseIdentifier: optionDescriptionCell.identifier,
                 for: indexPath
             ) as! optionDescriptionCell
             
-            let iceHotText = menuCart.menu.options.temperature?.reversed().joined(separator: " | ") ?? ""
-            cell.optionDescriptionView.setUIData(menuCart.menu.imageUrl,
-                                                 menuCart.menu.name,
+            let iceHotText = viewModel.cartItem.menu.options.temperature?.reversed().joined(separator: " | ") ?? ""
+            cell.optionDescriptionView.setUIData(viewModel.cartItem.menu.imageUrl,
+                                                 viewModel.cartItem.menu.name,
                                                  iceHotText,
-                                                 menuCart.menu.description)
+                                                 viewModel.cartItem.menu.description)
             return cell
             
         case .iceHot:
@@ -132,7 +140,7 @@ extension MenuOptionViewController: UICollectionViewDataSource, UICollectionView
             let cell = collectionView.dequeueReusableCell(
                 withReuseIdentifier: optionCheckCell.identifier, for: indexPath) as! optionCheckCell
             
-            if let size = menuCart.menu.options.size {
+            if let size = viewModel.cartItem.menu.options.size {
                 let isChecked = (selectedSizeIndex == indexPath.item)
                 cell.optionCheckView.setUIData(
                     title: size[indexPath.item],
@@ -151,12 +159,27 @@ extension MenuOptionViewController: UICollectionViewDataSource, UICollectionView
         case .stepper:
             let cell = collectionView.dequeueReusableCell(
                 withReuseIdentifier: optionStapperCell.identifier,
-                for: indexPath
-            ) as! optionStapperCell
-            if let extraSize = menuCart.menu.options.extraShot{
-                cell.optionStapperView.updateOptionDataUI(
-                    count: menuCart.shotCount,price: "+ \(formatAsCurrency(intMoney: menuCart.shotCount*(extraSize.pricePerShot ?? 0))) 원", minMax: .Min)
+                for: indexPath ) as! optionStapperCell
+            cell.optionStapperView.ButtonActionClosure = { [weak self] action in
+                guard let self else { return }
+                self.viewModel.updateShotCount(action: action)
             }
+            
+            cell.optionStapperView.updateOptionDataUI(
+                count: viewModel.cartItem.shotCount,
+                price: "+ \(formatAsCurrency(intMoney: viewModel.cartItem.shotCount * (viewModel.cartItem.menu.options.extraShot?.pricePerShot ?? 0))) 원",
+                minMax: viewModel.getShotCountState()
+            )
+            
+            viewModel.shotCountChanged = { [weak self] count, minMax in
+                guard let self else { return }
+                cell.optionStapperView.updateOptionDataUI(
+                    count: count,
+                    price: "+ \(formatAsCurrency(intMoney: count * (viewModel.cartItem.menu.options.extraShot?.pricePerShot ?? 0))) 원",
+                    minMax: minMax
+                )
+            }
+            
             return cell
         }
     }
@@ -179,13 +202,14 @@ extension MenuOptionViewController: UICollectionViewDataSource, UICollectionView
     
 }
 
+
 //MARK: - METHOD: Config CompositionalLayout
 extension MenuOptionViewController {
     /// 섹션타입에 따른 레이아웃 생성 메소드
     private func createLayout() -> UICollectionViewCompositionalLayout {
         return UICollectionViewCompositionalLayout { [weak self] (sectionIndex, _) -> NSCollectionLayoutSection? in
             guard let self = self else { return nil }
-            let MenuSectionType = self.activeSections[sectionIndex]
+            let MenuSectionType = self.viewModel.activeSections[sectionIndex]
 
             switch MenuSectionType {
             case .mainImage:
@@ -278,29 +302,9 @@ extension MenuOptionViewController {
     }
 }
 
-
-//MARK: - METHOD: Check Add section
-extension MenuOptionViewController {
-    func checkedNewSection() {
-        activeSections.append(.mainImage)
-        if menuCart.menu.options.temperature?.count == 2 {
-            activeSections.append(.iceHot)
-        }
-        if let extraShot = menuCart.menu.options.extraShot {
-            if extraShot.max > 0 {
-                activeSections.append(.stepper)
-            }
-        }
-        if let size = menuCart.menu.options.size {
-            if size.count > 0 {
-                activeSections.append(.check)
-            }
-        }
-    }
-}
-
 //MARK: - METHOD: UI Configure
 extension MenuOptionViewController {
+    /// 초기 UI 세팅 메소드
     func configureUI(){
         // 컬랙션뷰 생성
         collectionView = UICollectionView(frame: .zero, collectionViewLayout: createLayout())
