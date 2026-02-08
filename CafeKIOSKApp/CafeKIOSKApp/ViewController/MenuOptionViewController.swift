@@ -59,7 +59,7 @@ extension MenuOptionViewController {
         menuOrderView.orderButtonClosure = { [weak self] in
             guard let self else { return }
             viewModel.commitToCart()
-            let cartTableVC = CartTableViewController()
+            let cartTableVC = CartViewController()
             navigationController?.pushViewController(cartTableVC, animated: true)
         }
         
