@@ -96,6 +96,7 @@ class MenuOptionOrderView: UIView {
         super.init(frame: frame)
         configureUI()
         SetButtonAction()
+        setSampleData()
     }
     
     required init?(coder: NSCoder) {
@@ -154,6 +155,7 @@ extension MenuOptionOrderView {
             $0.axis = .horizontal
             $0.distribution = .fill
             $0.spacing = 5
+            //$0.backgroundColor = .black
         }
         
         topStack.addArrangedSubview(increaseButton)
@@ -183,6 +185,11 @@ extension MenuOptionOrderView {
             $0.top.equalToSuperview().offset(10)
             $0.height.equalTo(40)
         }
+        bottomStack.snp.makeConstraints {
+            //$0.top.equalTo(topStack.snp.bottom)
+            $0.height.equalTo(50)
+        }
+        
         increaseButton.snp.makeConstraints {
             $0.leading.equalToSuperview().offset(20)
             $0.width.height.equalTo(40)
@@ -201,6 +208,10 @@ extension MenuOptionOrderView {
             $0.width.equalTo(100)
             $0.height.equalTo(40)
         }
+        
+        emptyView.snp.makeConstraints {
+            $0.width.lessThanOrEqualTo(20)
+        }
         emptyTopMiddleView.snp.makeConstraints {
             $0.width.greaterThanOrEqualTo(20)
         }
@@ -214,6 +225,7 @@ extension MenuOptionOrderView {
         
         emptyMainbottomView.snp.makeConstraints {
             $0.height.greaterThanOrEqualTo(5)
+            $0.bottom.equalToSuperview()
         }
         
     }
@@ -231,5 +243,5 @@ extension MenuOptionOrderView {
 
 
 #Preview {
-    MenuOptionOrderView()
+    MenuOptionViewController()
 }

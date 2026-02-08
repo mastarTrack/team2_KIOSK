@@ -65,8 +65,8 @@ class MenuOptionStapperView: UIView {
         titleattr.font = UIFont.boldSystemFont(ofSize: 15)
         $0.configuration?.contentInsets = NSDirectionalEdgeInsets()
         $0.configuration?.attributedTitle = AttributedString("+", attributes: titleattr)
-        $0.configuration?.baseBackgroundColor = .systemBlue // 기본 배경
-        $0.configuration?.baseForegroundColor = .white    // 글자 색상
+        $0.configuration?.baseBackgroundColor = .systemBlue
+        $0.configuration?.baseForegroundColor = .white
         $0.configuration?.cornerStyle = .fixed
         $0.configuration?.titleAlignment = .automatic
         $0.configuration?.background.cornerRadius = 5
@@ -78,8 +78,8 @@ class MenuOptionStapperView: UIView {
         titleattr.font = UIFont.boldSystemFont(ofSize: 15)
         $0.configuration?.contentInsets = NSDirectionalEdgeInsets()
         $0.configuration?.attributedTitle = AttributedString("-", attributes: titleattr)
-        $0.configuration?.baseBackgroundColor = .systemRed // 기본 배경
-        $0.configuration?.baseForegroundColor = .white    // 글자 색상
+        $0.configuration?.baseBackgroundColor = .systemRed
+        $0.configuration?.baseForegroundColor = .white
         $0.configuration?.cornerStyle = .fixed
         $0.configuration?.titleAlignment = .automatic
         $0.configuration?.background.cornerRadius = 5
@@ -159,7 +159,7 @@ extension MenuOptionStapperView {
         
         optionStackView.snp.makeConstraints {
             $0.edges.equalToSuperview()
-            $0.height.greaterThanOrEqualTo(45)
+            $0.height.greaterThanOrEqualTo(55)
             $0.width.lessThanOrEqualToSuperview()
         }
         
@@ -168,13 +168,13 @@ extension MenuOptionStapperView {
         }
         
         decreaseButton.snp.makeConstraints {
-            $0.height.equalTo(20)
-            $0.width.equalTo(27)
+            $0.height.equalTo(30)
+            $0.width.equalTo(30)
         }
         
         increaseButton.snp.makeConstraints {
-            $0.height.equalTo(20)
-            $0.width.equalTo(27)
+            $0.height.equalTo(30)
+            $0.width.equalTo(30)
         }
                 
         mainStapperStackView.snp.makeConstraints{
