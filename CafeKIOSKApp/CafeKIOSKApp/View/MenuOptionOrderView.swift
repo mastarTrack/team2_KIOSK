@@ -14,15 +14,13 @@ class MenuOptionOrderView: UIView {
     
     // MARK: - Closures
     /// 메뉴 개수 증가 버튼 이벤트용 클로져
-    var orderIncreaseCountClosure: (()->Void)?
-    /// 메뉴 개수 감소 버튼 이벤트용 클로져
-    var orderDecreaseCountClosure: (()->Void)?
+    var orderCountButtonClosure: ((MenuOptionViewModel.StepperAction)->Void)?
     /// 담기 버튼 이벤트용 클로져
     // TODO: 메인뷰에 전달할 모델값으로 수정 예정
-    var cartCartClosure: (()->Void)?
+    var returnMainViewBottonClosure: (()->Void)?
     /// 주문하기 버튼 이벤트용 클로져
     // TODO: 결제뷰에 전달할 모델값으로 수정 예정
-    var orderCartClosure: (()->Void)?
+    var orderButtonClosure: (()->Void)?
     
     
     // MARK: - Components
@@ -96,7 +94,6 @@ class MenuOptionOrderView: UIView {
         super.init(frame: frame)
         configureUI()
         SetButtonAction()
-        setSampleData()
     }
     
     required init?(coder: NSCoder) {
@@ -109,22 +106,28 @@ class MenuOptionOrderView: UIView {
 extension MenuOptionOrderView {
     private func SetButtonAction() {
         increaseButton.addAction(UIAction { [weak self] _ in
-            self?.orderIncreaseCountClosure?()
+            self?.orderCountButtonClosure?(.Increase)
         }, for: .touchUpInside)
         
         decreaseButton.addAction(UIAction { [weak self] _ in
-            self?.orderDecreaseCountClosure?()
+            self?.orderCountButtonClosure?(.Decrease)
         }, for: .touchUpInside)
         
         cartButton.addAction(UIAction{ [weak self] _ in
-            self?.cartCartClosure?()
+            self?.returnMainViewBottonClosure?()
         }, for: .touchUpInside)
         orderButton.addAction(UIAction { [weak self] _ in
-            self?.orderCartClosure?()
+            self?.orderButtonClosure?()
         }, for: .touchUpInside)
     }
     
     func updateOptionUIData(count: Int, price: String) {
+        if count == 1 {
+            decreaseButton.isEnabled = false
+        } else {
+            decreaseButton.isEnabled = true
+        }
+        
         countLabel.text = "\(count)"
         TotalPriceLabel.text = price
     }
@@ -158,9 +161,9 @@ extension MenuOptionOrderView {
             //$0.backgroundColor = .black
         }
         
-        topStack.addArrangedSubview(increaseButton)
-        topStack.addArrangedSubview(countLabel)
         topStack.addArrangedSubview(decreaseButton)
+        topStack.addArrangedSubview(countLabel)
+        topStack.addArrangedSubview(increaseButton)
         topStack.addArrangedSubview(emptyTopMiddleView)
         topStack.addArrangedSubview(TotalPriceLabel)
         topStack.addArrangedSubview(emptyTopView)
@@ -191,10 +194,10 @@ extension MenuOptionOrderView {
         }
         
         increaseButton.snp.makeConstraints {
-            $0.leading.equalToSuperview().offset(20)
             $0.width.height.equalTo(40)
         }
         decreaseButton.snp.makeConstraints {
+            $0.leading.equalToSuperview().offset(20)
             $0.width.height.equalTo(40)
         }
         TotalPriceLabel.snp.makeConstraints {

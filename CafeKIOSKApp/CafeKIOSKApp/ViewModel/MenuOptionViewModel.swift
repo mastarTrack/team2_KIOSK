@@ -45,13 +45,25 @@ class MenuOptionViewModel {
         self.cartManager = cartManager
         self.cartItem = CartItem(menu: menuItem, isIce: true, shotCount: 0, count: 1)
         cartItem = SetSampleData()
+        checkedNewSection()
     }
 }
 
 //MARK: - METHOD: Update Date
 extension MenuOptionViewModel {
+    
     func updateSizeSelect(select: Int) {
         selectedSizeIndex = select
+    }
+    
+    func updateMenuCount(action: StepperAction) {
+        switch action {
+        case .Increase:
+            cartItem.count += 1
+        case .Decrease:
+            guard !(cartItem.count == 1) else { return }
+            cartItem.count -= 1
+        }
     }
     
     func updateIceHot(isIce: Bool) {
@@ -99,13 +111,37 @@ extension MenuOptionViewModel {
             return .None
         }
     }
-    
-    func updateCount(count: Int) {
-        cartItem.count = count
-    }
+}
+
+//MARK: - METHOD: Set OrderView Closure
+extension MenuOptionViewModel {
+
 }
 
 
+//MARK: - METHOD: Set Section
+extension MenuOptionViewModel {
+    func checkedNewSection() {
+        activeSections.append(.mainImage)
+        if cartItem.menu.options.temperature?.count == 2 {
+            activeSections.append(.iceHot)
+        }
+        if let extraShot = cartItem.menu.options.extraShot {
+            if extraShot.max > 0 {
+                activeSections.append(.stepper)
+            }
+        }
+        if let size = cartItem.menu.options.size {
+            if size.count > 0 {
+                activeSections.append(.check)
+                cartItem.option = ["SIZE":[:]]
+                guard let size = cartItem.menu.options.size, size.count > 0 else { return }
+                cartItem.option?["SIZE"] = [size.first ?? "" : 0]
+            }
+        }
+    }
+    
+}
 
 //MARK: - Sample Data
 extension MenuOptionViewModel {

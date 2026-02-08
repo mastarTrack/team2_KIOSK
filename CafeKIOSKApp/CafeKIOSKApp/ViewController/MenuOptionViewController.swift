@@ -11,27 +11,14 @@ import Then
 
 class MenuOptionViewController: UIViewController {
     
-    enum MenuSectionType {
-        case mainImage
-        case iceHot
-        case stepper
-        case check
-    }
     //MARK: - ViewModel
-    let viewModel: MenuOptionViewModel
+    private let viewModel: MenuOptionViewModel
     
     //MARK: - Components
-    var collectionView: UICollectionView!
-
-    let menuOrderView = MenuOptionOrderView()
+    private var collectionView: UICollectionView!
     
-    //MARK: - Properties
+    private let menuOrderView = MenuOptionOrderView()
     
-    var selectedSizeIndex: Int? = 0
-    
-    var tempCartManager = CartManager()
-    
-        
     //MARK: - Init
     init(menu: MenuItem, cartManager: CartManager) {
         viewModel = MenuOptionViewModel(cartManager: cartManager, menuItem: menu)
@@ -50,37 +37,50 @@ class MenuOptionViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        checkedNewSection()
         configureUI()
+        setOrderViewClosures()
     }
 }
 
-//MARK: - METHOD: Clousure
+//MARK: - OrderView Related Methods
 extension MenuOptionViewController {
-    func setClosure() {
+    /// orderView 클로져 세팅 메소드
+    func setOrderViewClosures(){
+        menuOrderView.orderCountButtonClosure = { [weak self] action in
+            guard let self else { return }
+            viewModel.updateMenuCount(action: action)
+            updateOrderUI()
+        }
+    }
+    
+    // orderView UI 갱신 메소드
+    func updateOrderUI() {
+        menuOrderView.updateOptionUIData(
+            count: viewModel.cartItem.count,
+            price: "\(formatAsCurrency(intMoney: viewModel.cartItem.getTotalPrice() * viewModel.cartItem.count)) 원")
+    }
+}
+
+//MARK: - CollectionView Related Methods
+extension MenuOptionViewController {
+    // 단일 선택 관리 메서드
+    private func updateSelectedSize(to indexPath: IndexPath) {
+        // 이전 선택 해제
+        if let previousIndex = viewModel.selectedSizeIndex,
+           let previousCell = collectionView.cellForItem(at: IndexPath(item: previousIndex, section: indexPath.section)) as? optionCheckCell {
+            previousCell.optionCheckView.setChecked(false)
+        }
         
-    }
-}
-
-
-
-//MARK: - METHOD: Check Add section
-extension MenuOptionViewController {
-    /// 어떤 섹션을 추가할지 체크하는 메소드
-    func checkedNewSection() {
-        viewModel.activeSections.append(.mainImage)
-        if viewModel.cartItem.menu.options.temperature?.count == 2 {
-            viewModel.activeSections.append(.iceHot)
+        // 현재 선택 적용
+        if let currentCell = collectionView.cellForItem(at: indexPath) as? optionCheckCell {
+            currentCell.optionCheckView.setChecked(true)
         }
-        if let extraShot = viewModel.cartItem.menu.options.extraShot {
-            if extraShot.max > 0 {
-                viewModel.activeSections.append(.stepper)
-            }
-        }
+        
+        // viewModel에 데이터 저장
+        viewModel.selectedSizeIndex = indexPath.item
         if let size = viewModel.cartItem.menu.options.size {
-            if size.count > 0 {
-                viewModel.activeSections.append(.check)
-            }
+            viewModel.cartItem.option?["SIZE"] = [size[indexPath.item] : indexPath.item * 500]
+            updateOrderUI()
         }
     }
 }
@@ -112,7 +112,7 @@ extension MenuOptionViewController: UICollectionViewDataSource, UICollectionView
         }
     }
     
-    /// indexPath 위치에 표시할 셀을 생성 및 구성하는 메소드
+    /// indexPath 위치에 표시할 셀을 생성하는 메소드
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
         switch viewModel.activeSections[indexPath.section] {
@@ -121,7 +121,6 @@ extension MenuOptionViewController: UICollectionViewDataSource, UICollectionView
                 withReuseIdentifier: optionDescriptionCell.identifier,
                 for: indexPath
             ) as! optionDescriptionCell
-            
             let iceHotText = viewModel.cartItem.menu.options.temperature?.reversed().joined(separator: " | ") ?? ""
             cell.optionDescriptionView.setUIData(viewModel.cartItem.menu.imageUrl,
                                                  viewModel.cartItem.menu.name,
@@ -134,25 +133,10 @@ extension MenuOptionViewController: UICollectionViewDataSource, UICollectionView
                 withReuseIdentifier: optionIceHotCell.identifier,
                 for: indexPath
             ) as! optionIceHotCell
-            return cell
-            
-        case .check:
-            let cell = collectionView.dequeueReusableCell(
-                withReuseIdentifier: optionCheckCell.identifier, for: indexPath) as! optionCheckCell
-            
-            if let size = viewModel.cartItem.menu.options.size {
-                let isChecked = (selectedSizeIndex == indexPath.item)
-                cell.optionCheckView.setUIData(
-                    title: size[indexPath.item],
-                    price: "+ \(formatAsCurrency(intMoney: indexPath.item * 500)) 원",
-                    checked: isChecked
-                )
-
-                // Closure 전달
-                cell.didTapCheck = { [weak self] in
-                    guard let self = self else { return }
-                    self.updateSelectedSize(to: indexPath)
-                }
+            cell.optionIceHotView.updateSelected(isIce: viewModel.cartItem.isIce)
+            cell.optionIceHotView.isIceClosure = { [weak self] isIce in
+                guard let self else { return }
+                viewModel.updateIceHot(isIce: isIce)
             }
             return cell
             
@@ -160,17 +144,17 @@ extension MenuOptionViewController: UICollectionViewDataSource, UICollectionView
             let cell = collectionView.dequeueReusableCell(
                 withReuseIdentifier: optionStapperCell.identifier,
                 for: indexPath ) as! optionStapperCell
+            
             cell.optionStapperView.ButtonActionClosure = { [weak self] action in
                 guard let self else { return }
                 self.viewModel.updateShotCount(action: action)
+                self.updateOrderUI()
             }
-            
             cell.optionStapperView.updateOptionDataUI(
                 count: viewModel.cartItem.shotCount,
                 price: "+ \(formatAsCurrency(intMoney: viewModel.cartItem.shotCount * (viewModel.cartItem.menu.options.extraShot?.pricePerShot ?? 0))) 원",
                 minMax: viewModel.getShotCountState()
             )
-            
             viewModel.shotCountChanged = { [weak self] count, minMax in
                 guard let self else { return }
                 cell.optionStapperView.updateOptionDataUI(
@@ -179,27 +163,30 @@ extension MenuOptionViewController: UICollectionViewDataSource, UICollectionView
                     minMax: minMax
                 )
             }
+            return cell
             
+        case .check:
+            let cell = collectionView.dequeueReusableCell(
+                withReuseIdentifier: optionCheckCell.identifier, for: indexPath) as! optionCheckCell
+            
+            if let size = viewModel.cartItem.menu.options.size {
+                let isChecked = (viewModel.selectedSizeIndex == indexPath.item)
+                
+                cell.optionCheckView.setUIData(
+                    title: size[indexPath.item],
+                    price: "+ \(formatAsCurrency(intMoney: indexPath.item * 500)) 원",
+                    checked: isChecked
+                )
+                
+                // Closure 전달
+                cell.didTapCheck = { [weak self] in
+                    guard let self = self else { return }
+                    self.updateSelectedSize(to: indexPath)
+                }
+            }
             return cell
         }
     }
-    
-    // 단일 선택 관리 메서드
-    private func updateSelectedSize(to indexPath: IndexPath) {
-        // 이전 선택 해제
-        if let previousIndex = selectedSizeIndex,
-           let previousCell = collectionView.cellForItem(at: IndexPath(item: previousIndex, section: indexPath.section)) as? optionCheckCell {
-            previousCell.optionCheckView.setChecked(false)
-        }
-
-        // 현재 선택 적용
-        if let currentCell = collectionView.cellForItem(at: indexPath) as? optionCheckCell {
-            currentCell.optionCheckView.setChecked(true)
-        }
-
-        selectedSizeIndex = indexPath.item
-    }
-    
 }
 
 
@@ -210,7 +197,7 @@ extension MenuOptionViewController {
         return UICollectionViewCompositionalLayout { [weak self] (sectionIndex, _) -> NSCollectionLayoutSection? in
             guard let self = self else { return nil }
             let MenuSectionType = self.viewModel.activeSections[sectionIndex]
-
+            
             switch MenuSectionType {
             case .mainImage:
                 return DesriptionSection()
@@ -228,7 +215,7 @@ extension MenuOptionViewController {
 //MARK: - METHOD: CompositionalLayout Settings
 extension MenuOptionViewController {
     /// 메뉴 설명 섹션 생성 메소드
-    func DesriptionSection() -> NSCollectionLayoutSection {
+    private func DesriptionSection() -> NSCollectionLayoutSection {
         let item = NSCollectionLayoutItem(
             layoutSize: .init(
                 widthDimension: .fractionalWidth(1.0),
@@ -249,10 +236,10 @@ extension MenuOptionViewController {
     }
     
     /// Ice/Hot 옵션 섹션 생성 메소드
-    func iceHotSection() -> NSCollectionLayoutSection {
+    private func iceHotSection() -> NSCollectionLayoutSection {
         let item = NSCollectionLayoutItem(
             layoutSize: .init(widthDimension: .fractionalWidth(1),
-                  heightDimension: .absolute(60))
+                              heightDimension: .absolute(60))
         )
         let group = NSCollectionLayoutGroup.vertical(
             layoutSize: .init(widthDimension: .fractionalWidth(1.0),
@@ -269,7 +256,7 @@ extension MenuOptionViewController {
     func stepperSection() -> NSCollectionLayoutSection {
         let item = NSCollectionLayoutItem(
             layoutSize: .init(widthDimension: .fractionalWidth(1.0),
-                  heightDimension: .absolute(80))
+                              heightDimension: .absolute(80))
         )
         
         let group = NSCollectionLayoutGroup.vertical(
@@ -284,10 +271,10 @@ extension MenuOptionViewController {
     }
     
     /// 체크 옵션 섹션 생성 메소드
-    func checkSection() -> NSCollectionLayoutSection {
+    private func checkSection() -> NSCollectionLayoutSection {
         let item = NSCollectionLayoutItem(
             layoutSize: .init(widthDimension: .fractionalWidth(1.0),
-                  heightDimension: .absolute(60))
+                              heightDimension: .absolute(60))
         )
         
         let group = NSCollectionLayoutGroup.vertical(
@@ -297,7 +284,7 @@ extension MenuOptionViewController {
         let section = NSCollectionLayoutSection(group: group)
         section.contentInsets = .init(top: 9, leading: 0, bottom: 9, trailing: 0)
         section.interGroupSpacing = 5
-
+        
         return section
     }
 }
@@ -305,7 +292,7 @@ extension MenuOptionViewController {
 //MARK: - METHOD: UI Configure
 extension MenuOptionViewController {
     /// 초기 UI 세팅 메소드
-    func configureUI(){
+    private func configureUI(){
         // 컬랙션뷰 생성
         collectionView = UICollectionView(frame: .zero, collectionViewLayout: createLayout())
         
@@ -314,6 +301,11 @@ extension MenuOptionViewController {
         collectionView.register(optionCheckCell.self, forCellWithReuseIdentifier: optionCheckCell.identifier)
         collectionView.register(optionStapperCell.self, forCellWithReuseIdentifier: optionStapperCell.identifier)
         collectionView.dataSource = self
+        
+        menuOrderView.updateOptionUIData(
+            count: viewModel.cartItem.count,
+            price: "\(formatAsCurrency(intMoney: viewModel.cartItem.getTotalPrice() * viewModel.cartItem.count)) 원")
+        
         view.addSubview(collectionView)
         view.addSubview(menuOrderView)
         collectionView.backgroundColor = .systemGray6
