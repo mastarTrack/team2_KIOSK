@@ -87,6 +87,11 @@ class CartManager {
         print("\(newItem.menu.name)가 \(newItem.count)개가 장바구니에 추가되었습니다!")
     }
     
+    func addItem(newItem : CartItem) {
+        items.append(newItem)
+        print("\(newItem.menu.name)가 \(newItem.count)개가 장바구니에 추가되었습니다!")
+    }
+    
     // 총 가격 계산하는 함수
     func calculateTotal() -> Int {
         var total = 0

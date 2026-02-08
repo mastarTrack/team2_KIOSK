@@ -37,6 +37,8 @@ class MenuOptionViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.title = "옵션 선택"
+
         configureUI()
         setOrderViewClosures()
     }
@@ -46,10 +48,26 @@ class MenuOptionViewController: UIViewController {
 extension MenuOptionViewController {
     /// orderView 클로져 세팅 메소드
     func setOrderViewClosures(){
+        // 개수 버튼 클로져 설정
         menuOrderView.orderCountButtonClosure = { [weak self] action in
             guard let self else { return }
             viewModel.updateMenuCount(action: action)
             updateOrderUI()
+        }
+        
+        // 주문하기 버튼 클로져 설정
+        menuOrderView.orderButtonClosure = { [weak self] in
+            guard let self else { return }
+            viewModel.commitToCart()
+            let cartTableVC = CartTableViewController()
+            navigationController?.pushViewController(cartTableVC, animated: true)
+        }
+        
+        // 담기 버튼 클로져 설정
+        menuOrderView.returnMainViewBottonClosure = { [weak self] in
+            guard let self else { return }
+            viewModel.commitToCart()
+            navigationController?.popViewController(animated: true)
         }
     }
     

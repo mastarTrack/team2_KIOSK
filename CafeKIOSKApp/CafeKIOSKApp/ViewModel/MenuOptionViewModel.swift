@@ -44,7 +44,6 @@ class MenuOptionViewModel {
     init(cartManager: CartManager, menuItem: MenuItem) {
         self.cartManager = cartManager
         self.cartItem = CartItem(menu: menuItem, isIce: true, shotCount: 0, count: 1)
-        cartItem = SetSampleData()
         checkedNewSection()
     }
 }
@@ -111,13 +110,11 @@ extension MenuOptionViewModel {
             return .None
         }
     }
+    
+    func commitToCart() {
+        cartManager.addItem(newItem: cartItem)
+    }
 }
-
-//MARK: - METHOD: Set OrderView Closure
-extension MenuOptionViewModel {
-
-}
-
 
 //MARK: - METHOD: Set Section
 extension MenuOptionViewModel {
