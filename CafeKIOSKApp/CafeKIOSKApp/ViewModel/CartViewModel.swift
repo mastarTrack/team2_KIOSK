@@ -9,30 +9,35 @@ import Foundation
 
 class CartViewModel{
     
-    private var cartManager = CartManager()
-    
     // View 갱신용 클로저
     var dataChanged: (() -> Void)?
     
+    
+    // 더미 데이터 가져오기
+    private var cartManager = CartManager()
     func fetchData() {
         let mockItems = cartManager.makeMockCartItems()
-        
         cartManager.items = mockItems
-        
         dataChanged?()
-        }
+    }
+    
+    
     // 테이블뷰 행 개수
     var rowCount: Int {
         return cartManager.items.count
     }
     
-//    func toggleSelectAll() {  
-//        // 1. 모든 요소가 true인지 검사
-//        let isAllSelected = cartManager.items.allSatisfy { $0.isSelected == true }
-//        
-//        // 2. 반대 상태로 설정하기
-//    }
-//    
+    // 선택된 아이템의 개수
+    var selectedCount: Int {
+        return cartManager.items.filter { $0.isSelected! }.count
+    }
+    
+    var totalPrice: Int {
+        let total = cartManager.calculateTotal()
+        return total
+    }
+    
+    
     // 특정한 인덱스값의 items 반환하기
     func item(at index: Int) -> CartItem {
         return cartManager.items[index]
@@ -41,7 +46,6 @@ class CartViewModel{
     // 아이템 삭제하기
     func removeItem(at index: Int) {
         cartManager.items.remove(at: index)
-        
         dataChanged?()
     }
     
@@ -51,13 +55,15 @@ class CartViewModel{
         dataChanged?()
     }
     
+    // 수량 감소 함수
     func decreaseCount(at index: Int) {
         if cartManager.items[index].count > 1 {
             cartManager.items[index].count -= 1
             dataChanged?()
         }
     }
-
+    
+    // 전체 선택 함수
     func ToggleAllSelection() {
         let isAllSelected = cartManager.items.allSatisfy { $0.isSelected! }
         
@@ -71,19 +77,9 @@ class CartViewModel{
         dataChanged?()
     }
     
+    // 선택버튼 함수
     func toggleSelection(at index: Int) {
         cartManager.items[index].isSelected?.toggle()
         dataChanged?()
     }
-        
-    var selectedCount: Int {
-        return cartManager.items.filter { $0.isSelected! }.count
-        }
-    
-    var totalPrice: Int {
-        let total = cartManager.calculateTotal()
-        return total
-    }
-    
 }
-
