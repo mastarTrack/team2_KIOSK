@@ -11,6 +11,7 @@ import SnapKit
 
 class CartView: UIView {
     
+    // MARK: -- 상단, 테이블, 하단 뷰 선언
     // 1. 상단 뷰 (타이틀, 위치)
     let topView = CartTopView()
     
@@ -24,7 +25,7 @@ class CartView: UIView {
     let bottomView = CartBottomView()
     
     
-    // 초기화
+    // MARK: -- 초기화
     override init(frame: CGRect) {
         super.init(frame: frame)
         setupUI()
@@ -33,8 +34,9 @@ class CartView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
-    // 뷰 위치 잡기
+    // MARK: -- 뷰 위치 잡기
     private func setupUI() {
+        // addSubview
         [topView, tableView, bottomView].forEach {
             addSubview($0)
         }
@@ -43,7 +45,7 @@ class CartView: UIView {
         topView.snp.makeConstraints {
             $0.leading.trailing.equalToSuperview()
             $0.top.equalTo(safeAreaLayoutGuide)
-            $0.height.equalTo(130)
+            $0.height.equalTo(80)
         }
         
         // 테이블뷰 위치 잡기
@@ -59,9 +61,10 @@ class CartView: UIView {
             $0.leading.trailing.bottom.equalToSuperview()
             $0.height.equalTo(110)
         }
-        
-        
     }
 }
 
+#Preview {
+    UINavigationController(rootViewController: CartViewController())
+}
 
