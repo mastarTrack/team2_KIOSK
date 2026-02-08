@@ -29,7 +29,8 @@ class CartTableViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
-        
+        self.title = "장바구니"
+
         setupUIView()
         fetchData()      // 데이터 가져와
         

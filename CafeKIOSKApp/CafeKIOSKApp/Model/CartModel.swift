@@ -13,6 +13,52 @@ struct CartItem {
     var isIce: Bool         // 아이스 여부 (true면 아이스)
     var shotCount: Int      // 샷 추가 횟수 (안했으면 0)
     var count: Int          // 주문 수량 (몇 잔)
+    var option: [String:[String:Int]]? // [옵션명:[선택옵션명:가격]]
+    
+    func getTotalPrice() -> Int {
+        var price = menu.price
+        
+        // 샷 가격 추가
+        price += shotCount * (menu.options.extraShot?.pricePerShot ?? 0)
+        
+        // 옵션 가격 추가
+        if let option {
+            for (_, optionValues) in option {
+                      for (_, optionPrice) in optionValues {
+                          price += optionPrice
+                      }
+                  }
+        }
+        return price
+    }
+    
+    static func SetSampleData()-> CartItem {
+        return CartItem(menu: MenuItem(
+            id: "menu_001",
+            categoryId: "coffee",
+            name: "아메리카노",
+            nameEn: "Americano",
+            description: "에스프레소에 물을 더해 깔끔한 맛의 커피",
+            price: 4500,
+            imageUrl: "https://img.79plus.co.kr/megahp/manager/upload/menu/20240610105645_1717984605982_8i5CoHU2NV.jpg",
+            tags: ["BEST", "HOT", "ICE"],
+            options: ItemOptions(
+                temperature: ["HOT", "ICE"],
+                size: ["TALL", "GRANDE", "VENTI"],
+                extraShot: ExtraShot(
+                    min: 0,
+                    max: 3,
+                    pricePerShot: 500
+                ),
+                iceLevel: ["LESS", "NORMAL", "MORE"]
+            ),
+            displayOrder: 1
+        ),
+                                isIce: true,
+                                shotCount: 0,
+                                count: 0
+        )
+    }
 }
 
 // 2. 물건들이 담길 장바구니 그 자체 (아이템 추가, 가격 계산, 비우기 기능)
@@ -20,6 +66,10 @@ class CartManager {
     
     // 빈 장바구니 배열
     var items: [CartItem] = []
+    
+    var sum: ((Int)->Void)?
+    
+    var cartCount: ((Int)->Void)?
     
     // 장바구니에 아이템을 추가하는 함수
     func addItem(menu: MenuItem, isIce: Bool, shotCount: Int, count: Int) {
@@ -33,6 +83,11 @@ class CartManager {
         )
         
         // 빈 장바구니 배열에 집어넣기
+        items.append(newItem)
+        print("\(newItem.menu.name)가 \(newItem.count)개가 장바구니에 추가되었습니다!")
+    }
+    
+    func addItem(newItem : CartItem) {
         items.append(newItem)
         print("\(newItem.menu.name)가 \(newItem.count)개가 장바구니에 추가되었습니다!")
     }

@@ -82,7 +82,7 @@ extension MenuOptionCheckView {
     func setUIData(title: String, price: String, checked: Bool) {
         optionTitleLabel.text = title
         optionPriceLabel.text = price
-        setChecked(isSelected)
+        setChecked(checked)
     }
 }
 
@@ -130,5 +130,5 @@ extension MenuOptionCheckView {
 //}
 
 #Preview {
-    MenuOptionCheckView()
+    MenuOptionViewController()
 }

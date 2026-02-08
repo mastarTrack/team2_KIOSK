@@ -29,6 +29,11 @@ class MainMenuViewController: UIViewController {
         return pageControl
     }()
     
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        updateBottomView()
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
@@ -74,10 +79,11 @@ class MainMenuViewController: UIViewController {
     }
     
     func passSelectedItem() {
-        mainMenuCollectionView.selectedItem = { item in // <여기서 전달 받습니당
-            // 여기에 주헌님 뷰컨 생성해서 네비게이션 바에 이런식으로 넣어주면 됩니다 👍
-            // let detailVC = DetailViewController(item: item, cartModel: CartModel) 선택된 아이템과 카트모델 같이 보내줍니다
-            // navigationController?.pushViewController(detailVC, animated: true)
+        mainMenuCollectionView.selectedItem = { [weak self] item in
+            guard let self else { return }
+            let detailVC = MenuOptionViewController(menu: item, cartManager: self.cartModel)
+            navigationController?.pushViewController(detailVC, animated: true)
+            
         }
     }
     
