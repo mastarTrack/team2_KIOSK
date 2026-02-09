@@ -63,8 +63,3 @@ class CartView: UIView {
         }
     }
 }
-
-#Preview {
-    UINavigationController(rootViewController: CartViewController())
-}
-

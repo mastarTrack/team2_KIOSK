@@ -68,8 +68,3 @@ class CartBottomView: UIView {
     }
 
 }
-
-
-#Preview {
-    CartViewController()
-}
