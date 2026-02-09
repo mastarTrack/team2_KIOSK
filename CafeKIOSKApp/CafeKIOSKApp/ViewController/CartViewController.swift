@@ -13,11 +13,31 @@ class CartViewController: UIViewController {
     
     // 메인뷰로 사용할 CartView의 인스턴스 만들고 VM 인스턴스도 만듬
     private let cartView = CartView()
-    private let viewModel = CartViewModel()
+    
+//    private let viewModel = CartViewModel(cartManager: CartManager())
+    
+    // 외부에서 주입받을 변수
+    private let viewModel: CartViewModel
+    
+    // 생성자 추가: 외부에서 만든 ViewModel을 받음
+    init(cartManager: CartManager) {
+        self.viewModel = CartViewModel(cartManager: cartManager)
+        super.init(nibName: nil, bundle: nil)
+    }
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
     // 메인뷰를 cartview로 교체
     override func loadView() {
         self.view = cartView
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        // 화면이 나타날 때마다 최신 데이터를 가져옴
+        viewModel.fetchData()
     }
     
     override func viewDidLoad() {
@@ -27,9 +47,14 @@ class CartViewController: UIViewController {
         setupNavigationBar() // 네비게이션바 셋업
         setupTableView() // 테이블뷰 셋업
         setupBindings() // VM과 View 연결
-        
-        //데이터 가져오기
+//        
+//        //데이터 가져오기
         viewModel.fetchData()
+        
+//        // 뷰모델이 "데이터 바뀌었다(dataChanged)"고 신호주면 테이블뷰 리로드
+//        viewModel.dataChanged = { [weak self] in
+//            self?.cartView.tableView.reloadData()
+//        }
     }
     
     private func setupNavigationBar() {
@@ -139,7 +164,4 @@ extension CartViewController: UITableViewDataSource, UITableViewDelegate {
         return cell
     }
     
-}
-#Preview {
-    UINavigationController(rootViewController: CartViewController())
 }

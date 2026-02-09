@@ -8,16 +8,25 @@
 import Foundation
 
 class CartViewModel{
+    var items: [CartItem] = []
     
     // View 갱신용 클로저
     var dataChanged: (() -> Void)?
     
+    // 외부에서 받아올 변수로 변경
+    let cartManager: CartManager
     
-    // 더미 데이터 가져오기
-    private var cartManager = CartManager()
+    // 생성자 추가: 밖에서 던져주는 cartManager를 받음
+    init(cartManager: CartManager) {
+        self.cartManager = cartManager
+    }
+    
     func fetchData() {
-        let mockItems = cartManager.makeMockCartItems()
-        cartManager.items = mockItems
+        // [수정 2] 매니저가 들고 있는 진짜 데이터를 뷰모델의 배열로 가져옵니다.
+        // (더 이상 mockItems를 만들 필요가 없습니다)
+        self.items = cartManager.items
+        
+        // [수정 3] 뷰에게 "데이터 준비됐으니 화면 갱신해!"라고 알립니다.
         dataChanged?()
     }
     
