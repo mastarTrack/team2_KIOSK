@@ -35,11 +35,14 @@ class MainBottomView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func update(cartCount: Int, price: Int) {
-        priceLabel.text = formatAsCurrency(intMoney: price)
-        
-        shoppingCartButton.configuration?.subtitle =
-        "총 수량: \(cartCount)개"
+    func updatePrice(_ price: Int) {
+        priceLabel.text = String(price)
+    }
+
+    func updateCount(_ count: Int) {
+        var config = shoppingCartButton.configuration
+        config?.subtitle = "총 수량: \(count)개"
+        shoppingCartButton.configuration = config
     }
     
     func configure() {

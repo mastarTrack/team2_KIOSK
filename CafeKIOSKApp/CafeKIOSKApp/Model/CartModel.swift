@@ -71,14 +71,37 @@ struct CartItem {
 class CartManager {
     
     // 빈 장바구니 배열
-    var items: [CartItem] = []
+    var items: [CartItem] = [] {
+        didSet {
+            recalculate()
+        }
+    }
     
     var sum: ((Int)->Void)?
     
     var cartCount: ((Int)->Void)?
     
-    var currentSum = 0
-    var currentCount = 0
+    var currentSum = 0 {
+        didSet {
+            sum?(currentSum)
+        }
+    }
+    
+    var currentCount = 0 {
+        didSet {
+            cartCount?(currentCount)
+        }
+    }
+    
+    func recalculate() {
+        currentCount = items.reduce(0) { total, item in
+            item.count + total
+        }
+        currentSum = items.reduce(0) { total, item in
+            guard item.isSelected ?? true else { return total }
+            return total + item.getTotalPrice() * item.count
+        }
+    }
     
     // 장바구니에 아이템을 추가하는 함수
     func addItem(menu: MenuItem, isIce: Bool, shotCount: Int, count: Int) {
@@ -96,19 +119,13 @@ class CartManager {
         // 빈 장바구니 배열에 집어넣기
         items.append(newItem)
         print("\(newItem.menu.name)가 \(newItem.count)개가 장바구니에 추가되었습니다!")
-        currentSum = calculateTotal()
-        currentCount = items.count
-        sum?(currentSum)
-        cartCount?(items.count)
+
     }
     
     func addItem(newItem : CartItem) {
         items.append(newItem)
         print("\(newItem.menu.name)가 \(newItem.count)개가 장바구니에 추가되었습니다!")
-        currentCount = items.count
-        currentSum = calculateTotal()
-        sum?(currentSum)
-        cartCount?(items.count)
+ 
     }
     
     // 총 가격 계산하는 함수 (수정됨: CartItem의 getTotalPrice 활용)
@@ -133,10 +150,7 @@ class CartManager {
     // 장바구니 비우기
     func clear() {
         items.removeAll() // 배열 전체 지우기
-        currentCount = items.count
-        currentSum = calculateTotal()
-        sum?(currentSum)
-        cartCount?(items.count)
+        
     }
     
 }
