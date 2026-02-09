@@ -13,9 +13,7 @@ class CartViewController: UIViewController {
     
     // 메인뷰로 사용할 CartView의 인스턴스 만들고 VM 인스턴스도 만듬
     private let cartView = CartView()
-    
-//    private let viewModel = CartViewModel(cartManager: CartManager())
-    
+        
     // 외부에서 주입받을 변수
     private let viewModel: CartViewModel
     
@@ -47,14 +45,10 @@ class CartViewController: UIViewController {
         setupNavigationBar() // 네비게이션바 셋업
         setupTableView() // 테이블뷰 셋업
         setupBindings() // VM과 View 연결
-//        
-//        //데이터 가져오기
+        
+        //데이터 가져오기
         viewModel.fetchData()
         
-//        // 뷰모델이 "데이터 바뀌었다(dataChanged)"고 신호주면 테이블뷰 리로드
-//        viewModel.dataChanged = { [weak self] in
-//            self?.cartView.tableView.reloadData()
-//        }
     }
     
     private func setupNavigationBar() {
@@ -93,43 +87,40 @@ class CartViewController: UIViewController {
     private func setupBindings() {
         viewModel.dataChanged = { [weak self] in
             guard let self = self else { return }
+            
             // View 업데이트
-            DispatchQueue.main.async {
-                self.cartView.tableView.reloadData()
-                self.cartView.bottomView.updatePrice(self.viewModel.totalPrice)
-                self.cartView.topView.updateStatus(selectedCount: self.viewModel.selectedCount, totalCount: self.viewModel.rowCount)
-            }
+            self.cartView.tableView.reloadData()
+            self.cartView.bottomView.updatePrice(self.viewModel.totalPrice)
+            self.cartView.topView.updateStatus(selectedCount: self.viewModel.selectedCount, totalCount: self.viewModel.rowCount)
             
             // 주문 버튼
             cartView.bottomView.OrderButtonTapped = { [weak self] in
-                // 팝업창 만들기
-                let alert = UIAlertController(
-                    title: "주문 완료",
-                    message: "주문이 성공적으로 접수되었습니다.\n잠시만 기다려주세요.",
-                    preferredStyle: .alert
-                )
-                
-                // 버튼 만들기
-                let okAction = UIAlertAction(title: "확인", style: .default) { _ in
-                    // 확인 버튼을 눌렀을 때 실행할 코드
-                    print("확인 버튼 눌림")
+                if self?.viewModel.rowCount ?? 0 > 0 {
+                    // 팝업창 만들기
+                    let alert = UIAlertController(
+                        title: "주문 완료",
+                        message: "주문이 성공적으로 접수되었습니다.\n잠시만 기다려주세요.",
+                        preferredStyle: .alert
+                    )
+                    // 버튼 만들기
+                    let okAction = UIAlertAction(title: "확인", style: .default) { _ in
+                        // 확인 버튼을 눌렀을 때 실행할 코드
+                    }
+                    // 팝업창에 버튼 추가하기
+                    alert.addAction(okAction)
+                    // 화면에 띄우기
+                    self?.present(alert, animated: true, completion: nil)
                 }
-                
-                // 팝업창에 버튼 추가하기
-                alert.addAction(okAction)
-                
-                // 화면에 띄우기
-                self?.present(alert, animated: true, completion: nil)
+                self?.viewModel.removeItemAll() // 주문 후 모든 아이템 삭제
             }
-            
         }
+        
         // view에서 전달받음
         cartView.topView.selectAllAction = { [weak self] in
             // VM으로 전달함
             self?.viewModel.ToggleAllSelection()
         }
     }
-    
 }
 
 extension CartViewController: UITableViewDataSource, UITableViewDelegate {

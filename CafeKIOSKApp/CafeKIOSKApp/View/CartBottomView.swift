@@ -32,6 +32,7 @@ class CartBottomView: UIView {
         orderButton.addTarget(self, action: #selector(ButtonTapped), for: .touchUpInside)
     }
     
+    // 스토리 보드 해제
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -43,7 +44,7 @@ class CartBottomView: UIView {
     
     // 가격 텍스트를 업데이트하는 메서드
     func updatePrice(_ price: Int) {
-        let priceString = formatAsCurrency(intMoney: price)
+        let priceString = formatAsCurrency(intMoney: price) // ',' 넣어주는 함수
         orderButton.setTitle("\(priceString)원 주문하기", for: .normal)
     }
     
@@ -52,10 +53,10 @@ class CartBottomView: UIView {
         self.backgroundColor = .white
         
         // 떠있는듯한 그림자 효과
-        self.layer.shadowColor = UIColor.black.cgColor
-        self.layer.shadowOpacity = 0.1
-        self.layer.shadowOffset = CGSize(width: 0, height: -3)
-        self.layer.shadowRadius = 4
+        self.layer.shadowColor = UIColor.black.cgColor // 그림자 색상
+        self.layer.shadowOpacity = 0.1 // 투명도 조절
+        self.layer.shadowOffset = CGSize(width: 0, height: -3) // 좌우로는 치우치지않음, 위쪽으로 3만큼 그림자 생성
+        self.layer.shadowRadius = 4 // 부드럽게 만드는 효과
         
         self.addSubview(orderButton)
         

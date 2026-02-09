@@ -55,7 +55,6 @@ class CartTableViewCell: UITableViewCell {
     }
     
     private let temperatureLabel = UILabel().then {
-        $0.text = "1"
         $0.font = .systemFont(ofSize: 13)
         $0.textAlignment = .center
     }
@@ -67,7 +66,7 @@ class CartTableViewCell: UITableViewCell {
     
     // 삭제 버튼 구현
     private let deleteButton = UIButton().then {
-        let config = UIImage.SymbolConfiguration(pointSize: 13, weight: .regular)
+        let config = UIImage.SymbolConfiguration(pointSize: 20, weight: .regular)
         // SF symbol
         let image = UIImage(systemName: "xmark",  withConfiguration: config)
         $0.setImage(image, for: .normal)
@@ -76,7 +75,7 @@ class CartTableViewCell: UITableViewCell {
     
     // 체크 버튼 구현
     private let checkBox = UIButton().then {
-        let config = UIImage.SymbolConfiguration(pointSize: 22, weight: .bold)
+        let config = UIImage.SymbolConfiguration(pointSize: 27, weight: .bold)
         let image = UIImage(systemName: "checkmark.circle.fill",  withConfiguration: config)
         $0.setImage(image, for: .normal)
         $0.tintColor = .systemYellow
@@ -84,7 +83,7 @@ class CartTableViewCell: UITableViewCell {
     
     // 감소 버튼 구현
     private let minusButton = UIButton().then {
-        let config = UIImage.SymbolConfiguration(pointSize: 22, weight: .regular)
+        let config = UIImage.SymbolConfiguration(pointSize: 28, weight: .regular)
         let image = UIImage(systemName: "minus.square",  withConfiguration: config)
         $0.setImage(image, for: .normal)
         $0.tintColor = .systemGray2
@@ -92,7 +91,7 @@ class CartTableViewCell: UITableViewCell {
     
     // 증가 버튼 구현
     private let plusButton = UIButton().then {
-        let config = UIImage.SymbolConfiguration(pointSize: 22, weight: .regular)
+        let config = UIImage.SymbolConfiguration(pointSize: 28, weight: .regular)
         let image = UIImage(systemName: "plus.square",  withConfiguration: config)
         $0.setImage(image, for: .normal)
         $0.tintColor = .systemGray
@@ -208,7 +207,7 @@ class CartTableViewCell: UITableViewCell {
     func configure(with item: CartItem) {
         nameLabel.text = item.menu.name
         
-        priceLabel.text = "\(formatAsCurrency(intMoney: (item.menu.price + (item.menu.options.extraShot?.pricePerShot ?? 0 * item.shotCount)) * item.count))원"
+        priceLabel.text = "\(formatAsCurrency(intMoney: (item.menu.price + ((item.menu.options.extraShot?.pricePerShot ?? 0 ) * item.shotCount)) * item.count))원"
         
         countLabel.text = "\(item.count)"
         
@@ -233,9 +232,14 @@ class CartTableViewCell: UITableViewCell {
         
         // 샷 데이터 채워넣기
         let shots = item.shotCount
+<<<<<<< Updated upstream
         if shots > 0 {
             shotLabel.isHidden = false
             shotLabel.text = "\(item.shotCount)샷 추가(+\(item.menu.options.extraShot?.pricePerShot ?? 0 * item.shotCount)원)"
+=======
+        if shots > 0 { // 샷 추가 하였을때
+            shotLabel.text = "\(item.shotCount)샷 추가(+\((item.menu.options.extraShot?.pricePerShot ?? 0) * item.shotCount)원)"
+>>>>>>> Stashed changes
         } else {
             // 샷추가 하지않은 메뉴는 숨김
             shotLabel.isHidden = true
@@ -252,4 +256,7 @@ class CartTableViewCell: UITableViewCell {
     }
     
 }
+<<<<<<< Updated upstream
 
+=======
+>>>>>>> Stashed changes
