@@ -21,6 +21,8 @@ class MainBottomView: UIView {
         $0.distribution = .fill
     }
     
+    var onTapCartButton: (() -> Void)?
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         addSubview(stackView)
@@ -33,12 +35,27 @@ class MainBottomView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
+    func update(cartCount: Int, price: Int) {
+        priceLabel.text = formatAsCurrency(intMoney: price)
+        
+        shoppingCartButton.configuration?.subtitle =
+        "총 수량: \(cartCount)개"
+    }
+    
     func configure() {
         shoppingCartButton.applyBig()
         shoppingCartButton.configuration?.title = "장바구니 가기"
         shoppingCartButton.configuration?.subtitle = "총 수량: \(cartCount)개"
         shoppingCartButton.configuration?.image = UIImage(systemName: "cart")
         shoppingCartButton.configuration?.baseBackgroundColor = .brown
+        
+        shoppingCartButton.addTarget(
+            self,
+            action: #selector(didTapCartButton),
+            for: .touchUpInside
+        )
+        
+        
         stackView.snp.makeConstraints {
             $0.top.bottom.equalToSuperview()
             $0.leading.trailing.equalToSuperview().inset(30)
@@ -61,5 +78,9 @@ class MainBottomView: UIView {
         
         stackView.addArrangedSubview(labelStackView)
         stackView.addArrangedSubview(shoppingCartButton)
+    }
+    
+    @objc private func didTapCartButton() {
+        onTapCartButton?()
     }
 }

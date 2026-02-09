@@ -49,6 +49,7 @@ class MainMenuViewController: UIViewController {
         updateBottomView()
         
         configure()
+        ApplyBottomViewCartButton()
         
         mainMenuViewModel.loadMenu()
     }
@@ -87,12 +88,30 @@ class MainMenuViewController: UIViewController {
         }
     }
     
-    func updateBottomView() {
-        cartModel.sum = { sum in
-            self.mainBottomView.priceCount = String(sum)
+    func ApplyBottomViewCartButton() {
+        mainBottomView.onTapCartButton = { [weak self] in
+            guard let self else { return }
+            
+            let cartVC = CartViewController(cartManager: self.cartModel)
+            self.navigationController?.pushViewController(cartVC, animated: true)
         }
-        cartModel.cartCount = { count in
-            self.mainBottomView.cartCount = count
+    }
+    
+    func updateBottomView() {
+        cartModel.sum = { [weak self] sum in
+            guard let self else { return }
+            self.mainBottomView.update(
+                cartCount: self.cartModel.currentCount,
+                price: sum
+            )
+        }
+        
+        cartModel.cartCount = { [weak self] count in
+            guard let self else { return }
+            self.mainBottomView.update(
+                cartCount: count,
+                price: self.cartModel.currentSum
+            )
         }
     }
     
