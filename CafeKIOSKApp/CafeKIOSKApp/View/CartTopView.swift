@@ -36,7 +36,7 @@ class CartTopView: UIView {
     
     // 전체선택 체크 버튼 구현
     private let totalCheckButton = UIButton().then {
-        let config = UIImage.SymbolConfiguration(pointSize: 18, weight: .bold)
+        let config = UIImage.SymbolConfiguration(pointSize: 21, weight: .bold)
         let image = UIImage(systemName: "checkmark.circle.fill",  withConfiguration: config)
         $0.setImage(image, for: .normal)
         $0.tintColor = .systemGray4
@@ -119,10 +119,3 @@ class CartTopView: UIView {
         }
     }
 }
-
-
-
-#Preview {
-    UINavigationController(rootViewController: CartViewController())
-}
-
