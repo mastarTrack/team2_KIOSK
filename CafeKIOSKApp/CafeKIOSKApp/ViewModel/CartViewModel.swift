@@ -22,14 +22,9 @@ class CartViewModel{
     }
     
     func fetchData() {
-        // [수정 2] 매니저가 들고 있는 진짜 데이터를 뷰모델의 배열로 가져옵니다.
-        // (더 이상 mockItems를 만들 필요가 없습니다)
         self.items = cartManager.items
-        
-        // [수정 3] 뷰에게 "데이터 준비됐으니 화면 갱신해!"라고 알립니다.
         dataChanged?()
     }
-    
     
     // 테이블뷰 행 개수
     var rowCount: Int {
@@ -58,6 +53,12 @@ class CartViewModel{
         dataChanged?()
     }
     
+    // 아이템 전체 삭제하기
+    func removeItemAll() {
+        cartManager.items.removeAll()
+        dataChanged?()
+    }
+    
     // 수량 증가 함수
     func increaseCount(at index: Int) {
         cartManager.items[index].count += 1
@@ -82,7 +83,6 @@ class CartViewModel{
         for i in 0..<cartManager.items.count {
             cartManager.items[i].isSelected = newValue
         }
-        
         dataChanged?()
     }
     
