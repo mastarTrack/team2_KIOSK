@@ -100,18 +100,12 @@ class MainMenuViewController: UIViewController {
     func updateBottomView() {
         cartModel.sum = { [weak self] sum in
             guard let self else { return }
-            self.mainBottomView.update(
-                cartCount: self.cartModel.currentCount,
-                price: sum
-            )
+            self.mainBottomView.updatePrice(sum)
         }
         
         cartModel.cartCount = { [weak self] count in
             guard let self else { return }
-            self.mainBottomView.update(
-                cartCount: count,
-                price: self.cartModel.currentSum
-            )
+            self.mainBottomView.updateCount(count)
         }
     }
     
