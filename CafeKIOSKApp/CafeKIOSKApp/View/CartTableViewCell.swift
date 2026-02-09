@@ -218,6 +218,7 @@ class CartTableViewCell: UITableViewCell {
         // 온도 데이터 채워넣기
         if let temps = item.menu.options.temperature, !temps.isEmpty {
             // HOT, ICE에 따라 색상 변경
+            temperatureLabel.isHidden = false
             if item.isIce {
                 temperatureLabel.text = "ICE"
                 temperatureLabel.textColor = .systemBlue
@@ -233,6 +234,7 @@ class CartTableViewCell: UITableViewCell {
         // 샷 데이터 채워넣기
         let shots = item.shotCount
         if shots > 0 {
+            shotLabel.isHidden = false
             shotLabel.text = "\(item.shotCount)샷 추가(+\(item.menu.options.extraShot?.pricePerShot ?? 0 * item.shotCount)원)"
         } else {
             // 샷추가 하지않은 메뉴는 숨김
@@ -251,6 +253,3 @@ class CartTableViewCell: UITableViewCell {
     
 }
 
-#Preview {
-    CartViewController()
-}

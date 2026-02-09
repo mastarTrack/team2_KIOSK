@@ -121,8 +121,3 @@ class CartTopView: UIView {
 }
 
 
-
-#Preview {
-    UINavigationController(rootViewController: CartViewController())
-}
-
